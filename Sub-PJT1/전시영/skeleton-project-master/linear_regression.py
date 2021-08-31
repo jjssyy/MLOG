@@ -10,6 +10,7 @@ train_data = np.load(".\\datasets\\linear_train.npy")
 test_x = np.load(".\\datasets\\linear_test_x.npy")
 
 
+
 # tf 형식에 맞게 변환
 x_data = np.expand_dims(train_data[:,0], axis=1)
 y_data = train_data[:,1]
