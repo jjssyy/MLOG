@@ -41,8 +41,7 @@ model.fit(x=x_data,
 
 # Req. 1-5
 # 모델 테스트
-prediction = model.predict(x=test_x,
-    					   batch_size=None)
+prediction = model.predict(x=test_x, batch_size=None)
 
 # 결과 시각화
 plt.scatter(x_data,y_data,s=5,label="train data")
