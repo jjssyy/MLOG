@@ -14,6 +14,9 @@ test_x = np.load(".\\datasets\\linear_test_x.npy")
 x_data = np.expand_dims(train_data[:,0], axis=1)
 y_data = train_data[:,1]
 
+# Req 1-1
+plt.scatter(x_data,y_data)
+plt.show()
 
 # 모델 생성
 model = LinearModel(num_units=1)
