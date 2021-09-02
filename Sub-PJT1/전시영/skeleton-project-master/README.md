@@ -8,7 +8,12 @@
 |     ✅     | 1-4  | 모델 학습 함수 구현             | [linear_regression.py](linear_regression.py) |
 |     ✅     | 1-5  | 예측 및 결과 시각화             | [linear_regression.py](linear_regression.py) |
 
-![Req. 1-1](C:\Users\multicampus\git\S05P21C104\Sub-PJT1\전시영\skeleton-project-master\plot\Req. 1-1.PNG)
+##### Req. 1-1
+
+![Req._1-1](/uploads/e1b88fb7386aa1688cd165130a60d5d2/Req._1-1.PNG)
+<br>
+##### Req. 1-5
+![Req._1-5](/uploads/053dac512f3cda21d41ef2ab434380a7/Req._1-5.PNG)
 
 
 ## Req 2. 이미지 캡셔닝 Configuration
