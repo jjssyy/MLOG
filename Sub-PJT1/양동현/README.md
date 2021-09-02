@@ -1,5 +1,33 @@
-## 인공지능(영상) 프로젝트
+## Req 1. 단순 선형 회귀 모델 구현
 
-  * 이미지 파일
-    - 용량이 큰 관계로 별도 링크를 통해 다운로드 후 datasets 폴더에 압축을 해제하여 사용합니다.
-    - 다운로드: [https://drive.google.com/drive/folders/1_Md_iaLUsChAHEcm9bVDS9TfbTT7K8A_](https://drive.google.com/drive/folders/1_Md_iaLUsChAHEcm9bVDS9TfbTT7K8A_)
+| 진행상태           | 과제명              | 작업 파일                   |
+| ------------------ | -------------------| ---------------------- |
+| :white_check_mark: | Req. 1-1           | [practice.ipynb](practice.ipynb)    |
+| :white_check_mark: | Req. 1-2           | [practice.ipynb](practice.ipynb)     |
+| :white_check_mark: | Req. 1-3           | [practice.ipynb](practice.ipynb)      |
+| :white_check_mark: | Req. 1-4           | [practice.ipynb](practice.ipynb)     |
+| :white_check_mark: | Req. 1-5           | [practice.ipynb](practice.ipynb)  |
+
+## Req 2. 이미지 캠셔닝 Configuration
+
+| 진행상태           | 과제명              | 작업 파일                   |
+| ------------------ | -------------------| ---------------------- |
+| :white_check_mark: | Req. 2-1           | [practice.ipynb](practice.ipynb)      |
+| :white_check_mark: | Req. 2-2           | [practice.ipynb](practice.ipynb)     |
+
+## Req 3. 이미지 캡셔닝 데이터 전처리
+
+| 진행상태           | 과제명              | 작업 파일                    |
+| ------------------ | -------------------| ---------------------- |
+| :white_check_mark: | Req. 3-1           | [practice.ipynb](practice.ipynb)     |
+| :white_check_mark: | Req. 3-2           | [practice.ipynb](practice.ipynb)    |
+| :white_check_mark: | Req. 3-3           | [practice.ipynb](practice.ipynb)     |
+| :white_large_square: | Req. 3-4           | [practice.ipynb](practice.ipynb)     |
+
+## Req 4. 데이터 시각화
+
+| 진행상태           | 과제명              | 작업 파일                    |
+| ------------------ | -------------------| ---------------------- |
+| :white_large_square: | Req. 4-1           | [practice.ipynb](practice.ipynb)     |
+
+
