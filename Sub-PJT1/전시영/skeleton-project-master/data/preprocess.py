@@ -34,8 +34,18 @@ def dataset_split_save(img_paths, captions):
 
 
 # Req. 3-3	저장된 데이터셋 불러오기
-def get_data_file():
-    pass
+def get_data_file(train_or_test, path):
+    if train_or_test == 'train':
+        dataset = pd.read_csv(path)
+        img_paths = dataset['image']
+        caption = dataset['caption']
+        return img_paths, caption
+
+    elif train_or_test == 'test':
+        dataset = pd.read_csv(path)
+        img_paths = dataset['image']
+        caption = dataset['caption']
+        return img_paths, caption
 
 
 # Req. 3-4	데이터 샘플링
