@@ -12,7 +12,7 @@ img_paths, captions = preprocess.get_path_caption()
 
 
 # 전체 데이터셋을 분리해 저장하기
-train_dataset_path, val_dataset_path = preprocess.dataset_split_save()
+train_dataset_path, val_dataset_path = preprocess.dataset_split_save(img_paths, captions)
 
 
 # 저장된 데이터셋 불러오기

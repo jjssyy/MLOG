@@ -3,6 +3,7 @@ import csv
 import numpy as np
 import config
 import pandas as pd
+from sklearn.model_selection import train_test_split
 
 # Req. 3-1	이미지 경로 및 캡션 불러오기
 def get_path_caption():
@@ -16,8 +17,20 @@ def get_path_caption():
 
 
 # Req. 3-2	전체 데이터셋을 분리해 저장하기
-def dataset_split_save():
-    pass
+def dataset_split_save(img_paths, captions):
+    size=len(img_paths)
+    X_train, X_test, y_train, y_test = train_test_split(img_paths, captions, test_size=0.2, shuffle=True, random_state=1004)
+    column = {'image':X_train, 'caption':y_train}
+    train_dataset= pd.DataFrame(column)
+    train_dataset_path = '.\\datasets\\train.csv'
+    train_dataset.to_csv(train_dataset_path)
+
+    column = {'image':X_test, 'caption':y_test}
+    test_dataset = pd.DataFrame(column)
+    val_dataset_path = '.\\datasets\\test.csv'
+    test_dataset.to_csv(val_dataset_path)
+
+    return train_dataset_path, val_dataset_path
 
 
 # Req. 3-3	저장된 데이터셋 불러오기
