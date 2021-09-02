@@ -7,6 +7,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--caption_file_path', type=str, default='.\\datasets\\captions.csv')
 
 #이미지 파일들이 저장된 경로
-parser.add_argument('--image_file_path', default='.\\datasets\\images')
+parser.add_argument('--images_file_path', type=str, default='.\\datasets\\images\\')
 
 args=parser.parse_args()
