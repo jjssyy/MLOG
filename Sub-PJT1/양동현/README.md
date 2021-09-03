@@ -8,7 +8,7 @@
 | :white_check_mark: | Req. 1-4           | [practice.ipynb](practice.ipynb)     |
 | :white_check_mark: | Req. 1-5           | [practice.ipynb](practice.ipynb)  |
 
-## Req 2. 이미지 캠셔닝 Configuration
+## Req 2. 이미지 캡셔닝 Configuration
 
 | 진행상태           | 과제명              | 작업 파일                   |
 | ------------------ | -------------------| ---------------------- |
@@ -30,4 +30,8 @@
 | ------------------ | -------------------| ---------------------- |
 | :white_large_square: | Req. 4-1           | [practice.ipynb](practice.ipynb)     |
 
+## Req 4. 노션 페이지
 
+| 진행상태           | 과제명              | 작업 파일                    |
+| ------------------ | -------------------| ---------------------- |
+| :white_check_mark: | 팀 위키 만들기         | [노션 페이지](https://descriptive-palm-574.notion.site/WIKI-b4c7e9087ec64e6da5d3000e13708895)     |
