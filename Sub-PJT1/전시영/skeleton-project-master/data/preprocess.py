@@ -18,7 +18,6 @@ def get_path_caption():
 
 # Req. 3-2	전체 데이터셋을 분리해 저장하기
 def dataset_split_save(img_paths, captions):
-    size=len(img_paths)
     X_train, X_test, y_train, y_test = train_test_split(img_paths, captions, test_size=0.2, shuffle=True, random_state=1004)
     column = {'image':X_train, 'caption':y_train}
     train_dataset= pd.DataFrame(column)
@@ -37,17 +36,22 @@ def dataset_split_save(img_paths, captions):
 def get_data_file(train_or_test, path):
     if train_or_test == 'train':
         dataset = pd.read_csv(path)
-        img_paths = dataset['image']
+        img_path = dataset['image']
         caption = dataset['caption']
-        return img_paths, caption
+        return img_path, caption
 
     elif train_or_test == 'test':
         dataset = pd.read_csv(path)
-        img_paths = dataset['image']
+        img_path = dataset['image']
         caption = dataset['caption']
-        return img_paths, caption
+        return img_path, caption
 
 
 # Req. 3-4	데이터 샘플링
-def sampling_data():
-    pass
+def sampling_data(img_paths, captions, percent):
+    X_train, X_test, y_train, y_test = train_test_split(img_paths, captions, test_size=percent, shuffle=False)
+    img_paths = X_test
+    caption = y_test
+    size = len(img_paths)
+    print(size, str(percent*100)+'%')
+    return img_paths, caption

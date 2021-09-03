@@ -16,13 +16,13 @@ train_dataset_path, val_dataset_path = preprocess.dataset_split_save(img_paths, 
 
 
 # 저장된 데이터셋 불러오기
-img_paths, caption = preprocess.get_data_file('train',train_dataset_path)
+img_path, caption = preprocess.get_data_file('train',train_dataset_path)
 # print(img_paths[0])
 
 
 # 데이터 샘플링
 if config.do_sampling:
-    img_paths, caption = preprocess.sampling_data()
+    img_paths, caption = preprocess.sampling_data(img_paths, captions, 0.1)
 
 
 # 이미지와 캡션 시각화 하기
