@@ -8,3 +8,4 @@ parser.add_argument('--caption_file_path', type=str, default='.\\datasets\\capti
 parser.add_argument('--images_file_path', type=str, default='.\\datasets\\images')
 
 args = parser.parse_args()
+do_sampling = True

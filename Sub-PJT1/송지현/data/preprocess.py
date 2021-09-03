@@ -50,11 +50,20 @@ def dataset_split_save():
 def get_data_file(dataset_path,img_captions):
     img_paths = os.listdir(dataset_path)
     caption = {}
-    print(type(img_captions['1000092795.jpg']))
     for img in img_paths:
         caption[img] = img_captions[img]
     return [img_paths, caption]
 
 # Req. 3-4	데이터 샘플링
-def sampling_data():
-    pass
+def sampling_data(img_paths, img_captions ,ratio):
+    img_path = []
+    caption = {}
+    shuffled_indices = np.random.permutation(len(img_paths))
+    sample_size = int(len(img_paths) * ratio)
+    sample_data = shuffled_indices[:sample_size]
+    for i in sample_data:
+        img_path += [img_paths[i]]
+    print('sample data : {}개  ratio: {}%'.format(sample_size, int(ratio * 100)))
+    for img in img_path:
+        caption[img] = img_captions[img]
+    return [img_path, caption]
