@@ -27,22 +27,22 @@ def get_path_caption():
 def dataset_split_save():
     train_dataset_path = '.\\datasets\\train'
     val_dataset_path = '.\\datasets\\val'
-    # os.makedirs('.\\datasets\\train', exist_ok=True)
-    # os.makedirs('.\\datasets\\val', exist_ok=True)
-    # images_list = os.listdir('.\\datasets\\images')
-    # shuffled_indices = np.random.permutation(len(images_list)) 
-    # val_set_size = int(len(images_list) * 0.2)
-    # val_indices = shuffled_indices[:val_set_size]
-    # train_indices = shuffled_indices[val_set_size:]
-    # for train in train_indices:
-    #     img = '.\\datasets\\images\\' + images_list[train]
-    #     src = '.\\datasets\\train\\'
-    #     shutil.copy(img,src)
+    os.makedirs('.\\datasets\\train', exist_ok=True)
+    os.makedirs('.\\datasets\\val', exist_ok=True)
+    images_list = os.listdir('.\\datasets\\images')
+    shuffled_indices = np.random.permutation(len(images_list)) 
+    val_set_size = int(len(images_list) * 0.2)
+    val_indices = shuffled_indices[:val_set_size]
+    train_indices = shuffled_indices[val_set_size:]
+    for train in train_indices:
+        img = '.\\datasets\\images\\' + images_list[train]
+        src = '.\\datasets\\train\\'
+        shutil.copy(img,src)
 
-    # for val in val_indices:
-    #     img = '.\\datasets\\images\\' + images_list[val]
-    #     src = '.\\datasets\\val\\'
-    #     shutil.copy(img,src)
+    for val in val_indices:
+        img = '.\\datasets\\images\\' + images_list[val]
+        src = '.\\datasets\\val\\'
+        shutil.copy(img,src)
 
     return [train_dataset_path, val_dataset_path]
 
