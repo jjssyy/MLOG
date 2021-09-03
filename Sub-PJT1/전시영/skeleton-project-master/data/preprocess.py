@@ -38,6 +38,7 @@ def get_data_file(train_or_test, path):
         dataset = pd.read_csv(path)
         img_path = dataset['image']
         caption = dataset['caption']
+        # print(caption)
         return img_path, caption
 
     elif train_or_test == 'test':
