@@ -10,7 +10,9 @@
         <div class="input-box">
           <input v-model="nickname" @keyup.enter="nextPage" type="text">
         </div>
-        <button class="next" @click="nextPage">다음</button>
+        <div class="btn-box1">
+          <button class="next" @click="nextPage">다음</button>
+        </div>
       </div>
     </div>
 </template>
@@ -29,7 +31,7 @@ export default {
   methods: {
     nextPage() {
       this.$store.state.initNickname = this.nickname
-      this.$router.push({name:'InitProfile'})
+      this.$router.push({name:'InitProfileImg'})
     }
   },
   computed: {
