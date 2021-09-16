@@ -1,6 +1,7 @@
 @charset "utf-8";
 @import './common';
 
+
 .user {
     @include wrap;
     min-height: 100%;
@@ -9,13 +10,12 @@
         color:#000;
         font-weight: $f500;
     }
-
     /*로그인*/
     &#login {
         .loginBox{
             .logo{
                 display: inline-block;
-                min-width: 220px;
+                width: 220px;
                 height: 170px;
                 background-color: #DAEEDE;
             }

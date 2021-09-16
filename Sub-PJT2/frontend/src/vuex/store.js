@@ -8,6 +8,8 @@ Vue.use(Vuex)
 
 const state = {
     isUser: false,
+    initNickname: '',
+    initProfileimg: '',
 }
 
 export default new Vuex.Store({

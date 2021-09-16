@@ -1,15 +1,19 @@
-/*
- User API 예시
- */
+import http from '@/util/http-common';
 
-const requestLogin = (data,callback,errorCallback) => {
-    //백앤드와 로그인 통신하는 부분
-    callback();
-
-}
+const initProfile = (data,callback,errorCallback) => {
+    http
+    .put('/member/'+data.uid, {
+        params: {
+            nickname: data.nickname,
+            file_path: data.profileImg,
+        },
+    })
+    .then((res) => callback(res))
+    .catch((err) => errorCallback(err));
+};
 
 const UserApi = {
-    requestLogin:(data,callback,errorCallback)=>requestLogin(data,callback,errorCallback)
+    initProfile:(data,callback,errorCallback)=>initProfile(data,callback,errorCallback)
 }
 
 export default UserApi
