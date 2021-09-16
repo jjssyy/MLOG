@@ -21,8 +21,9 @@ button {
     height: 170px;
     background-color: #DAEEDE;
   }
-  .nickname-box{
+  .nickname-box, .profileimg-box{
     .input-title{
+      width: 230px;
       margin: 30px 0px 30px 0px;
       h1{
         text-align: end;
@@ -33,6 +34,20 @@ button {
         width: 230px;
         text-align: center;
       }
+    }
+    .image-box{
+      margin-top: 65px;
+      margin-bottom: 45px;
+    }
+    .btn-box2{
+      display: flex;
+      justify-content: space-between;
+      width: 230px;
+    }
+    .btn-box1{
+      display: flex;
+      justify-content: flex-end;
+      width: 230px;
     }
   }
 }
