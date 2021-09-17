@@ -21,7 +21,7 @@
      <br>
 
 ## ERD
-![ERD](exec/ERD.PNG)
+![ERD](exec/ERD.png)
 
 ## 프로젝트 명세
 
