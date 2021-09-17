@@ -23,6 +23,15 @@
 ## ERD
 ![ERD](exec/ERD.png)
 
+## 와이어프레임
+https://www.figma.com/file/XyPPJJKXXDhhy0M51RjzHZ/%ED%8A%B9%ED%99%94%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8?node-id=1%3A4
+
+## 기능명세
+https://www.notion.so/af23164466a34b299d36b28238cdbc16?v=aafa017e4e29494ba3f5a48b20d00ffe
+
+## API
+https://www.notion.so/30361e28d9d44efead2413ffd1d4e0bf?v=79ccc6246c0a4d63b23ff6d16df0596c
+
 ## 프로젝트 명세
 
 ### 개발 환경
