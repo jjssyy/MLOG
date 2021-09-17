@@ -1,4 +1,4 @@
-# SSAFY PJT II Mlog?
+# SSAFY PJT II Mlog
 
 ## 목차
 
