@@ -54,6 +54,7 @@ export default {
       UserApi.initProfile(
         data,
         res => {
+          console.log(res)
           this.$store.state.filePath = this.initProfileImg
           this.$stare.state.nickname = this.initNickname
         },
