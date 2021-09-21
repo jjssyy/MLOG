@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import GoogleLogin from "vue-google-login";
+import GoogleLogin from 'vue-google-login'
 export default {
   components: {
     GoogleLogin,
@@ -27,22 +27,22 @@ export default {
     return {
       params: {
         client_id:
-          "512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com",
-        ux_mode: "popup",
-        redirect_uri: "http://localhost:8081/",
+          '512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com',
+        ux_mode: 'popup',
+        redirect_uri: 'http://localhost:8081/',
       },
       renderParams: {
         width: 50,
         height: 50,
         longtitle: false,
       },
-    };
+    }
   },
   methods: {
     onSuccess(googleUser) {
-      console.log(googleUser.getBasicProfile());
+      console.log(googleUser.getBasicProfile())
     },
     onFailure() {},
   },
-};
+}
 </script>
