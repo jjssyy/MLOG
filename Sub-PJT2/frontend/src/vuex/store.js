@@ -7,21 +7,21 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-    isUser: false,
-    initNickname: '',
-    initProfileimg: '',
-    authToken:'',
-    uid: '',
-    filePath: '',
-    nickname: '',
-    email: '',
-    emailCompany: '',
-    hasSurveyed: false,
+  isUser: false,
+  initNickname: '',
+  initProfileimg: '',
+  authToken: '',
+  uid: '',
+  filePath: '',
+  nickname: '',
+  email: '',
+  emailCompany: '',
+  hasSurveyed: false,
 }
 
 export default new Vuex.Store({
-    state,
-    mutations,
-    getters,
-    actions
+  state,
+  mutations,
+  getters,
+  actions,
 })

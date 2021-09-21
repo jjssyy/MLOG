@@ -57,9 +57,22 @@
         <!-- header -->
         <HeaderComponent headerTitle="헤더 타이틀" :isSearch="true" />
         <HeaderComponent headerTitle="헤더 타이틀" :isBack="true" />
-        <HeaderComponent headerTitle="헤더 타이틀" :isBack="true" rightText="저장" isDisabled="true" />
-        <HeaderComponent headerTitle="헤더 타이틀" :isBack="true" rightText="저장" />
-        <HeaderComponent headerTitle="헤더 타이틀" :isBack="true" :isSearch="true" />
+        <HeaderComponent
+          headerTitle="헤더 타이틀"
+          :isBack="true"
+          rightText="저장"
+          isDisabled="true"
+        />
+        <HeaderComponent
+          headerTitle="헤더 타이틀"
+          :isBack="true"
+          rightText="저장"
+        />
+        <HeaderComponent
+          headerTitle="헤더 타이틀"
+          :isBack="true"
+          :isSearch="true"
+        />
       </div>
 
       <h2>tab</h2>
@@ -95,24 +108,24 @@
 </template>
 
 <script>
-import InputComponent from "../components/common/Input";
-import TextareaComponent from "../components/common/Textarea";
-import LargeButton from "../components/common/ButtonLarge";
-import SmallButton from "../components/common/ButtonSmall";
-import HalfButton from "../components/common/ButtonHalf";
-import SelectComponent from "../components/common/Select";
-import CheckboxComponent from "../components/common/Checkbox";
-import SwitchComponent from "../components/common/Switch";
-import HeaderComponent from "../components/common/Header";
-import TabComponent from "../components/common/Tab";
-import KeywordDelComponent from "../components/common/KeywordDel";
-import KeywordAddComponent from "../components/common/KeywordAdd";
-import CurationComponent from "../components/common/Curation";
-import ToastComponent from "../components/common/Toast";
-import "../assets/css/components.scss";
+import InputComponent from '../components/common/Input'
+import TextareaComponent from '../components/common/Textarea'
+import LargeButton from '../components/common/ButtonLarge'
+import SmallButton from '../components/common/ButtonSmall'
+import HalfButton from '../components/common/ButtonHalf'
+import SelectComponent from '../components/common/Select'
+import CheckboxComponent from '../components/common/Checkbox'
+import SwitchComponent from '../components/common/Switch'
+import HeaderComponent from '../components/common/Header'
+import TabComponent from '../components/common/Tab'
+import KeywordDelComponent from '../components/common/KeywordDel'
+import KeywordAddComponent from '../components/common/KeywordAdd'
+import CurationComponent from '../components/common/Curation'
+import ToastComponent from '../components/common/Toast'
+import '../assets/css/components.scss'
 
 export default {
-  name: "components",
+  name: 'components',
   components: {
     InputComponent,
     TextareaComponent,
@@ -127,55 +140,54 @@ export default {
     KeywordDelComponent,
     KeywordAddComponent,
     CurationComponent,
-    ToastComponent
+    ToastComponent,
   },
   data: () => {
     return {
-      email: "",
-      password: "",
-      contents: "",
+      email: '',
+      password: '',
+      contents: '',
       error: {
-        email: "",
-        password: ""
+        email: '',
+        password: '',
       },
       buttons: [
         {
-          title: "확인",
+          title: '확인',
           highlight: true,
           onClick: () => {
-            console.log("클릭");
-          }
+            console.log('클릭')
+          },
         },
         {
-          title: "취소",
+          title: '취소',
           onClick: () => {
-            console.log("클릭");
-          }
-        }
+            console.log('클릭')
+          },
+        },
       ],
       options: [
         {
-          value: "option1",
-          title: "옵션1"
+          value: 'option1',
+          title: '옵션1',
         },
         {
-          value: "option2",
-          title: "옵션2"
-        }
-      ]
-    };
+          value: 'option2',
+          title: '옵션2',
+        },
+      ],
+    }
   },
   methods: {
     enterInput(e, type) {
-      if (type === "email") {
-        this.email = e;
-      } else if (type === "password") {
-        this.password = e;
+      if (type === 'email') {
+        this.email = e
+      } else if (type === 'password') {
+        this.password = e
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
