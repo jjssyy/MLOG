@@ -5,7 +5,7 @@ const initProfile = (data,callback,errorCallback) => {
     .put('/member/'+data.uid, {
         params: {
             nickname: data.nickname,
-            file_path: data.profileImg,
+            file_path: data.file_path,
         },
     })
     .then((res) => callback(res))

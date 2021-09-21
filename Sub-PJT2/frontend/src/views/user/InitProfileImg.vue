@@ -32,6 +32,7 @@
 <script>
 import { mapState } from 'vuex'
 import "../../assets/css/views/init.scss";
+import UserApi from '../../api/UserApi';
 
 export default {
   data() {
@@ -46,10 +47,27 @@ export default {
     nextPage() {
       this.$store.state.initProfileimg = this.profileImg
       this.$router.push({name:''})
-    },
+      let data = {
+        uid : this.uid,
+        nickname : this.initNickname,
+        file_path: this.initProfileimg,
+      }
+      UserApi.initProfile(
+        data,
+        res => {
+          this.$store.state.filePath = this.initProfileImg
+          this.$stare.state.nickname = this.initNickname
+        },
+        err => {
+          console.log(err)
+        }
+      )
+    }
   },
   computed: {
     ...mapState([
+      'uid',
+      'initNickname',
       'initProfileimg',
     ])
   },
