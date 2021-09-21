@@ -7,5 +7,5 @@ export default {
     state.email = ''
     state.email_company = ''
     state.has_surveyed = false
-  }
+  },
 }
