@@ -30,4 +30,8 @@ export default [
     name: 'Profile',
     component: Profile,
   },
+  {
+    path: '/main',
+    component: () => import('@/views/main/main.vue'),
+  },
 ]
