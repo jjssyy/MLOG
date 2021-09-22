@@ -5,6 +5,7 @@
     <MainTotalCnt :totalCnt="totalCnt"></MainTotalCnt>
     <!-- 해당 월의 차트 조회 -->
     <MainChart :chart="chart"></MainChart>
+    <!-- 스크롤 메뉴 추가해야함 -->
   </div>
 </template>
 
