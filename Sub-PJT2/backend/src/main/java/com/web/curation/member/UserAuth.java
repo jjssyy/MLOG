@@ -22,9 +22,6 @@ public class UserAuth {
 	@Column(nullable = false, length = 25)
 	private String emailCompany;
 
-	@Column(nullable = false, length = 128)
-	private String authToken;
-
 //	@OneToOne(mappedBy = "userAuth", cascade = CascadeType.ALL)
 //	@PrimaryKeyJoinColumn
 //	private UserProfile userProfile;

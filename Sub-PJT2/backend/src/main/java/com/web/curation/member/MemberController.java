@@ -38,13 +38,14 @@ public class MemberController {
         Optional<MemberDto> dto = memberService.getMemberByEmail(userInfo.get("email"));
 
         if(!dto.isPresent()){
-            memberService.joinMember("KAKAO", userInfo.get("email"), token);
+            memberService.joinMember("KAKAO", userInfo.get("email"));
+            dto = memberService.getMemberByEmail(userInfo.get("email"));
         }
-        //memberService.login(token);
 
+        resultMap.put("status", HttpStatus.OK);
         resultMap.put("message", "카카오 유저 정보");
-        resultMap.put("data", userInfo);
-        resultMap.put("member", dto);
+        resultMap.put("User Dto", dto);
+        resultMap.put("token", token);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
