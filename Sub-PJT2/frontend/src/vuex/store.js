@@ -10,13 +10,13 @@ const state = {
   isUser: false,
   initNickname: '',
   initProfileimg: '',
-  auth_token: '',
+  authToken: '',
   uid: '',
-  file_path: '',
+  filePath: '',
   nickname: '',
   email: '',
-  email_company: '',
-  has_surveyed: false,
+  emailCompany: '',
+  hasSurveyed: false,
 }
 
 export default new Vuex.Store({
