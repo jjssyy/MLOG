@@ -17,6 +17,7 @@ const state = {
   email: '',
   emailCompany: '',
   hasSurveyed: false,
+  playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 }
 
 export default new Vuex.Store({
