@@ -33,6 +33,7 @@ public class MemberController {
     private MemberService memberService;
 
     private static String client_id = "1417199790d5e442654d27578fe4e890";
+    private static String google_client_id ="512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com";
     private static String redirect_uri = "http://localhost:8081";
 
     @GetMapping("/kakao")
@@ -175,11 +176,9 @@ public class MemberController {
         HttpTransport transport = new NetHttpTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
-        String CLIENT_ID = "512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com";
-
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
                 // Specify the CLIENT_ID of the app that accesses the backend:
-                .setAudience(Collections.singletonList(CLIENT_ID))
+                .setAudience(Collections.singletonList(google_client_id))
                 .build();
         // (Receive idTokenString by HTTPS POST)
         try {
@@ -195,12 +194,22 @@ public class MemberController {
                 String email = payload.getEmail();
                 boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
                 System.out.println("email: " + email);
-
                 // Use or store profile information
-                // ...
+                if(emailVerified) {
+                    Optional<MemberDto> dto = memberService.getMemberByEmail(email);
+                    if (!dto.isPresent()) {
+                        memberService.joinMember("GOOGLE", email);
+                        dto = memberService.getMemberByEmail(email);
+                    }
+                    resultMap.put("message", "구글 유저 정보");
+                    resultMap.put("User Dto", dto);
+
+                    return new ResponseEntity<>(resultMap, HttpStatus.OK);
+                }
 
             } else {
-                System.out.println("Invalid ID token.");
+                resultMap.put("message","GOOGLE: Invalid ID token");
+                return new ResponseEntity<>(resultMap, HttpStatus.UNAUTHORIZED);
             }
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
