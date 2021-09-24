@@ -19,7 +19,7 @@ public class MemberService {
 		Optional<MemberDto> memberDto = Optional.ofNullable(null);
 
 		if(userAuth.isPresent()){
-			Optional<UserProfile> userProfile = memberProfileDao.findById(userAuth.get());
+			Optional<UserProfile> userProfile = memberProfileDao.findById(userAuth.get().getUid());
 			memberDto = Optional.of(MemberAdapter.entityToDto(userProfile.get(), userAuth.get()));
 		}
 		return memberDto;

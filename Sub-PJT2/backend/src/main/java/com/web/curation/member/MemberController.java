@@ -51,7 +51,7 @@ public class MemberController {
 
         resultMap.put("status", HttpStatus.OK);
         resultMap.put("message", "카카오 유저 정보");
-        resultMap.put("User Dto", dto);
+        resultMap.put("userInfo", dto);
         resultMap.put("token", token);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);

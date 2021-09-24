@@ -12,6 +12,13 @@ const initProfile = (data, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const kakaoLogin = (data, callback, errorCallback) => {
+  http
+    .get('/member/kakao?code=' + data.code)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const googleLogin = (data, callback, errorCallback) => {
   http
     .get('/member/google/' + data.id_token)
@@ -22,6 +29,8 @@ const googleLogin = (data, callback, errorCallback) => {
 const UserApi = {
   initProfile: (data, callback, errorCallback) =>
     initProfile(data, callback, errorCallback),
+  kakaoLogin: (data, callback, errorCallback) =>
+    kakaoLogin(data, callback, errorCallback),
   googleLogin: (data, callback, errorCallback) =>
     googleLogin(data, callback, errorCallback),
 }
