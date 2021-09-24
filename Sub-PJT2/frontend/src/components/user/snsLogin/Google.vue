@@ -19,6 +19,7 @@
 
 <script>
 import GoogleLogin from 'vue-google-login'
+import UserApi from '@/api/UserApi.js'
 export default {
   components: {
     GoogleLogin,
@@ -40,7 +41,22 @@ export default {
   },
   methods: {
     onSuccess(googleUser) {
+      console.log(googleUser)
       console.log(googleUser.getBasicProfile())
+      console.log(googleUser.getAuthResponse().id_token)
+
+      let data = {
+        id_token: googleUser.getAuthResponse().id_token,
+      }
+      UserApi.googleLogin(
+        data,
+        res => {
+          console.log(res)
+        },
+        error => {
+          console.log(error)
+        },
+      )
     },
     onFailure() {},
   },
