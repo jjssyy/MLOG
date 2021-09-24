@@ -5,6 +5,7 @@ import Profile from './views/profile/Profile.vue'
 import SurveyStart from './views/survey/SurveyStart.vue'
 import Survey from './views/survey/Survey.vue'
 import Components from './views/Components.vue'
+import Main from './views/main/Main.vue'
 
 export default [
   {
@@ -42,5 +43,10 @@ export default [
     name: 'Survey',
     component: Survey,
     props: true,
+  },
+  {
+    path: '/main',
+    name: 'Main',
+    component: Main,
   },
 ]

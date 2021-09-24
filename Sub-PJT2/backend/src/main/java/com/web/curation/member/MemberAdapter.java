@@ -6,7 +6,6 @@ public class MemberAdapter {
                 .uid(userAuth.getUid())
                 .email(userAuth.getEmail())
                 .emailCompany(userAuth.getEmailCompany())
-                .authToken(userAuth.getAuthToken())
                 .filePath(userProfile.getFilePath())
                 .nickname(userProfile.getNickname())
                 .hasSurveyed(userProfile.isHasSurveyed())

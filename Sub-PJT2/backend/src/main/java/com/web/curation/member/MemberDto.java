@@ -11,7 +11,6 @@ public class MemberDto {
     private String uid;
     private String email;
     private String emailCompany;
-    private String authToken;
     private String filePath;
     private String nickname;
     private boolean hasSurveyed;
