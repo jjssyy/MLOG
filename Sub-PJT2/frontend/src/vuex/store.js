@@ -10,7 +10,7 @@ const state = {
   isUser: false,
   initNickname: '',
   initProfileimg: '',
-  authToken: '',
+  token: '',
   uid: '',
   filePath: '',
   nickname: '',
