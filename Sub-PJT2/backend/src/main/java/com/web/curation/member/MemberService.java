@@ -25,7 +25,7 @@ public class MemberService {
 		return memberDto;
 	}
 	
-	public void joinMember(String companyName, String email, String authToken) {
+	public void joinMember(String companyName, String email) {
 		long randomNum = (long)(Math.random() * (long)Math.pow(10, 12));
 		String uid = companyName.substring(0, 1).toUpperCase() + Long.toString(randomNum);
 
@@ -33,7 +33,6 @@ public class MemberService {
 				.uid(uid)
 				.email(email)
 				.emailCompany(companyName)
-				.authToken(authToken)
 				.build();
 
 		UserAuth mappingUserAuth = memberAuthDao.save(userAuth);
