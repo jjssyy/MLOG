@@ -1,0 +1,13 @@
+import { instance } from '@/util/index'
+
+// 총 일기 작성글 수 조회 API
+function fetchTotalCnt(data) {
+  return instance.get(`/main/${data['id']}/totalcnt`)
+}
+
+// 해당 원의 차트 조회 API
+function fetchChart(data) {
+  return instance.get(`/main/${data['id']}/${data['month']}/chart`)
+}
+
+export { fetchTotalCnt, fetchChart }
