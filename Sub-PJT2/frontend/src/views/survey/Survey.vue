@@ -39,16 +39,16 @@ export default {
   },
   data() {
     return {
-      musicList: {
-        dom_ballad: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        over_pop: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        over_po: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        over_pp: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        ovedr_pop: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        ovedr_psop: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        over_fpop: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        over_pfop: { video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-      },
+      musicList: [
+        { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_po', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pp', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pfop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+      ],
     }
   },
   props: {

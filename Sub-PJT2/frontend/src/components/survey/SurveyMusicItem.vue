@@ -1,7 +1,8 @@
 <template>
   <div id="playerdiv">
     <div>
-      {{ idx }}
+      {{ musicItem.genre }}
+      {{ playing }}
     </div>
     <youtube
       :video-id="musicItem.video_id"
@@ -10,13 +11,13 @@
       style="display:none;"
     ></youtube>
     <div>
-      <span v-show="playing == true">
-        <button @click="playVideo">
+      <span v-show="playing[idx] == false">
+        <button @click="playVideo(idx)">
           <i class="fas fa-play"></i>
         </button>
       </span>
-      <span v-show="playing == false">
-        <button @click="stopVideo">
+      <span v-show="playing[idx] == true">
+        <button @click="stopVideo(idx)">
           <i class="fas fa-stop"></i>
         </button>
       </span>
@@ -26,31 +27,28 @@
 
 <script>
 import '../../assets/css/views/survey.scss'
+import { mapState } from 'vuex'
 
 export default {
-  data() {
-    return {
-      playing: true,
-    }
-  },
   props: {
     musicItem: {
       type: [Array, Object],
     },
-    idx: String,
+    idx: Number,
   },
   computed: {
     player() {
       return this.$refs.youtube.player
     },
+    ...mapState(['playing']),
   },
   methods: {
-    playVideo() {
-      this.playing = false
+    playVideo(idx) {
+      this.$store.dispatch('playMusic', idx)
       this.player.playVideo()
     },
-    stopVideo() {
-      this.playing = true
+    stopVideo(idx) {
+      this.$store.dispatch('stopMusic', idx)
       this.player.stopVideo()
     },
   },
