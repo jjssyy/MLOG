@@ -10,11 +10,34 @@
       <h1>들으시나요? (최대 3가지)</h1>
     </div>
     <div class="music-list">
+      <div v-if="num >= 0">
+        <youtube
+          id="genre-music"
+          :video-id="musicList[num].video_id"
+          :player-vars="playerVars"
+          ref="youtube"
+          style="display:none;"
+        ></youtube>
+      </div>
       <div v-for="(musicItem, idx) in musicList" :key="idx">
-        <survey-music-item
-          :musicItem="musicItem"
-          :idx="idx"
-        ></survey-music-item>
+        <div id="playerdiv">
+          <div>
+            {{ musicItem.genre }}
+            {{ playing[idx] }}
+          </div>
+          <div>
+            <span v-show="playing[idx] == 0">
+              <button @click="playVideo(idx)">
+                <i class="fas fa-play"></i>
+              </button>
+            </span>
+            <span v-show="playing[idx] == 1">
+              <button @click="stopVideo(idx)">
+                <i class="fas fa-stop"></i>
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
     <div class="survey-footer">
@@ -31,19 +54,20 @@
 <script>
 import '../../assets/css/views/survey.scss'
 import SurveyApi from '../../api/SurveyApi'
-import SurveyMusicItem from '../../components/survey/SurveyMusicItem'
 
 export default {
-  components: {
-    SurveyMusicItem,
-  },
   data() {
     return {
+      playerVars: {
+        autoplay: 1,
+      },
+      num: -1,
+      playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
         { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pop', video_id: 'BBJa32lCaaY', music_title: 'vue' },
         { genre: 'over_po', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_pp', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
         { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
         { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
         { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
@@ -59,6 +83,7 @@ export default {
       res => {
         console.log(res.data)
         this.musicList = res.data
+        console.log(this.musicList)
       },
       err => {
         console.log(err)
@@ -73,8 +98,11 @@ export default {
           name: 'Survey',
           params: { survey_num: survey_num },
         })
+        this.stopingIdx()
+        this.num = -1
       } else {
         this.$router.push({ name: 'SurveyStart' })
+        this.stopingIdx()
       }
     },
     nextPage() {
@@ -84,9 +112,43 @@ export default {
           name: 'Survey',
           params: { survey_num: survey_num },
         })
+        this.stopingIdx()
+        this.num = -1
       } else {
-        this.$router.push({ name: '' })
+        this.$router.push({ name: 'Main' })
       }
+    },
+    playVideo(idx) {
+      this.num = idx
+      this.playingIdx(idx)
+      console.log('재생')
+    },
+    stopVideo(idx) {
+      this.playing[idx] = false
+      this.player.stopVideo()
+      this.stopingIdx()
+      console.log('스탑')
+    },
+    stopingIdx() {
+      this.player.stopVideo()
+      for (let i = 0; i < this.playing.length; i++) {
+        this.playing[i] = 0
+      }
+      console.log(this.playing)
+    },
+    playingIdx(idx) {
+      for (let i = 0; i < this.playing.length; i++) {
+        if (i != idx) {
+          this.playing[i] = 0
+        } else {
+          this.playing[idx] = 1
+        }
+      }
+    },
+  },
+  computed: {
+    player() {
+      return this.$refs.youtube.player
     },
   },
 }

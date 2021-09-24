@@ -2,18 +2,23 @@
 
 .survey-box{
   position: relative;
-  margin-top: 20px;
   height: 100%;
   .title{
+    padding-top: 20px;
     margin-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
+    h1 {
+      font-size: 21px;
+      display: flex;
+      justify-content: flex-end; 
+    }
   }
   .music-list{
     overflow-y:scroll;
     overflow-x: hidden;
     height: 500px;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
     #playerdiv{
       display: flex;
       align-items: center;
