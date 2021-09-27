@@ -1,0 +1,53 @@
+button {
+  background-color: #DAEEDE;
+  font-size: larger;
+  padding: 8px 14px;
+  margin-top: 20px;
+  border-radius: 7px;
+}
+
+.init-box {
+  margin: 0;
+  padding: 0px 30px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.init-box .logo {
+  display: inline-block;
+  width: 100%;
+  height: 170px;
+  background-color: #DAEEDE;
+}
+
+.init-box .nickname-box .input-title, .init-box .profileimg-box .input-title, .init-box .surveyStart-box .input-title {
+  width: 100%;
+  margin: 30px 0px 30px 0px;
+}
+
+.init-box .nickname-box .input-title h1, .init-box .profileimg-box .input-title h1, .init-box .surveyStart-box .input-title h1 {
+  text-align: end;
+}
+
+.init-box .nickname-box .input-box input, .init-box .profileimg-box .input-box input, .init-box .surveyStart-box .input-box input {
+  width: 230px;
+  text-align: center;
+}
+
+.init-box .nickname-box .image-box, .init-box .profileimg-box .image-box, .init-box .surveyStart-box .image-box {
+  margin-top: 65px;
+  margin-bottom: 45px;
+}
+
+.init-box .nickname-box .btn-box2, .init-box .profileimg-box .btn-box2, .init-box .surveyStart-box .btn-box2 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.init-box .nickname-box .btn-box1, .init-box .profileimg-box .btn-box1, .init-box .surveyStart-box .btn-box1 {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+/*# sourceMappingURL=init.css.map */
