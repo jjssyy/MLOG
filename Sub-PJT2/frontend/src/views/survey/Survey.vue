@@ -1,29 +1,26 @@
 <template>
-  <div v-if="survey_num >= 1 && survey_num <= 5" class="survey-box">
+  <div v-if="survey_num >= '1' && survey_num <= '5'" class="survey-box">
     <div class="title">
-      <h1 v-if="survey_num == 1">당신은 평소에</h1>
-      <h1 v-if="survey_num == 2">당신은 행복할 때</h1>
-      <h1 v-if="survey_num == 3">당신은 짜증나거나 화날 때</h1>
-      <h1 v-if="survey_num == 4">당신은 우울하거나 슬플 때</h1>
-      <h1 v-if="survey_num == 5">당신은 불안하거나 공포스러울 때</h1>
+      <h1 v-if="survey_num == '1'">당신은 평소에</h1>
+      <h1 v-if="survey_num == '2'">당신은 행복할 때</h1>
+      <h1 v-if="survey_num == '3'">당신은 짜증나거나 화날 때</h1>
+      <h1 v-if="survey_num == '4'">당신은 우울하거나 슬플 때</h1>
+      <h1 v-if="survey_num == '5'">당신은 불안하거나 공포스러울 때</h1>
       <h1>어떤 분위기의 음악을</h1>
       <h1>들으시나요? (최대 3가지)</h1>
     </div>
     <div class="music-list">
-      <div v-if="num >= 0">
-        <youtube
-          id="genre-music"
-          :video-id="musicList[num].video_id"
-          :player-vars="playerVars"
-          ref="youtube"
-          style="display:none;"
-        ></youtube>
-      </div>
+      <youtube
+        id="genre-music"
+        :video-id="musicVideoId || defaultVideo"
+        :player-vars="playerVars"
+        ref="youtube"
+        style="display:none;"
+      ></youtube>
       <div v-for="(musicItem, idx) in musicList" :key="idx">
         <div id="playerdiv">
           <div>
             {{ musicItem.genre }}
-            {{ playing[idx] }}
           </div>
           <div>
             <span v-show="playing[idx] == 0">
@@ -33,7 +30,7 @@
             </span>
             <span v-show="playing[idx] == 1">
               <button @click="stopVideo(idx)">
-                <i class="fas fa-stop"></i>
+                <i class="fas fa-pause"></i>
               </button>
             </span>
           </div>
@@ -61,12 +58,13 @@ export default {
       playerVars: {
         autoplay: 1,
       },
-      num: -1,
-      playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      musicVideoId: '',
+      defaultVideo: '',
+      playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
         { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_pop', video_id: 'BBJa32lCaaY', music_title: 'vue' },
-        { genre: 'over_po', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_po', video_id: 'BBJa32lCaaY', music_title: 'vue' },
         { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
         { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
         { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
@@ -76,7 +74,7 @@ export default {
     }
   },
   props: {
-    survey_num: Number,
+    survey_num: String,
   },
   created() {
     SurveyApi.getSurveyMusicList(
@@ -92,49 +90,48 @@ export default {
   },
   methods: {
     prevPage() {
-      if (this.survey_num != 1) {
+      if (this.survey_num != '1') {
         let survey_num = parseInt(this.survey_num) - 1
         this.$router.push({
           name: 'Survey',
-          params: { survey_num: survey_num },
+          params: { survey_num: String(survey_num) },
         })
         this.stopingIdx()
-        this.num = -1
+        this.musicVideoId = ''
       } else {
-        this.$router.push({ name: 'SurveyStart' })
         this.stopingIdx()
+        this.musicVideoId = ''
+        this.$router.push({ name: 'SurveyStart' })
       }
     },
     nextPage() {
-      if (this.survey_num != 5) {
+      if (this.survey_num != '5') {
         let survey_num = parseInt(this.survey_num) + 1
         this.$router.push({
           name: 'Survey',
-          params: { survey_num: survey_num },
+          params: { survey_num: String(survey_num) },
         })
         this.stopingIdx()
-        this.num = -1
+        this.musicVideoId = ''
       } else {
+        this.stopingIdx()
+        this.musicVideoId = ''
         this.$router.push({ name: 'Main' })
       }
     },
-    playVideo(idx) {
-      this.num = idx
-      this.playingIdx(idx)
-      console.log('재생')
+    async playVideo(idx) {
+      this.musicVideoId = this.musicList[idx].video_id
+      await this.playingIdx(idx)
     },
-    stopVideo(idx) {
-      this.playing[idx] = false
-      this.player.stopVideo()
-      this.stopingIdx()
-      console.log('스탑')
+    async stopVideo(idx) {
+      this.playing[idx] = 0
+      await this.player.stopVideo()
     },
     stopingIdx() {
       this.player.stopVideo()
       for (let i = 0; i < this.playing.length; i++) {
         this.playing[i] = 0
       }
-      console.log(this.playing)
     },
     playingIdx(idx) {
       for (let i = 0; i < this.playing.length; i++) {
