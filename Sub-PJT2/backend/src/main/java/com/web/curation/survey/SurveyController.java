@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -19,13 +20,12 @@ import java.util.Optional;
 public class SurveyController {
     private SurveyService surveyService;
 
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<Map<String, Object>> surveyStart(){
         Map<String, Object> resultMap = new HashMap<>();
-
-        Optional<Survey> surveyOptional = surveyService.getAllSurvey();
+        List<Survey> surveyList = surveyService.getAllSurvey();
         resultMap.put("message", "설문조사 리스트");
-        resultMap.put("Survey", surveyOptional);
+        resultMap.put("Survey", surveyList);
         
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }

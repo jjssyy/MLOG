@@ -13,9 +13,8 @@ import java.util.Optional;
 public class SurveyService {
     private SurveyDao surveyDao;
 
-    public Optional<Survey> getAllSurvey(){
-        Optional<Survey> survey = getAllSurvey();
-        survey = Optional.ofNullable(null);
+    public List<Survey> getAllSurvey(){
+        List<Survey> survey = surveyDao.findAll();
         return survey;
     }
 }
