@@ -6,29 +6,12 @@
 /*14px*/
 /*12px*/
 /*12px*/
-@-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%, 100% {
-    background-position: 140px;
-  }
-}
 @keyframes shine-lines {
   0% {
     background-position: -100px;
   }
   40%, 100% {
     background-position: 140px;
-  }
-}
-
-@-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%, 100% {
-    background-position: 208px;
   }
 }
 
@@ -44,8 +27,7 @@
 .skeleton-loading {
   background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
   background-size: 600px;
-  -webkit-animation: shine-avatar 1.6s infinite linear;
-          animation: shine-avatar 1.6s infinite linear;
+  animation: shine-avatar 1.6s infinite linear;
   border-radius: 3px;
 }
 

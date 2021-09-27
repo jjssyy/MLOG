@@ -1,5 +1,12 @@
 package com.web.curation.member;
 
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -7,14 +14,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.GeneralSecurityException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -27,6 +33,7 @@ public class MemberController {
     private MemberService memberService;
 
     private static String client_id = "1417199790d5e442654d27578fe4e890";
+    private static String google_client_id ="512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com";
     private static String redirect_uri = "http://localhost:8081";
 
     @GetMapping("/kakao")
@@ -44,7 +51,7 @@ public class MemberController {
 
         resultMap.put("status", HttpStatus.OK);
         resultMap.put("message", "카카오 유저 정보");
-        resultMap.put("User Dto", dto);
+        resultMap.put("userInfo", dto);
         resultMap.put("token", token);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
@@ -160,5 +167,56 @@ public class MemberController {
         }
 
         return userInfo;
+    }
+
+
+    @GetMapping("/google/{idTokenString}")
+    public ResponseEntity<Map<String, Object>> googleLogin(@PathVariable String idTokenString){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpTransport transport = new NetHttpTransport();
+        JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
+
+        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+                // Specify the CLIENT_ID of the app that accesses the backend:
+                .setAudience(Collections.singletonList(google_client_id))
+                .build();
+        // (Receive idTokenString by HTTPS POST)
+        try {
+            GoogleIdToken idToken = verifier.verify(idTokenString);
+            if (idToken != null) {
+                Payload payload = idToken.getPayload();
+
+                // Print user identifier
+                String userId = payload.getSubject();
+                System.out.println("User ID: " + userId);
+
+                // Get profile information from payload
+                String email = payload.getEmail();
+                boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+                System.out.println("email: " + email);
+                // Use or store profile information
+                if(emailVerified) {
+                    Optional<MemberDto> dto = memberService.getMemberByEmail(email);
+                    if (!dto.isPresent()) {
+                        memberService.joinMember("GOOGLE", email);
+                        dto = memberService.getMemberByEmail(email);
+                    }
+                    resultMap.put("message", "구글 유저 정보");
+                    resultMap.put("User Dto", dto);
+
+                    return new ResponseEntity<>(resultMap, HttpStatus.OK);
+                }
+
+            } else {
+                resultMap.put("message","GOOGLE: Invalid ID token");
+                return new ResponseEntity<>(resultMap, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }

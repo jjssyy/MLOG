@@ -6,29 +6,12 @@
 /*14px*/
 /*12px*/
 /*12px*/
-@-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%, 100% {
-    background-position: 140px;
-  }
-}
 @keyframes shine-lines {
   0% {
     background-position: -100px;
   }
   40%, 100% {
     background-position: 140px;
-  }
-}
-
-@-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%, 100% {
-    background-position: 208px;
   }
 }
 
@@ -43,8 +26,7 @@
 
 .static h2.title {
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
   margin-bottom: 20px;
 }
 
@@ -64,8 +46,7 @@
 
 .static .no-static h4 {
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
   float: left;
 }
 
@@ -74,8 +55,7 @@
   color: #3893A8;
   margin-top: 8px;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .static .static-count li {
@@ -88,8 +68,7 @@
   float: left;
   color: #787878;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
   margin-top: 5px;
 }
 
@@ -112,8 +91,7 @@
 .static .sorting-wrap .title-wrap h4 {
   float: left;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
   margin-right: 20px;
 }
 
@@ -127,8 +105,7 @@
   float: right;
   color: #3893A8;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
   font-size: 0.857em;
   margin-top: 2px;
 }

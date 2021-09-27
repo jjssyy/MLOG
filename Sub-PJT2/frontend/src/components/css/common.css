@@ -6,29 +6,12 @@
 /*14px*/
 /*12px*/
 /*12px*/
-@-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%, 100% {
-    background-position: 140px;
-  }
-}
 @keyframes shine-lines {
   0% {
     background-position: -100px;
   }
   40%, 100% {
     background-position: 140px;
-  }
-}
-
-@-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%, 100% {
-    background-position: 208px;
   }
 }
 
