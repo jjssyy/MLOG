@@ -7,29 +7,12 @@
 /*14px*/
 /*12px*/
 /*12px*/
-@-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%, 100% {
-    background-position: 140px;
-  }
-}
 @keyframes shine-lines {
   0% {
     background-position: -100px;
   }
   40%, 100% {
     background-position: 140px;
-  }
-}
-
-@-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%, 100% {
-    background-position: 208px;
   }
 }
 
@@ -46,8 +29,7 @@
   width: 100%;
   float: left;
   min-height: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   /*로그인*/
 }
 
@@ -58,7 +40,7 @@
 
 .user#login .loginBox .logo {
   display: inline-block;
-  min-width: 220px;
+  width: 220px;
   height: 170px;
   background-color: #DAEEDE;
 }
@@ -84,12 +66,8 @@
 }
 
 .user#login .loginBox .sns-login .login-logo {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  justify-content: center;
 }
 
 .user#login .loginBox .sns-login .login-logo #kakao-login, .user#login .loginBox .sns-login .login-logo .google-login, .user#login .loginBox .sns-login .login-logo .facebook, .user#login .loginBox .sns-login .login-logo .naver {

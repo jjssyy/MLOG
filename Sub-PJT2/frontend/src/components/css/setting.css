@@ -6,29 +6,12 @@
 /*14px*/
 /*12px*/
 /*12px*/
-@-webkit-keyframes shine-lines {
-  0% {
-    background-position: -100px;
-  }
-  40%, 100% {
-    background-position: 140px;
-  }
-}
 @keyframes shine-lines {
   0% {
     background-position: -100px;
   }
   40%, 100% {
     background-position: 140px;
-  }
-}
-
-@-webkit-keyframes shine-avatar {
-  0% {
-    background-position: -32px;
-  }
-  40%, 100% {
-    background-position: 208px;
   }
 }
 
@@ -79,9 +62,7 @@
   background: #eee;
   left: -2px;
   top: -4px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-  -webkit-transition: .2s;
+  box-sizing: border-box;
   transition: .2s;
 }
 
@@ -119,8 +100,7 @@
 .setting .curation-search-item-wrap .title-wrap h4 {
   float: left;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting .curation-search-item-wrap .title-wrap span {
@@ -148,8 +128,7 @@
   background: #eee;
   border-radius: 3px;
   padding: 18px 20px;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin-bottom: 5px;
 }
 
@@ -193,8 +172,7 @@
   -webkit-appearance: none;
   background-color: #fff;
   border: 1px solid #000;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   height: 50px;
   border-radius: 3px;
   padding: 0 40px 0 20px;
@@ -214,8 +192,7 @@
 .setting .curation-search-item-wrap + .delete-btn {
   color: #EE4B55;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting.setting-list ul li {
@@ -249,15 +226,13 @@
   width: 60px;
   height: 60px;
   border-radius: 60px;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .setting.setting-account .select-profile label {
   position: absolute;
   text-align: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding-top: 6px;
   display: inline-block;
   width: 27px;
@@ -284,13 +259,11 @@
 .setting.setting-account .about textarea {
   width: 100%;
   float: left;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   padding: 45px 15px 15px 15px;
   border-radius: 3px;
   border: 1px solid #000;
   outline: none;
-  -webkit-transition: .2s;
   transition: .2s;
   height: 96px;
 }
@@ -314,8 +287,7 @@
   margin-top: 100px;
   color: #3893A8;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting.setting-quration {
@@ -325,8 +297,7 @@
 .setting.setting-quration .quration-item {
   width: 100%;
   float: left;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   margin-bottom: 5px;
   border: 1px solid #000;
   border-radius: 3px;
@@ -337,8 +308,7 @@
   float: left;
   width: calc(100% - 50px);
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting.setting-quration .quration-item .fa-chevron-right {
@@ -349,8 +319,7 @@
 .setting.curation-manage .no-curation-title {
   font-weight: 600;
   margin-bottom: 40px;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting.setting-notification h4 {
@@ -359,8 +328,7 @@
   color: #7B7B7B;
   margin-bottom: 15px;
   font-weight: 600;
-  -webkit-transform: rotate(0.1deg);
-          transform: rotate(0.1deg);
+  transform: rotate(0.1deg);
 }
 
 .setting.setting-notification h4 + div {
