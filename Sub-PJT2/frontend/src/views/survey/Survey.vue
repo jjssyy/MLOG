@@ -62,7 +62,11 @@ export default {
     return {
       count: 0,
       emotion: ['neutral', 'joy', 'sadness', 'anger', 'fear'],
-      surveyList: { neutral: [], joy: [], sadness: [], anger: [], fear: [] },
+      neutral: [],
+      joy: [],
+      sadness: [],
+      anger: [],
+      fear: [],
       surveyMusicSelect: Array.from(Array(5), () => Array(3).fill(null)),
       playerVars: {
         autoplay: 1,
@@ -86,14 +90,14 @@ export default {
       ],
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
-        // { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: 'over_po', video_id: 'BBJa32lCaaY', music_title: 'vue' },
-        // { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
-        // { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: 'over_pfop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_po', video_id: 'BBJa32lCaaY', music_title: 'vue' },
+        { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
+        { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: 'over_pfop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
       ],
     }
   },
@@ -116,10 +120,13 @@ export default {
       for (let i = 0; i < this.emotion.length; i++) {
         this.saveSurveyList(i)
       }
-      console.log(this.surveyList)
       const data = {
         id: this.uid,
-        survey_list: this.surveyList,
+        neutral: this.neutral,
+        joy: this.joy,
+        sadness: this.sadness,
+        anger: this.anger,
+        fear: this.fear,
       }
       SurveyApi.enrollSurvey(
         data,
@@ -134,7 +141,7 @@ export default {
     saveSurveyList(num) {
       for (let i = 0; i < 3; i++) {
         if (this.surveyMusicSelect[num][i] != null) {
-          this.surveyList[this.emotion[num]].push(
+          this[this.emotion[num]].push(
             this.musicList[this.surveyMusicSelect[num][i]].genre,
           )
         }
@@ -169,7 +176,6 @@ export default {
           })
           this.stopingIdx()
           this.musicVideoId = ''
-          console.log(this.surveyMusicSelect)
           this.selected(survey_num)
         } else {
           alert('최소 1가지 이상 골라주세요')
