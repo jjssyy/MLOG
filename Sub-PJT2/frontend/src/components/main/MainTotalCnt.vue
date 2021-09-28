@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <p>MainTotalCnt 컴포넌트이다.</p>
-    <p>내 일기장은 {{ totalCnt }}</p>
+  <div class="count-box" style="margin-bottom:1rem;">
+    <p class="my-sub-title-two">내 일기장은 {{ totalCnt }} 장</p>
   </div>
 </template>
 
 <script>
+import '@/components/css/maincount.scss'
 export default {
   props: {
     totalCnt: {

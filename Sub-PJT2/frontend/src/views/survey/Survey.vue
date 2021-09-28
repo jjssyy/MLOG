@@ -25,7 +25,6 @@
         >
           <div>
             {{ musicItem.genre }}
-            {{ clicked[idx] }}
           </div>
           <div>
             <span v-show="playing[idx] == 0">
@@ -85,7 +84,7 @@ export default {
         false,
         false,
       ],
-      playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
         { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
         { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
@@ -218,7 +217,6 @@ export default {
       }
     },
     selected(sn) {
-      console.log(this.surveyMusicSelect)
       if (this.surveyMusicSelect[sn - 1]) {
         for (let i = 0; i <= this.surveyMusicSelect[sn - 1].length; i++) {
           if (this.surveyMusicSelect[sn - 1][i] != null) {
