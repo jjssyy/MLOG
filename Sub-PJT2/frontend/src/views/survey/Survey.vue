@@ -54,7 +54,7 @@
 
 <script>
 import '../../assets/css/views/survey.scss'
-import { getSurveyMusicList, enrollSurvey } from '@/api/SurveyApi'
+import SurveyApi from '@/api/SurveyApi'
 import { mapState } from 'vuex'
 
 export default {
@@ -101,13 +101,16 @@ export default {
     survey_num: String,
   },
   async created() {
-    await this.SurveyMusicList()
+    SurveyApi.SurveyMusicList(
+      res => {
+        this.musicList = res.data
+      },
+      err => {
+        console.log(err)
+      },
+    )
   },
   methods: {
-    async SurveyMusicList() {
-      const response = await getSurveyMusicList()
-      this.musicList = response.data
-    },
     async endSurvey() {
       for (let i = 0; i < this.emotion.length; i++) {
         this.saveSurveyList(i)
@@ -117,7 +120,15 @@ export default {
         id: this.uid,
         survey_list: this.surveyList,
       }
-      await enrollSurvey(data)
+      SurveyApi.enrollSurvey(
+        data,
+        res => {
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        },
+      )
     },
     saveSurveyList(num) {
       for (let i = 0; i < 3; i++) {
