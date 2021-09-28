@@ -20,7 +20,7 @@ import '../../assets/css/views/init.scss'
 export default {
   methods: {
     startSurvey() {
-      this.$router.push({ name: 'Survey', params: { survey_num: 1 } })
+      this.$router.push({ name: 'Survey', params: { survey_num: '1' } })
     },
     prevPage() {
       this.$router.push({ name: 'InitProfileImg' })

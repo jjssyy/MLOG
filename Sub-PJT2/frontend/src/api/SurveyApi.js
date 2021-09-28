@@ -11,7 +11,11 @@ const enrollSurvey = (data, callback, errorCallback) => {
   instance
     .put(`/survey/${data['id']}`, {
       params: {
-        surveyList: data.survey_list,
+        neutral: data.neutral,
+        joy: data.joy,
+        sadness: data.sadness,
+        anger: data.anger,
+        fear: this.fear,
       },
     })
     .then(res => callback(res))
