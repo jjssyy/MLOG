@@ -1,0 +1,29 @@
+package com.web.curation.diary;
+
+public class DiaryAdapater {
+	
+	public static DiaryDto entityToDto(
+			DiaryAnalytics diaryAnalytics,
+			DiaryAnalyticsSentiment diaryAnalyticsSentiment,
+			Diary diary,
+			DiaryMusic diaryMusic) {
+		return new DiaryDto.DiaryDtoBuilder()
+				.diary_id(diary.getDiaryId())
+				.uid(diary.getUid())
+				.diaryDate(diary.getDiaryDate())
+				.content(diary.getContent())
+				.regDate(diary.getRegDate())
+				.isDeleted(diary.isDeleted())
+				.neutral(diaryAnalytics.getNeutral())
+				.joy(diaryAnalytics.getJoy())
+				.sadness(diaryAnalytics.getSadness())
+				.anger(diaryAnalytics.getAnger())
+				.fear(diaryAnalytics.getFear())
+//				.sentiment(diaryAnalyticsSentiment.getSetiment())
+//				.accuracy(diaryAnalyticsSentiment.getAccuracy())
+//				.mid(diaryMusic.getMid())
+				.build();
+	}
+	
+
+}

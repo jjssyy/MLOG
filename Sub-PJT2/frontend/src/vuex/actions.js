@@ -1,5 +1,5 @@
 export default {
-  logout: function({ commit }, res) {
-    commit('LOGOUT', res)
+  logout: function({ commit }) {
+    commit('LOGOUT')
   },
 }
