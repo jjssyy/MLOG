@@ -1,15 +1,11 @@
-import http from '@/util/http-common'
+import { instance } from '@/util/index'
 
-const getSurveyMusicList = (callback, errorCallback) => {
-  http
-    .get('/survey')
-    .then(res => callback(res))
-    .catch(err => errorCallback(err))
+function getSurveyMusicList() {
+  return instance.get(`/survey`)
 }
 
-const SurveyApi = {
-  getSurveyMusicList: (data, callback, errorCallback) =>
-    getSurveyMusicList(data, callback, errorCallback),
+function enrollSurvey(data) {
+  return instance.post(`/survey/${data['id']}`)
 }
 
-export default SurveyApi
+export { getSurveyMusicList, enrollSurvey }

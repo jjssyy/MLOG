@@ -18,9 +18,14 @@
         style="display:none;"
       ></youtube>
       <div v-for="(musicItem, idx) in musicList" :key="idx">
-        <div id="playerdiv">
+        <div
+          id="playerdiv"
+          :class="{ 'yes-choice': clicked[idx], 'no-choice': !clicked[idx] }"
+          @click="selectGenre(idx)"
+        >
           <div>
             {{ musicItem.genre }}
+            {{ clicked[idx] }}
           </div>
           <div>
             <span v-show="playing[idx] == 0">
@@ -50,16 +55,36 @@
 
 <script>
 import '../../assets/css/views/survey.scss'
-import SurveyApi from '../../api/SurveyApi'
+import { getSurveyMusicList, enrollSurvey } from '@/api/SurveyApi'
+import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
+      count: 0,
+      emotion: ['neutral', 'joy', 'sadness', 'anger', 'fear'],
+      surveyList: { neutral: [], joy: [], sadness: [], anger: [], fear: [] },
+      surveyMusicSelect: Array.from(Array(5), () => Array(3).fill(null)),
       playerVars: {
         autoplay: 1,
       },
       musicVideoId: '',
       defaultVideo: '',
+      clicked: [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+      ],
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
         { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
@@ -76,21 +101,37 @@ export default {
   props: {
     survey_num: String,
   },
-  created() {
-    SurveyApi.getSurveyMusicList(
-      res => {
-        console.log(res.data)
-        this.musicList = res.data
-        console.log(this.musicList)
-      },
-      err => {
-        console.log(err)
-      },
-    )
+  async created() {
+    await this.SurveyMusicList()
   },
   methods: {
+    async SurveyMusicList() {
+      const response = await getSurveyMusicList()
+      this.musicList = response.data
+    },
+    async endSurvey() {
+      for (let i = 0; i < this.emotion.length; i++) {
+        this.saveSurveyList(i)
+      }
+      console.log(this.surveyList)
+      const data = {
+        id: this.uid,
+        survey_list: this.surveyList,
+      }
+      await enrollSurvey(data)
+    },
+    saveSurveyList(num) {
+      for (let i = 0; i < 3; i++) {
+        if (this.surveyMusicSelect[num][i] != null) {
+          this.surveyList[this.emotion[num]].push(
+            this.musicList[this.surveyMusicSelect[num][i]].genre,
+          )
+        }
+      }
+    },
     prevPage() {
       if (this.survey_num != '1') {
+        this.selectMusicList(this.survey_num)
         let survey_num = parseInt(this.survey_num) - 1
         this.$router.push({
           name: 'Survey',
@@ -98,25 +139,49 @@ export default {
         })
         this.stopingIdx()
         this.musicVideoId = ''
+        this.selected(survey_num)
       } else {
         this.stopingIdx()
         this.musicVideoId = ''
+        this.count = 0
         this.$router.push({ name: 'SurveyStart' })
       }
     },
     nextPage() {
       if (this.survey_num != '5') {
-        let survey_num = parseInt(this.survey_num) + 1
-        this.$router.push({
-          name: 'Survey',
-          params: { survey_num: String(survey_num) },
-        })
-        this.stopingIdx()
-        this.musicVideoId = ''
+        if (this.count > 0) {
+          this.selectMusicList(this.survey_num)
+          let survey_num = parseInt(this.survey_num) + 1
+          this.$router.push({
+            name: 'Survey',
+            params: { survey_num: String(survey_num) },
+          })
+          this.stopingIdx()
+          this.musicVideoId = ''
+          console.log(this.surveyMusicSelect)
+          this.selected(survey_num)
+        } else {
+          alert('최소 1가지 이상 골라주세요')
+        }
       } else {
+        this.selectMusicList(this.survey_num)
         this.stopingIdx()
         this.musicVideoId = ''
+        this.count = 0
+        this.endSurvey()
         this.$router.push({ name: 'Main' })
+      }
+    },
+    selectGenre(idx) {
+      if (this.count >= 3 && this.clicked[idx] == false) {
+        alert('최대 3가지만 골라주세요.')
+        return
+      }
+      this.$set(this.clicked, idx, !this.clicked[idx])
+      if (this.clicked[idx]) {
+        this.count += 1
+      } else {
+        this.count -= 1
       }
     },
     async playVideo(idx) {
@@ -124,7 +189,8 @@ export default {
       await this.playingIdx(idx)
     },
     async stopVideo(idx) {
-      this.playing[idx] = 0
+      this.$set(this.playing, idx, 0)
+      await this.$nextTick()
       await this.player.stopVideo()
     },
     stopingIdx() {
@@ -138,8 +204,28 @@ export default {
         if (i != idx) {
           this.playing[i] = 0
         } else {
-          this.playing[idx] = 1
+          this.$set(this.playing, idx, 1)
         }
+      }
+    },
+    selectMusicList(sn) {
+      let count = 0
+      for (let i = 0; i <= this.clicked.length; i++) {
+        if (this.clicked[i] == true) {
+          this.surveyMusicSelect[sn - 1][count] = i
+          this.clicked[this.surveyMusicSelect[sn - 1][count++]] = false
+        }
+      }
+    },
+    selected(sn) {
+      console.log(this.surveyMusicSelect)
+      if (this.surveyMusicSelect[sn - 1]) {
+        for (let i = 0; i <= this.surveyMusicSelect[sn - 1].length; i++) {
+          if (this.surveyMusicSelect[sn - 1][i] != null) {
+            this.clicked[this.surveyMusicSelect[sn - 1][i]] = true
+          }
+        }
+        this.count = this.clicked.filter(element => true === element).length
       }
     },
   },
@@ -147,6 +233,7 @@ export default {
     player() {
       return this.$refs.youtube.player
     },
+    ...mapState(['uid']),
   },
 }
 </script>

@@ -19,6 +19,15 @@
     overflow-x: hidden;
     height: 500px;
     margin-bottom: 150px;
+    @media(hover: hover) {
+      #playerdiv:hover{
+        background-color:#DAEEDE;
+        button {
+          background-color: #DAEEDE;
+        }
+      }
+    }
+
     #playerdiv{
       display: flex;
       align-items: center;
@@ -28,7 +37,7 @@
       font-size: 15px;
       button {
         margin: 0px;
-        background-color: white;
+        background-color: transparent;
         font-size: 12px;
       }
     }
@@ -51,4 +60,12 @@
       font-size: 30px;
     }
   }
+}
+
+.yes-choice {
+  background-color: #DAEEDE;
+}
+
+.no-choice {
+  background-color: white;
 }
