@@ -45,7 +45,7 @@ export default {
     },
     nextPage() {
       this.$store.state.initProfileimg = this.profileImg
-      this.$router.push({ name: '' })
+      this.$router.push({ name: 'SurveyStart' })
       let data = {
         uid: this.uid,
         nickname: this.initNickname,
@@ -56,7 +56,7 @@ export default {
         res => {
           console.log(res)
           this.$store.state.filePath = this.initProfileImg
-          this.$stare.state.nickname = this.initNickname
+          this.$store.state.nickname = this.initNickname
         },
         err => {
           console.log(err)
