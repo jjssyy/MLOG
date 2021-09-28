@@ -86,14 +86,14 @@ export default {
       ],
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [
-        { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_po', video_id: 'BBJa32lCaaY', music_title: 'vue' },
-        { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
-        { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
-        { genre: 'over_pfop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'dom_ballad', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'over_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'over_po', video_id: 'BBJa32lCaaY', music_title: 'vue' },
+        // { genre: 'over_pp', video_id: 'BBJa32lCaaY', music_title: 'vue' },
+        // { genre: 'ovedr_pop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'ovedr_psop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'over_fpop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
+        // { genre: 'over_pfop', video_id: 'lG0Ys-2d4MA', music_title: 'vue' },
       ],
     }
   },
@@ -101,9 +101,10 @@ export default {
     survey_num: String,
   },
   async created() {
-    SurveyApi.SurveyMusicList(
+    SurveyApi.getSurveyMusicList(
       res => {
-        this.musicList = res.data
+        console.log(res)
+        this.musicList = res.data.Survey
       },
       err => {
         console.log(err)
