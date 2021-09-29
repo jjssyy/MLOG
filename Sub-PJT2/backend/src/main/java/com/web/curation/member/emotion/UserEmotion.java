@@ -16,11 +16,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class UserEmotion {
 
-    @Id
-    private String uid;
+    @EmbeddedId
+    private UserEmotionPK embGenre;
 
-    @Enumerated(EnumType.STRING)
-    private Genre genre;
+    @ManyToOne
+    @MapsId("uid") //UserEmotionPK
+    @JoinColumn(name="uid") //UserAuth
+    private UserAuth userAuth;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -44,10 +46,7 @@ public class UserEmotion {
 
     @Column(nullable = false)
     @ColumnDefault("false")
-    private boolean is_deleted;
+    private boolean isDeleted;
 
-    @ManyToOne
-    @MapsId
-    @JoinColumn(name="uid")
-    private UserAuth userAuth;
+
 }

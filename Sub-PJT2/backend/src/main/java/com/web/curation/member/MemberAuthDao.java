@@ -7,4 +7,6 @@ import java.util.Optional;
 public interface MemberAuthDao extends JpaRepository<UserAuth, String>{
 
     Optional<UserAuth> getUserAuthByEmail(String email);
+
+    UserAuth getUserAuthByUid(String uid);
 }
