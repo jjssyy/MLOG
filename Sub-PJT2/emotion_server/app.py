@@ -18,13 +18,11 @@ model = m.get_model()
 def predict():
     initialize(OKT='LATEST')  #: HNN=2.0.3
     splitter = SentenceSplitter(API.OKT)
-    print(request.is_json)
     params= request.get_json()
     text = params['content']
     sentence = splitter(text)
     result=[0,0,0,0,0]
     dict1= {"neutral" : 0, "sadness" : 1, "fear" : 2, "anger" : 3, "joy" : 4}
-    print(sentence)
     result=model.Predict(sentence)
     dict1["neutral"]=result[0]
     dict1["sadness"]=result[1]

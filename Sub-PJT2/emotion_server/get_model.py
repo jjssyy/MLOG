@@ -101,17 +101,22 @@ class get_model():
 
 ##모델실행함수
 ## 매번 실행될 함수#######################################
+
     def softmax(vals, idx):
         valscpu = vals.cpu().detach().squeeze(0)
         a = 0
         print(valscpu)
         for i in valscpu:
             a += np.exp(i)
-            print(np.exp(i))
-        print(a)
         return ((np.exp(valscpu[idx]))/a).item() * 100
 
+
     def Predict(self,sentence):
+        # def soft(val,idx):
+        #     a=0
+        #     for i in val:
+        #         a+=np.exp(i)
+        #     return ((np.exp(val[idx]))/a)*100
         print(sentence)
         sentence_dataset = BERTDatasetForTest(sentence, self.tok, self.max_len, True, False)
         sentence_dataloader = torch.utils.data.DataLoader(sentence_dataset, batch_size=self.batch_size, num_workers=0)
@@ -140,6 +145,8 @@ class get_model():
         multi_max_vals, multi_max_indices = torch.max(multi_out, 1)
         multi_predicted_emotion = list(self.multi_label2emotion[label] for label in multi_max_indices.tolist())
 
+        # for i in range(5) :
+        #   print(self.multi_label2emotion[i],"일 확률:", "{:.2f}%".format(soft(result,i)))
         print("multi result")
         for text, emotion in zip(sentence, multi_predicted_emotion):
             print(f"{emotion} : {text}")
@@ -147,9 +154,9 @@ class get_model():
         multi_prob_dict = get_label_probability(multi_max_indices, self.multi_label2emotion)
         neg_prob = multi_prob_dict["sadness"]+multi_prob_dict["fear"]+multi_prob_dict["anger"]
         pos_prob = multi_prob_dict["joy"]
-        print(multi_prob_dict)
-        print(neg_prob)
-        print(pos_prob)
+        # print(multi_prob_dict)
+        # print(neg_prob)
+        # print(pos_prob)
         return result
 
 # target = [

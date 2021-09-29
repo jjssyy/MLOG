@@ -1,6 +1,7 @@
 package com.web.curation.member;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -11,6 +12,7 @@ public class MemberDto {
     private String uid;
     private String email;
     private String emailCompany;
+    private MultipartFile image;
     private String filePath;
     private String nickname;
     private boolean hasSurveyed;

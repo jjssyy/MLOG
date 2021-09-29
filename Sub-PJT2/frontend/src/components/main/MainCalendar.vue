@@ -41,7 +41,7 @@
     </div>
 
     <p style="font-weight: bold;">아직 이날의 일기를 쓰지 않았어요.</p>
-    <button class="createBtn">
+    <button @click="moveCreate" class="createBtn">
       일기 쓰기
     </button>
     <!-- <div>이 날은 {{ sentiment }}</div>
@@ -62,12 +62,13 @@ export default {
   },
   data() {
     return {
+      currentDate: null,
       calMonth: null,
       calYear: null,
       calBody: null,
       clickedYear: null,
       clickedMonth: null,
-      clickedDay: null,
+      clickedDate: null,
       init: {
         monList: [
           'Jan. ',
@@ -124,9 +125,8 @@ export default {
     }
   },
   methods: {
-    testing() {
-      this.testValue = true
-      this.initCalendar()
+    moveCreate() {
+      this.$router.push(`/diary/${this.currentDate}/create`)
     },
     loadYYMM(fullDate) {
       let yy = fullDate.getFullYear()
@@ -166,7 +166,7 @@ export default {
             if (markToday && markToday === countDay + 1) {
               trtd += ' today" '
             } else if (
-              this.clickedDay === countDay + 1 &&
+              this.clickedDate === countDay + 1 &&
               this.init.activeDate.getFullYear() === this.clickedYear &&
               this.init.activeDate.getMonth() === this.clickedMonth
             ) {
@@ -186,23 +186,10 @@ export default {
       }
       this.calBody = trtd
     },
-    clickedDate() {
-      if (
-        this.init.activeDate.getFullYear() === this.clickedYear &&
-        this.init.activeDate.getMonth() === this.clickedMonth
-      ) {
-        console.log('okay')
-        let target = document.querySelector(
-          `td[data-date="${this.clickedDay}"]`,
-        )
-        console.log('여기!', target)
-        target.click()
-      }
-    },
     changeTag(e) {
-      if (this.clickedDay) {
+      if (this.clickedDate) {
         document
-          .querySelector(`td[data-date="${this.clickedDay}"]`)
+          .querySelector(`td[data-date="${this.clickedDate}"]`)
           .classList.remove('day-active')
       }
       if (e.target.classList.contains('day')) {
@@ -212,10 +199,30 @@ export default {
         let day = Number(e.target.textContent)
         this.clickedYear = this.init.activeDate.getFullYear()
         this.clickedMonth = this.init.activeDate.getMonth()
-        this.clickedDay = day
+        this.clickedDate = day
         e.target.classList.add('day-active')
         this.init.activeDTag = e.target
         this.init.activeDate.setDate(day)
+        console.log(
+          '여기',
+          this.clickedYear,
+          this.clickedMonth + 1,
+          this.clickedDate,
+        )
+        let tempMonth = ''
+        let tempDate = ''
+        if ((this.clickedMonth + 1).toString().length == 1) {
+          tempMonth = '0'
+        }
+        if (this.clickedDate.toString().length == 1) {
+          tempDate = '0'
+        }
+        this.currentDate =
+          this.clickedYear.toString() +
+          tempMonth +
+          (this.clickedMonth + 1).toString() +
+          tempDate +
+          this.clickedDate.toString()
       }
     },
     initCalendar() {
@@ -224,6 +231,21 @@ export default {
   },
   created() {
     this.initCalendar()
+    let date = new Date()
+    let tempMonth = ''
+    let tempDate = ''
+    if ((date.getMonth() + 1).toString().length == 1) {
+      tempMonth = '0'
+    }
+    if (date.getDate().toString().length == 1) {
+      tempDate = '0'
+    }
+    this.currentDate =
+      date.getFullYear().toString() +
+      tempMonth +
+      (date.getMonth() + 1).toString() +
+      tempDate +
+      date.getDate().toString()
   },
 }
 </script>

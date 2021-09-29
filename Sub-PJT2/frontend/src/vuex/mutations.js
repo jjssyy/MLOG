@@ -19,4 +19,8 @@ export default {
   SAVE_TOKEN(state, token) {
     state.token = token
   },
+  CHANGEPROFILE(state, user) {
+    state.nickname = user.nickname
+    state.filePath = user.filePath
+  },
 }

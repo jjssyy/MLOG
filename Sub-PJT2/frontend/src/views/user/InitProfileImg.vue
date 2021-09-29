@@ -8,16 +8,10 @@
       </div>
       <div class="image-box">
         <label for="file">
-          <img v-if="profileImg" :src="profileImg" style="cursor: pointer;" />
-          <img
-            v-else
-            src="@/assets/images/profile_default.png"
-            style="cursor: pointer;"
-            width="100"
-          />
+          <img :src="profileImg" style="cursor: pointer" />
         </label>
-        <div style="display:none;">
-          <input type="file" accept="image/*" id="file" />
+        <div style="display: none">
+          <input type="file" accept="image/*" id="file" @change="loadf" />
         </div>
       </div>
       <div class="btn-box2">
@@ -36,32 +30,50 @@ import UserApi from '../../api/UserApi'
 export default {
   data() {
     return {
+      isChange: false,
       profileImg: '',
     }
+  },
+  created() {
+    this.profileImg = this.$store.state.filePath
   },
   methods: {
     prevPage() {
       this.$router.push({ name: 'InitNickname' })
     },
     nextPage() {
-      this.$store.state.initProfileimg = this.profileImg
-      this.$router.push({ name: 'SurveyStart' })
+      const formData = new FormData()
+      formData.append('uid', this.$store.state.uid)
+      formData.append('nickname', this.$store.state.initNickname)
+
+      const file = document.getElementById('file').files[0]
+      if (this.isChange && file == null) {
+        alert('이미지를 선택해주세요')
+        return
+      } else if (this.isChange) {
+        formData.append('image', file)
+      }
+
       let data = {
-        uid: this.uid,
-        nickname: this.initNickname,
-        file_path: this.initProfileimg,
+        uid: this.$store.state.uid,
+        formData: formData,
       }
       UserApi.initProfile(
         data,
         res => {
           console.log(res)
-          this.$store.state.filePath = this.initProfileImg
-          this.$store.state.nickname = this.initNickname
+          this.$router.push({ name: 'SurveyStart' })
+          this.$store.commit('CHANGEPROFILE', res.data.userInfo)
         },
         err => {
           console.log(err)
         },
       )
+    },
+    loadf() {
+      this.isChange = true
+      var file = document.getElementById('file')
+      this.profileImg = URL.createObjectURL(file.files[0])
     },
   },
   computed: {
