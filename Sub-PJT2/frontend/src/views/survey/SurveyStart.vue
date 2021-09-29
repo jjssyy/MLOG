@@ -7,7 +7,7 @@
       </div>
       <div class="logo"></div>
       <div class="btn-box2">
-        <button>이전</button>
+        <button @click="prevPage">이전</button>
         <button @click="startSurvey">시작하기</button>
       </div>
     </div>
@@ -20,7 +20,10 @@ import '../../assets/css/views/init.scss'
 export default {
   methods: {
     startSurvey() {
-      this.$router.push({ name: '' })
+      this.$router.push({ name: 'Survey', params: { survey_num: '1' } })
+    },
+    prevPage() {
+      this.$router.push({ name: 'InitProfileImg' })
     },
   },
 }

@@ -1,33 +1,38 @@
 <template>
-  <div>
-    <h1>main페이지이다.</h1>
+  <div style="background-color: #DAEEDC;">
+    <br />
     <!-- 총 일기 작성글 수 -->
     <MainTotalCnt :totalCnt="totalCnt"></MainTotalCnt>
+    <!-- 달력(해당 월의 일기 정보 조회) -->
+    <MainCalendar :monthDiary="monthDiary"></MainCalendar>
     <!-- 해당 월의 차트 조회 -->
     <MainChart :chart="chart"></MainChart>
-    <!-- 스크롤 메뉴 추가해야함 -->
+    <br />
   </div>
 </template>
 
 <script>
 import MainTotalCnt from '@/components/main/MainTotalCnt.vue'
 import MainChart from '@/components/main/MainChart.vue'
-import { fetchTotalCnt, fetchChart } from '@/api/main.js'
+import MainCalendar from '@/components/main/MainCalendar.vue'
+import { fetchTotalCnt, fetchChart, fetchMonthDiary } from '@/api/main.js'
 export default {
   components: {
     MainTotalCnt,
     MainChart,
+    MainCalendar,
   },
   data() {
     return {
       totalCnt: 0,
       chart: {},
+      monthDiary: {},
     }
   },
   methods: {
     async loadTotalCnt() {
       const data = {
-        id: 'null',
+        id: null,
       }
       const response = await fetchTotalCnt(data)
       this.totalCnt = response['data']['total_cnt']
@@ -35,16 +40,26 @@ export default {
     async loadChart() {
       let date = new Date()
       const data = {
-        id: 'null',
+        id: null,
         month: date.getMonth() + 1,
       }
       const response = await fetchChart(data)
       this.chart = response['data']
     },
+    async loadMonthDiary() {
+      let date = new Date()
+      const data = {
+        id: null,
+        month: date.getMonth() + 1,
+      }
+      const response = await fetchMonthDiary(data)
+      this.monthDiary = response['data']
+    },
   },
   async created() {
     await this.loadTotalCnt()
     await this.loadChart()
+    await this.loadMonthDiary()
   },
 }
 </script>

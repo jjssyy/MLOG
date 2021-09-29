@@ -10,13 +10,13 @@
 </template>
 
 <script>
-import UserApi from "@/api/UserApi";
+import UserApi from '@/api/UserApi'
 export default {
   created() {
     if (this.$route.query.code != null) {
       const data = {
         code: this.$route.query.code,
-      };
+      }
       UserApi.kakaoLogin(
         data,
         (res) => {
@@ -24,18 +24,18 @@ export default {
           this.$store.commit("LOGIN", res.data.userInfo);
           this.$router.push({ name: "InitNickname" });
         },
-        (err) => {
-          console.log(err);
-        }
-      );
+        err => {
+          console.log(err)
+        },
+      )
     }
   },
   methods: {
     loginWithKakao() {
       window.location.replace(
-        "https://kauth.kakao.com/oauth/authorize?client_id=2e422a8e10fb191d40ff2b6fb7439b41&redirect_uri=http://localhost:8081&response_type=code"
-      );
+        'https://kauth.kakao.com/oauth/authorize?client_id=2e422a8e10fb191d40ff2b6fb7439b41&redirect_uri=http://localhost:8081&response_type=code',
+      )
     },
   },
-};
+}
 </script>
