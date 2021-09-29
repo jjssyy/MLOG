@@ -14,8 +14,8 @@
           <div class="naver">
             <img src="@/assets/images/n_icon.png" width="50" />
           </div>
-          <kakaoLogin :component="component" />
-          <GoogleLogin :component="component" />
+          <kakaoLogin />
+          <GoogleLogin />
           <div class="facebook">
             <img
               src="@/assets/images/f_icon.png"

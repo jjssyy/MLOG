@@ -2,10 +2,9 @@ import http from '@/util/http-common'
 
 const initProfile = (data, callback, errorCallback) => {
   http
-    .put('/member/' + data.uid, {
-      params: {
-        nickname: data.nickname,
-        file_path: data.file_path,
+    .put('/member/' + data.uid, data.formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
       },
     })
     .then(res => callback(res))

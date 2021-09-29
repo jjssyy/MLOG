@@ -20,6 +20,8 @@
 <script>
 import GoogleLogin from 'vue-google-login'
 import UserApi from '@/api/UserApi.js'
+import { mapState } from 'vuex'
+
 export default {
   components: {
     GoogleLogin,
@@ -51,14 +53,25 @@ export default {
       UserApi.googleLogin(
         data,
         res => {
-          console.log(res)
+          this.$store.commit('SAVE_TOKEN', data.id_token)
+          this.$store.commit('LOGIN', res.data['User Dto'])
+          if (this.hasSurveyed) {
+            this.$router.push({ name: 'Main' })
+          } else {
+            this.$router.push({ name: 'InitNickname' })
+          }
         },
         error => {
           console.log(error)
         },
       )
     },
-    onFailure() {},
+    onFailure(error) {
+      console.log(error)
+    },
+  },
+  computed: {
+    ...mapState(['hasSurveyed']),
   },
 }
 </script>
