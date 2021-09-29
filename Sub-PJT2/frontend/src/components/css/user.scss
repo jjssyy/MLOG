@@ -3,8 +3,8 @@
 
 
 .user {
-    @include wrap;
     min-height: 100%;
+    padding-top: 50px;
     box-sizing: border-box;
     h1 {
         color:#000;

@@ -3,6 +3,7 @@ import InitNickname from './views/user/InitNickname.vue'
 import InitProfileImg from './views/user/InitProfileImg.vue'
 import Profile from './views/profile/Profile.vue'
 import SurveyStart from './views/survey/SurveyStart.vue'
+import Survey from './views/survey/Survey.vue'
 import Components from './views/Components.vue'
 import Main from './views/main/Main.vue'
 import CreateDiary from './views/diary/CreateDiary.vue'
@@ -39,6 +40,12 @@ export default [
     path: '/survey',
     name: 'SurveyStart',
     component: SurveyStart,
+  },
+  {
+    path: '/survey/:survey_num',
+    name: 'Survey',
+    component: Survey,
+    props: true,
   },
   {
     path: '/main',
