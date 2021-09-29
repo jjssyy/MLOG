@@ -19,10 +19,10 @@ export default {
       }
       UserApi.kakaoLogin(
         data,
-        res => {
-          this.$store.commit('SAVE_TOKEN', res.data.token)
-          this.$store.commit('LOGIN', res.data.userInfo)
-          // TODO 메인페이지로 이동
+        (res) => {
+          this.$store.commit("SAVE_TOKEN", res.data.token);
+          this.$store.commit("LOGIN", res.data.userInfo);
+          this.$router.push({ name: "InitNickname" });
         },
         err => {
           console.log(err)
