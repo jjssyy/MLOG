@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RestController
 @AllArgsConstructor
 @RequestMapping("/member")
@@ -216,6 +217,19 @@ public class MemberController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable String id, MemberDto memberDto) throws IOException {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        memberDto.setUid(id);
+        MemberDto changedMemberDto = memberService.updateMember(memberDto);
+
+        resultMap.put("message", "회원 정보 수정 완료");
+        resultMap.put("userInfo", changedMemberDto);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
