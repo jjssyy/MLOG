@@ -23,60 +23,60 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import "../../assets/css/views/init.scss";
-import UserApi from "../../api/UserApi";
+import { mapState } from 'vuex'
+import '../../assets/css/views/init.scss'
+import UserApi from '../../api/UserApi'
 
 export default {
   data() {
     return {
       isChange: false,
-      profileImg: "",
-    };
+      profileImg: '',
+    }
   },
   created() {
-    this.profileImg = this.$store.state.filePath;
+    this.profileImg = this.$store.state.filePath
   },
   methods: {
     prevPage() {
-      this.$router.push({ name: "InitNickname" });
+      this.$router.push({ name: 'InitNickname' })
     },
     nextPage() {
-      const formData = new FormData();
-      formData.append("uid", this.$store.state.uid);
-      formData.append("nickname", this.$store.state.initNickname);
+      const formData = new FormData()
+      formData.append('uid', this.$store.state.uid)
+      formData.append('nickname', this.$store.state.initNickname)
 
-      const file = document.getElementById("file").files[0];
+      const file = document.getElementById('file').files[0]
       if (this.isChange && file == null) {
-        alert("이미지를 선택해주세요");
-        return;
+        alert('이미지를 선택해주세요')
+        return
       } else if (this.isChange) {
-        formData.append("image", file);
+        formData.append('image', file)
       }
 
       let data = {
         uid: this.$store.state.uid,
         formData: formData,
-      };
+      }
       UserApi.initProfile(
         data,
-        (res) => {
-          console.log(res);
-          this.$router.push({ name: "SurveyStart" });
+        res => {
+          console.log(res)
+          this.$router.push({ name: 'SurveyStart' })
         },
-        (err) => {
-          console.log(err);
-        }
-      );
+        err => {
+          console.log(err)
+        },
+      )
     },
     loadf() {
-      this.isChange = true;
-      var file = document.getElementById("file");
-      this.profileImg = URL.createObjectURL(file.files[0]);
+      this.isChange = true
+      var file = document.getElementById('file')
+      this.profileImg = URL.createObjectURL(file.files[0])
     },
   },
   computed: {
-    ...mapState(["uid", "initNickname", "initProfileimg"]),
+    ...mapState(['uid', 'initNickname', 'initProfileimg']),
   },
-};
+}
 </script>
