@@ -62,11 +62,11 @@ export default {
   data() {
     return {
       sectionsOne: [
-        { label: '긍정', value: 40, color: '#5abae6' },
-        { label: '부정', value: 60, color: '#d34e4e' },
+        { label: '긍정', value: 40, color: '#83c9e7' },
+        { label: '부정', value: 60, color: '#ff8585' },
       ],
       sectionsTwo: [
-        { label: '작성글수', value: 80, color: 'purple' },
+        { label: '작성글수', value: 80, color: '#83c9e7' },
         { label: '', value: 20, color: '#e9e9e9' },
       ],
     }

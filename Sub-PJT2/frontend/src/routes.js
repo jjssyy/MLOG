@@ -5,6 +5,9 @@ import Profile from './views/profile/Profile.vue'
 import SurveyStart from './views/survey/SurveyStart.vue'
 import Components from './views/Components.vue'
 import Main from './views/main/Main.vue'
+import CreateDiary from './views/diary/CreateDiary.vue'
+import ReadDiary from './views/diary/ReadDiary.vue'
+import UpdateDiary from './views/diary/UpdateDiary.vue'
 
 export default [
   {
@@ -41,5 +44,20 @@ export default [
     path: '/main',
     name: 'Main',
     component: Main,
+  },
+  {
+    path: '/diary/:date/create',
+    name: 'CreateDiary',
+    component: CreateDiary,
+  },
+  {
+    path: '/diary/:date',
+    name: 'ReadDiary',
+    component: ReadDiary,
+  },
+  {
+    path: '/diary/:date/update',
+    name: 'UpdateDiary',
+    component: UpdateDiary,
   },
 ]
