@@ -1,5 +1,6 @@
 <template>
   <div style="background-color: #DAEEDC;">
+    <Header></Header>
     <br />
     <!-- 총 일기 작성글 수 -->
     <MainTotalCnt :totalCnt="totalCnt"></MainTotalCnt>
@@ -15,12 +16,14 @@
 import MainTotalCnt from '@/components/main/MainTotalCnt.vue'
 import MainChart from '@/components/main/MainChart.vue'
 import MainCalendar from '@/components/main/MainCalendar.vue'
+import Header from '@/components/profile/Header.vue'
 import { fetchTotalCnt, fetchChart, fetchMonthDiary } from '@/api/main.js'
 export default {
   components: {
     MainTotalCnt,
     MainChart,
     MainCalendar,
+    Header,
   },
   data() {
     return {

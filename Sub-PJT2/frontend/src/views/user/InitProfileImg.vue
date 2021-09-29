@@ -63,6 +63,7 @@ export default {
         res => {
           console.log(res)
           this.$router.push({ name: 'SurveyStart' })
+          this.$store.commit('CHANGEPROFILE', res.data.userInfo)
         },
         err => {
           console.log(err)
