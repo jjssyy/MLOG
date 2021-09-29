@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: #DAEEDC;">
     <br />
     <!-- 총 일기 작성글 수 -->
     <MainTotalCnt :totalCnt="totalCnt"></MainTotalCnt>
