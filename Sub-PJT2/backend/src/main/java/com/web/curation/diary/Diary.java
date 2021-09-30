@@ -52,5 +52,12 @@ public class Diary {
 	@Column( nullable =false)
 	private boolean isDeleted;
 	
+	
+	public void deletediary() {
+		this.isDeleted=true;
+	}
+	public void updatecontent(String content) {
+		this.content=content;
+	}
 
 }

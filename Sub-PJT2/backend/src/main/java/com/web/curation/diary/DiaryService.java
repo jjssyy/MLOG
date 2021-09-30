@@ -68,36 +68,37 @@ public class DiaryService {
 		diaryAnalyticsDao.save(diaryAnalytics);
 	}
 	
-	public void modifyDiary(int diary_id,String content) {
+	public void modifyDiary(int diary_id,String content,LocalDate date) {
 		float[] emotion = new float[5];
 		emotion = find(content);
 	
-		Diary diary_info=diaryDao.getDiaryByDiaryId(diary_id);
-		
-		diary_info.builder()
-		.content(content)
-		.build();
-		System.out.println(diary_info.getDiaryId());
-		System.out.println(diary_info.getContent());
-		DiaryAnalytics diaryAnalytics=diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary_id);
-		diaryAnalytics.builder()
-		.neutral(emotion[0])
-		.joy(emotion[1])
-		.sadness(emotion[2])
-		.anger(emotion[3])
-		.fear(emotion[4])
-		.build();
+		Diary deleteDiary=diaryDao.getDiaryByDiaryId(diary_id);
+		deleteDiary.deletediary();
+		UserAuth userAuth=deleteDiary.getUserAuth();
+		Diary diary_info=Diary.builder()
+				.userAuth(userAuth)
+				.content(content)
+				.diaryDate(date)
+				.isDeleted(false)
+				.build();
+		DiaryAnalytics diaryAnalytics=DiaryAnalytics.builder()
+				.diary(diary_info)
+				.neutral(emotion[0])
+				.joy(emotion[1])
+				.sadness(emotion[2])
+				.anger(emotion[3])
+				.fear(emotion[4])
+				.build();
+		diaryDao.save(deleteDiary);
 		diaryDao.save(diary_info);
 		diaryAnalyticsDao.save(diaryAnalytics);
 		
 	}
 	
 	public void deleteDiary(int diary_id) {
-		Diary diary_info= diaryDao.getDiaryByDiaryId(diary_id);
-		diary_info.builder()
-		.isDeleted(true)
-		.build();
-		diaryDao.save(diary_info);
+		Diary deleteDiary=diaryDao.getDiaryByDiaryId(diary_id);
+		deleteDiary.deletediary();
+		diaryDao.save(deleteDiary);
 	}
 	
 	private float[] find(String content) {
