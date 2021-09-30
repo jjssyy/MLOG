@@ -8,9 +8,9 @@ import com.web.curation.member.UserAuth;
 
 public interface DiaryDao extends JpaRepository<Diary, String>{
 	
-	Diary getDiaryByUserAuthAndDiaryDateAndIsDeletedIsFalse(
-			UserAuth userAuth,LocalDate diaryDate);
+	Diary getDiaryByUserAuthAndDiaryDateAndIsDeletedIsFalse(UserAuth userAuth,LocalDate diaryDate);
+
 	Diary getDiaryByDiaryId(int diaryId);
 	
-
+	int countByUserAuthAndIsDeletedIsFalse(UserAuth userAuth);
 }
