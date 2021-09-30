@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.MemberProfileDao;
 import com.web.curation.member.MemberService;
+import com.web.curation.member.UserAuth;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,10 +28,15 @@ public class DiaryService {
 	private DiaryAnalyticsDao diaryAnalyticsDao;
 	private DiaryAnalyticsSentimentDao diaryAnalyticsSentimentDao;
 	private DiaryMusicDao diaryMusicDao;
+	private MemberAuthDao memberAuthDao;
+	
+	
+	
 	
 	public DiaryDto getDiaryByUidAndDiaryDate(String Uid, LocalDate DiaryDate) {
 		DiaryDto result =new DiaryDto(); 
-		Diary diary=diaryDao.getDiaryByUidAndDiaryDateAndIsDeletedIsFalse(Uid, DiaryDate);
+		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
+		Diary diary=diaryDao.getDiaryByUserAuthAndDiaryDateAndIsDeletedIsFalse(userAuth, DiaryDate);
 		if(diary!=null) {
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary.getDiaryId());
 //			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(diary.getDiaryId());
@@ -43,9 +49,9 @@ public class DiaryService {
 	public void WriteDiary(String Uid,String content,LocalDate date) {
 		float[] emotion=new float[5];
 		emotion=find(content);
-		
+		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
 		Diary diary_info=Diary.builder()
-				.uid(Uid)
+				.userAuth(userAuth)
 				.content(content)
 				.diaryDate(date)
 				.isDeleted(false)
@@ -62,6 +68,37 @@ public class DiaryService {
 		diaryAnalyticsDao.save(diaryAnalytics);
 	}
 	
+	public void modifyDiary(int diary_id,String content) {
+		float[] emotion = new float[5];
+		emotion = find(content);
+	
+		Diary diary_info=diaryDao.getDiaryByDiaryId(diary_id);
+		
+		diary_info.builder()
+		.content(content)
+		.build();
+		System.out.println(diary_info.getDiaryId());
+		System.out.println(diary_info.getContent());
+		DiaryAnalytics diaryAnalytics=diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary_id);
+		diaryAnalytics.builder()
+		.neutral(emotion[0])
+		.joy(emotion[1])
+		.sadness(emotion[2])
+		.anger(emotion[3])
+		.fear(emotion[4])
+		.build();
+		diaryDao.save(diary_info);
+		diaryAnalyticsDao.save(diaryAnalytics);
+		
+	}
+	
+	public void deleteDiary(int diary_id) {
+		Diary diary_info= diaryDao.getDiaryByDiaryId(diary_id);
+		diary_info.builder()
+		.isDeleted(true)
+		.build();
+		diaryDao.save(diary_info);
+	}
 	
 	private float[] find(String content) {
 		double[] tmp=new double[5];

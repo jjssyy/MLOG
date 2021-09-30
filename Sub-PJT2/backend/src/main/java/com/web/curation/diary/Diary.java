@@ -7,10 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.web.curation.member.UserAuth;
 import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
@@ -29,8 +33,10 @@ public class Diary {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int diaryId;
 	
-	@Column(nullable = false, length = 13)
-	private String uid;
+	
+	@ManyToOne
+	@JoinColumn(name = "uid")
+	private UserAuth userAuth;
 	
 	@Column(nullable = false)
 	private LocalDate diaryDate;
