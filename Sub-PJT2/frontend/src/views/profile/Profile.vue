@@ -24,22 +24,52 @@
       <div class="task">
         <h1>일기장</h1>
         <div class="subtask">
-          <h2><i class="fas fa-book"></i>내 일기장</h2>
-          <h2><i class="fas fa-music"></i>내 플레이리스트</h2>
+          <h2>
+            <i class="fas fa-book"></i>
+            <span>
+              내 일기장
+            </span>
+          </h2>
+          <h2>
+            <i class="fas fa-music"></i>
+            <span>
+              내 플레이리스트
+            </span>
+          </h2>
         </div>
       </div>
       <div class="task">
         <h1>분석</h1>
         <div class="subtask">
-          <h2><i class="fas fa-chart-bar"></i>내 일기 보고서</h2>
-          <h2><i class="fas fa-chart-pie"></i>긍·부정 보고서</h2>
+          <h2>
+            <i class="fas fa-chart-bar"></i>
+            <span>
+              내 일기 보고서
+            </span>
+          </h2>
+          <h2>
+            <i class="fas fa-chart-pie"></i>
+            <span>
+              긍·부정 보고서
+            </span>
+          </h2>
         </div>
       </div>
       <div class="task2">
         <h1>설정</h1>
         <div class="subtask">
-          <h2><i class="fas fa-cog"></i>내 정보</h2>
-          <h2><i class="fas fa-undo-alt"></i>설문조사 초기화</h2>
+          <h2 @click="goMyInfo">
+            <i class="fas fa-cog"></i>
+            <span>
+              내 정보
+            </span>
+          </h2>
+          <h2>
+            <i class="fas fa-undo-alt"></i>
+            <span>
+              설문조사 초기화
+            </span>
+          </h2>
         </div>
       </div>
     </div>
@@ -48,12 +78,16 @@
 
 <script>
 import { mapState } from 'vuex'
+import '@/assets/css/components/profile.scss'
 
 export default {
   methods: {
     logout() {
       this.$store.dispatch('logout')
       this.$router.push({ name: 'Login' })
+    },
+    goMyInfo() {
+      this.$router.push({ name: 'MyInfo' })
     },
   },
   computed: {

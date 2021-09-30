@@ -7,6 +7,13 @@
   }
 }
 
+@media(max-width:580px){
+  .myinfo{
+    height: 100%;
+    width: 100%;
+  }
+}
+
 @media(min-width:580px){
   .profile{
     // height: 100%;
@@ -16,6 +23,7 @@
 .profile{
   background-color: #DAEEDE;
   .profile-header2{
+    position: relative;
     height: 17%;
     display: flex;
     justify-content: space-between;
@@ -32,7 +40,7 @@
       }
       #header-img { 
         position: relative; 
-        width: 67px;
+        width: 70px;
         margin-left: 0.5rem;
       } 
       #header-img:before { 
@@ -49,21 +57,27 @@
       }
     }
     .logout {
+      position: absolute;
       font-size: 1.3em;
-      margin: 100px 25px 0 0;
+      cursor: pointer;
+      bottom: 20px;
     }
   }
   .profile-contents{
-    height: 85%;
+    height: 83%;
     background-color: white;
-    border-radius: 1.2rem;
-    padding-top: 10px;;
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+    padding-top: 10px;
     .task{
       padding: 35px;
       text-align: start;
       border-bottom: 2px solid #dee2e6;
       h2{
         margin: 10px 0 10px 0;
+        span{
+          cursor: pointer;
+        }
       }
       svg{
         margin-right: 10px;
@@ -74,6 +88,9 @@
       text-align: start;
       h2{
         margin: 10px 0 10px 0;
+        span{
+          cursor: pointer;
+        }
       }
       svg{
         margin-right: 10px;
@@ -106,5 +123,80 @@
     left: 0; 
     width: 100%; 
     height: 100%;
+  }
+}
+
+
+.myinfo{
+  background-color: #DAEEDE;
+  position: relative;
+  .profile-img{
+    position: absolute;
+    top: 4.25%;
+  }
+  #header-img { 
+    position: relative; 
+    width: 40px;
+    margin-left: 0.5rem;
+  } 
+  #header-img:before { 
+    content: ""; 
+    display: block; 
+    padding-top: 100%; 
+  } 
+  #header-img > div { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+  }
+  .myinfo-header{
+    height: 8.5%;
+    display: flex;
+    justify-content: space-between;
+    .back{
+      margin: 0px 0px 73px 5px;
+    }
+    .userinfo{
+      display: flex;
+      align-items: center;
+      font-size: 20px;
+      h2{
+        margin-left: 1rem; 
+        // margin-top: 20px;
+      }
+    }
+  }
+  .myinfo-contents{
+    height: 91.5%;
+    background-color: white;
+    border-top-left-radius: 1.2rem;
+    border-top-right-radius: 1.2rem;
+    padding-top: 10px;
+    .userinfo{
+      font-size: 20px;
+      h2{
+        margin-left: 1rem; 
+        margin-top: 20px;
+      }
+      #header-img { 
+        position: relative; 
+        width: 67px;
+        margin-left: 0.5rem;
+      } 
+      #header-img:before { 
+        content: ""; 
+        display: block; 
+        padding-top: 100%; 
+      } 
+      #header-img > div { 
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%;
+      }
+    }
   }
 }

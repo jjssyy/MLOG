@@ -2,6 +2,7 @@ import Login from './views/user/Login.vue'
 import InitNickname from './views/user/InitNickname.vue'
 import InitProfileImg from './views/user/InitProfileImg.vue'
 import Profile from './views/profile/Profile.vue'
+import MyInfo from './views/profile/MyInfo.vue'
 import SurveyStart from './views/survey/SurveyStart.vue'
 import Survey from './views/survey/Survey.vue'
 import Components from './views/Components.vue'
@@ -35,6 +36,11 @@ export default [
     path: '/profile',
     name: 'Profile',
     component: Profile,
+  },
+  {
+    path: '/profile/myinfo',
+    name: 'MyInfo',
+    component: MyInfo,
   },
   {
     path: '/survey',
