@@ -15,7 +15,7 @@ const enrollSurvey = (data, callback, errorCallback) => {
         joyList: data.joy,
         sadnessList: data.sadness,
         angerList: data.anger,
-        fearList: this.fear,
+        fearList: data.fear,
       },
     })
     .then(res => callback(res))
