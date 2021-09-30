@@ -9,7 +9,7 @@ const getSurveyMusicList = (callback, errorCallback) => {
 
 const enrollSurvey = (data, callback, errorCallback) => {
   instance
-    .put(`/survey/${data['id']}`, {
+    .post(`/survey/${data['id']}`, {
       params: {
         neutralList: data.neutral,
         joyList: data.joy,
