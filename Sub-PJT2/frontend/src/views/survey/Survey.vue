@@ -194,7 +194,7 @@ export default {
       }
     },
     async playVideo(idx) {
-      this.musicVideoId = this.musicList[idx].video_id
+      this.musicVideoId = this.musicList[idx].videoId
       await this.playingIdx(idx)
     },
     async stopVideo(idx) {
