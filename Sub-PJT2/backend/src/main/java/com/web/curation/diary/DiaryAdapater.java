@@ -9,7 +9,7 @@ public class DiaryAdapater {
 			DiaryMusic diaryMusic) {
 		return new DiaryDto.DiaryDtoBuilder()
 				.diary_id(diary.getDiaryId())
-				.uid(diary.getUid())
+				.uid(diary.getUserAuth().getUid())
 				.diaryDate(diary.getDiaryDate())
 				.content(diary.getContent())
 				.regDate(diary.getRegDate())
