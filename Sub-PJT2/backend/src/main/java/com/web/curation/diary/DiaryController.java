@@ -84,10 +84,12 @@ public class DiaryController {
 	@PutMapping("/{diary_id}/edit")
 	public ResponseEntity<Map<String , Object>> modifyDiary(
 			@PathVariable int diary_id,
-			@RequestParam String content
+			@RequestParam String content,
+			@RequestParam String date
 			){
+		LocalDate localdate= LocalDate.parse(date,DateTimeFormatter.ISO_DATE);
 		Map<String , Object> resultMap=new HashMap<>();
-		diarySerivce.modifyDiary(diary_id, content);
+		diarySerivce.modifyDiary(diary_id, content,localdate);
 		resultMap.put("status", HttpStatus.OK);
 		resultMap.put("meesage", "success");
 		
