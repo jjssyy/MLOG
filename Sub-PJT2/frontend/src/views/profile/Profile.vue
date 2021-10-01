@@ -96,7 +96,7 @@ export default {
       this.$router.push({ name: 'MyPlaylist' })
     },
     goMyDiaryReport() {
-      this.$router.push({ name: '' })
+      this.$router.push({ name: 'DiaryReport' })
     },
     goEmoReport() {
       this.$router.push({ name: '' })

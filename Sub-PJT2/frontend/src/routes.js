@@ -6,6 +6,7 @@ import MyInfo from './views/profile/MyInfo.vue'
 import MyInfoUpdate from './views/profile/MyInfoUpdate.vue'
 import MyDiary from './views/profile/MyDiary.vue'
 import MyPlaylist from './views/profile/MyPlaylist.vue'
+import DiaryReport from './views/profile/DiaryReport.vue'
 import SurveyStart from './views/survey/SurveyStart.vue'
 import Survey from './views/survey/Survey.vue'
 import Components from './views/Components.vue'
@@ -59,6 +60,11 @@ export default [
     path: '/profile/myplaylist',
     name: 'MyPlaylist',
     component: MyPlaylist,
+  },
+  {
+    path: '/profile/mydiaryreport',
+    name: 'DiaryReport',
+    component: DiaryReport,
   },
   {
     path: '/survey',

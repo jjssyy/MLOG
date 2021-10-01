@@ -8,4 +8,10 @@ function getMyPlaylist(data) {
   return instance.get(`/profile/${data['id']}/playlist`)
 }
 
-export { getMyDiary, getMyPlaylist }
+function getMyDiaryReport(data) {
+  return instance.get(
+    `/profile/${data['id']}/report/diary?start_date=${data['startDate']}&end_date=${data['endDate']}`,
+  )
+}
+
+export { getMyDiary, getMyPlaylist, getMyDiaryReport }
