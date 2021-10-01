@@ -12,6 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.web.curation.config.KeyConfig;
+import com.web.curation.music.MusicInfo;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
@@ -216,5 +217,19 @@ public class DiaryService {
 		}
 
 		return diaryDto;
+	}
+	public DiaryAnalyticsSentiment getDiaryAnalyticsSentiment(int DiaryID){
+		DiaryAnalyticsSentiment diarySentiment = diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(DiaryID);
+
+		return diarySentiment;
+	}
+
+	public MusicInfo getMusicInfo(int diaryId){
+		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiaryId(diaryId);
+		if(diaryMusic == null){
+			System.out.println("null 값임");
+		}
+		MusicInfo musicInfo = diaryMusic.getMusicInfo();
+		return musicInfo;
 	}
 }
