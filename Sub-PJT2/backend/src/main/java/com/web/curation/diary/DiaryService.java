@@ -7,11 +7,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.web.curation.config.KeyConfig;
+import com.web.curation.music.MusicDao;
 import com.web.curation.music.MusicInfo;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,6 +25,10 @@ import org.springframework.stereotype.Service;
 
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.UserAuth;
+import com.web.curation.member.emotion.Genre;
+import com.web.curation.member.emotion.UserEmotion;
+import com.web.curation.member.emotion.UserEmotionDao;
+import com.web.curation.member.emotion.UserEmotionPK;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +42,8 @@ public class DiaryService {
 	private DiaryAnalyticsSentimentDao diaryAnalyticsSentimentDao;
 	private DiaryMusicDao diaryMusicDao;
 	private MemberAuthDao memberAuthDao;
+	private UserEmotionDao userEmotionDao;
+	private MusicDao musicDao;
 
 	private final KeyConfig keyConfig;
 
@@ -104,6 +114,68 @@ public class DiaryService {
 		Diary deleteDiary=diaryDao.getDiaryByDiaryId(diary_id);
 		deleteDiary.deletediary();
 		diaryDao.save(deleteDiary);
+	}
+	
+	public MusicInfo[] getMusicList(int diary_id,String uid) {
+		MusicInfo[] result=new MusicInfo[5];
+		float[] Diary_Anlatics=new float[5];
+		DiaryAnalytics emotion=diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary_id);
+		Diary_Anlatics[0]=emotion.getNeutral();
+		Diary_Anlatics[1]=emotion.getJoy();
+		Diary_Anlatics[2]=emotion.getSadness();
+		Diary_Anlatics[3]=emotion.getAnger();
+		Diary_Anlatics[4]=emotion.getFear();
+		UserAuth userAuth=memberAuthDao.getUserAuthByUid(uid);
+		Optional<List<UserEmotion>> optional=userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
+		List<UserEmotion> userEmotionList=optional.get();
+		rank[] rank=new rank[12];
+		for(int i=0;i<12;i++) {
+			UserEmotion userEmotion=userEmotionList.get(i);
+			UserEmotionPK emGenre=userEmotion.getEmbGenre();
+			Genre genre=emGenre.getGenre();
+			String genreName=genre.toString();
+			float[] compare=new float[5];
+			compare[0]=userEmotion.getNeutral();
+			compare[1]=userEmotion.getJoy();
+			compare[2]=userEmotion.getSadness();
+			compare[3]=userEmotion.getAnger();
+			compare[4]=userEmotion.getFear();
+			
+			float score=cosineSimilarity(Diary_Anlatics, compare);
+			rank tmp=new rank(genreName,score);
+			rank[i]=tmp;	
+		}	
+		Arrays.sort(rank);
+		for(int i=0;i<12;i++) {
+			System.out.println(rank[i].cosine);
+		}
+		for(int i=0;i<3;i++) {
+			String genre=rank[i].genre;
+			List<MusicInfo> musicList=musicDao.getMusicInfoByMusicGenre(genre);
+			int random=(int) (Math.random()*musicList.size());
+			//중간에 체크하는 과정 추가.해야함
+			result[i]=musicList.get(random);
+		}
+		int v=0;
+		int CheckDuplicate=0;
+		for(int i=3;i<5;i++) {
+			while(true) {
+				int min=4;
+				int max=12;
+				v=(int) (Math.random()*(max-min)+min);
+				System.out.println(v);
+				if(CheckDuplicate-v==0)continue;
+				else break;
+			}
+			String genre=rank[v].genre;
+			List<MusicInfo> musicList=musicDao.getMusicInfoByMusicGenre(genre);
+			int random_value=(int) (Math.random()*musicList.size());
+			//중간에 체크하는 과정 추가.해야함
+			result[i]=musicList.get(random_value);
+			CheckDuplicate+=v;
+		}
+		
+		return result;
 	}
 	
 	private float[] find(String content) {
@@ -232,4 +304,36 @@ public class DiaryService {
 		MusicInfo musicInfo = diaryMusic.getMusicInfo();
 		return musicInfo;
 	}
+	
+	static public class rank implements Comparable<rank>{
+		String genre;
+		float cosine;
+		public rank(String genre, float cosine) {
+			super();
+			this.genre = genre;
+			this.cosine = cosine;
+		}
+		@Override
+		public int compareTo(rank o) {
+			if(this.cosine>o.cosine)return -1;
+			return 1;
+		}
+		
+	}
+	
+	public static float cosineSimilarity(float[] vectorA, float[] vectorB) {
+	    float dotProduct = 0;
+	    float normA = 0;
+	    float normB = 0;
+	    for (int i = 0; i < vectorA.length; i++) {
+	        dotProduct += vectorA[i] * vectorB[i];
+	        normA += Math.pow(vectorA[i], 2);
+	        normB += Math.pow(vectorB[i], 2);
+	    }   
+	    double tmp=dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+	    float result=(float)tmp;
+	    return result;
+	}
 }
+
+
