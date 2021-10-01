@@ -34,6 +34,7 @@ import org.json.simple.parser.ParseException;
 
 import com.web.curation.member.MemberController;
 import com.web.curation.member.MemberService;
+import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -107,6 +108,23 @@ public class DiaryController {
 		resultMap.put("status", HttpStatus.OK);
 		resultMap.put("meesage", "success");
 		
+		
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+	}
+	
+	@GetMapping("/music/{diary_id}/{uid}")
+	public ResponseEntity<Map<String , Object>> getMusicList(
+			@PathVariable int diary_id,
+			@PathVariable String uid
+			){
+		Map<String , Object> resultMap=new HashMap<>();
+		MusicInfo[] result=new MusicInfo[5];
+		result=diarySerivce.getMusicList(diary_id, uid);
+		
+		
+		resultMap.put("status", HttpStatus.OK);
+		resultMap.put("meesage", "success");
+		resultMap.put("result", result);
 		
 		return new ResponseEntity<>(resultMap,HttpStatus.OK);
 	}

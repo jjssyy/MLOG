@@ -13,4 +13,5 @@ public enum Genre {
     dance_electronic,
     ccm,
     folk_blues;
+
 }
