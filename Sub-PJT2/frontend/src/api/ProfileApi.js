@@ -4,4 +4,8 @@ function getMyDiary(data) {
   return instance.get(`/profile/${data['id']}/diary`)
 }
 
-export { getMyDiary }
+function getMyPlaylist(data) {
+  return instance.get(`/profile/${data['id']}/playlist`)
+}
+
+export { getMyDiary, getMyPlaylist }

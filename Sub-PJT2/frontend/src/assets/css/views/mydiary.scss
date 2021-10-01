@@ -3,15 +3,25 @@
     width: 100%;
     height: 100%;
   }
+  .myplaylist{
+    width: 100%;
+    height: 100%;
+  }
 }
 
 @media(min-width:580px){
   .mydiary{
     height:700px;
   }
+  .myplaylist{
+    height:700px;
+  }
 }
 
 .mydiary{
+  background-color: #DAEEDE;
+}
+.myplaylist{
   background-color: #DAEEDE;
 }
 .profile-header{
