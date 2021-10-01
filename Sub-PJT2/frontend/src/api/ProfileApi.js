@@ -14,4 +14,10 @@ function getMyDiaryReport(data) {
   )
 }
 
-export { getMyDiary, getMyPlaylist, getMyDiaryReport }
+function getEmotionReport(data) {
+  return instance.get(
+    `/profile/${data['id']}/report/sentiment?start_date=${data['startDate']}&end_date=${data['endDate']}`,
+  )
+}
+
+export { getMyDiary, getMyPlaylist, getMyDiaryReport, getEmotionReport }
