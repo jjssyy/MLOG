@@ -27,8 +27,7 @@ public class DiaryMusic {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int diaryId;
 	
-	@Column(nullable = false)
-	@MapsId
+	@OneToOne
 	@JoinColumn(name="mid")
 	private MusicInfo musicInfo;
 	
