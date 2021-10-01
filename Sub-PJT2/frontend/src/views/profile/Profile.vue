@@ -26,7 +26,7 @@
         <div class="subtask">
           <h2>
             <i class="fas fa-book"></i>
-            <span>
+            <span @click="goMyDiary">
               내 일기장
             </span>
           </h2>
@@ -88,6 +88,9 @@ export default {
     },
     goMyInfo() {
       this.$router.push({ name: 'MyInfo' })
+    },
+    goMyDiary() {
+      this.$router.push({ name: 'MyDiary' })
     },
   },
   computed: {

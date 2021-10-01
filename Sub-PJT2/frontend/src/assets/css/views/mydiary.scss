@@ -1,0 +1,34 @@
+@media(max-width:580px){
+  .mydiary{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media(min-width:580px){
+  .mydiary{
+    height:700px;
+  }
+}
+
+.mydiary{
+  background-color: #DAEEDE;
+}
+.profile-header{
+  height: 8.5%;
+  padding: 0px;
+  display: flex;
+  justify-content: flex-start;
+  .back{
+    margin-top: 0px;
+  }
+}
+.profile-body{
+  height: 91.5%;
+  background-color: white;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+  .title{
+    padding-top: 15px;
+  }
+}
