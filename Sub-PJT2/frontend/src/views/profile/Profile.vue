@@ -26,13 +26,13 @@
         <div class="subtask">
           <h2>
             <i class="fas fa-book"></i>
-            <span>
+            <span @click="goMyDiary">
               내 일기장
             </span>
           </h2>
           <h2>
             <i class="fas fa-music"></i>
-            <span>
+            <span @click="goMyPlaylist">
               내 플레이리스트
             </span>
           </h2>
@@ -43,13 +43,13 @@
         <div class="subtask">
           <h2>
             <i class="fas fa-chart-bar"></i>
-            <span>
+            <span @click="goMyDiaryReport">
               내 일기 보고서
             </span>
           </h2>
           <h2>
             <i class="fas fa-chart-pie"></i>
-            <span>
+            <span @click="goEmoReport">
               긍·부정 보고서
             </span>
           </h2>
@@ -88,6 +88,18 @@ export default {
     },
     goMyInfo() {
       this.$router.push({ name: 'MyInfo' })
+    },
+    goMyDiary() {
+      this.$router.push({ name: 'MyDiary' })
+    },
+    goMyPlaylist() {
+      this.$router.push({ name: 'MyPlaylist' })
+    },
+    goMyDiaryReport() {
+      this.$router.push({ name: 'DiaryReport' })
+    },
+    goEmoReport() {
+      this.$router.push({ name: 'EmotionReport' })
     },
   },
   computed: {
