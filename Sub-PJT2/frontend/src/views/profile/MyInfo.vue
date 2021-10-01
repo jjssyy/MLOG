@@ -12,6 +12,7 @@
           />
         </div>
       </div>
+      <h2 class="nickname">{{ nickname }} 님</h2>
     </div>
     <div class="myinfo-header">
       <button class="back" @click="goProfile">
@@ -19,9 +20,7 @@
       </button>
     </div>
     <div class="myinfo-contents">
-      <div class="userinfo">
-        <h2 class="nickname">{{ nickname }} 님</h2>
-      </div>
+      <div class="userinfo"></div>
     </div>
   </div>
 </template>
