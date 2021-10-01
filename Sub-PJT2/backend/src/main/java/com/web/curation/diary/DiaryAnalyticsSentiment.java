@@ -25,7 +25,7 @@ public class DiaryAnalyticsSentiment {
 	private int diaryId;
 	
 	@Column(nullable = false)
-	private float setiment;
+	private float sentiment;
 	
 	@Column(nullable =  false)
 	private float accuracy;
