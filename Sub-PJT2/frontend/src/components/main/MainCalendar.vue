@@ -44,6 +44,9 @@
     <button @click="moveCreate" class="createBtn">
       일기 쓰기
     </button>
+    <button @click="moveRead">
+      일기 읽기
+    </button>
     <!-- <div>이 날은 {{ sentiment }}</div>
     <p>MainCalendar 컴포넌트이다.</p>
     <p>monthDiary: {{ monthDiary }}</p> -->
@@ -127,6 +130,9 @@ export default {
   methods: {
     moveCreate() {
       this.$router.push(`/diary/${this.currentDate}/create`)
+    },
+    moveRead() {
+      this.$router.push(`/diary/${this.currentDate}`)
     },
     loadYYMM(fullDate) {
       let yy = fullDate.getFullYear()

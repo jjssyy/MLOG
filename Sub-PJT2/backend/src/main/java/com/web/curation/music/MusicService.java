@@ -91,31 +91,29 @@ public class MusicService {
 	private String convertGenre(int i) {
 		switch(i) {
 			case 3550:
-				return "국내발라드";
+				return "ballad";
 			case 3551: case 3562:
-				return "댄스/일렉";
+				return "dance_electronic";
 			case 3552: case 3560:
-				return "힙합";
+				return "hiphop";
 			case 3553: case 3561:
-				return "알앤비";
+				return "r_n_b";
 			case 3554:
-				return "트로트";
+				return "trot";
 			case 3555:
-				return "인디";
+				return "indie";
 			case 3557:
-				return "포크/블루스";
+				return "folk_blues";
 			case 3558: case 3563: case 3564:
-				return "락/메탈";
+				return "rock_metal";
 			case 3559: case 3556:
-				return"팝/어쿠스틱";
+				return "pop_acoustic";
 			case 3566:
-				return "클래식";
+				return "classic";
 			case 3567:
-				return "뉴에이지";
-			case 3568:
-				return "재즈";
+				return "newage";
 			case 3574:
-				return "CCM";
+				return "ccm";
 			default:
 				return null;
 		}

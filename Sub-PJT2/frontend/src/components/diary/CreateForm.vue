@@ -1,9 +1,9 @@
 <template>
   <div>
-    <form @submit.prevent="submitForm">
+    <div class="diary-content">
       <textarea id="content" type="text" v-model="content"></textarea>
-      <button type="submit">제출</button>
-    </form>
+    </div>
+    <button class="diary-btn" @click="submitForm">작성 완료</button>
   </div>
 </template>
 
@@ -20,12 +20,12 @@ export default {
       let date =
         this.$route.params.date.substring(0, 4) +
         '-' +
-        this.$route.params.date.substring(4, 2) +
+        this.$route.params.date.substring(4, 6) +
         '-' +
-        this.$route.params.date.substring(6, 2)
+        this.$route.params.date.substring(6, 8)
       const data = {
         content: this.content,
-        diary_date: date,
+        date: date,
       }
       console.log(this.$store.state.uid)
       console.log(data)
