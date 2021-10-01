@@ -89,7 +89,24 @@ export default {
         false,
       ],
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      musicList: [],
+      musicList: [
+        { genre: '국내 발라드', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '팝/어쿠스틱', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '락/메탈', videoId: 'BBJa32lCaaY', music_title: 'vue' },
+        { genre: '알앤비', videoId: 'BBJa32lCaaY', music_title: 'vue' },
+        { genre: '힙합', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '트로트', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '인디', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '클래식', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '뉴에이지', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        {
+          genre: '댄스/일레트로닉',
+          videoId: 'lG0Ys-2d4MA',
+          music_title: 'vue',
+        },
+        { genre: 'CCM', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+        { genre: '포크/블루스', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
+      ],
     }
   },
   props: {
@@ -99,7 +116,7 @@ export default {
     SurveyApi.getSurveyMusicList(
       res => {
         console.log(res)
-        this.musicList = res.data.Survey
+        // this.musicList = res.data.Survey
         console.log(this.musicList)
       },
       err => {

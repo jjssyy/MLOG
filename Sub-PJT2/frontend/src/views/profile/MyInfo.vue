@@ -12,6 +12,12 @@
           />
         </div>
       </div>
+      <h2 class="nickname">
+        {{ nickname }} 님
+        <span @click="goUpdate">
+          <i class="fas fa-pen fa-sm"></i>
+        </span>
+      </h2>
     </div>
     <div class="myinfo-header">
       <button class="back" @click="goProfile">
@@ -20,7 +26,17 @@
     </div>
     <div class="myinfo-contents">
       <div class="userinfo">
-        <h2 class="nickname">{{ nickname }} 님</h2>
+        <div class="content">
+          <h1>이메일</h1>
+          <h2>{{ email }}</h2>
+        </div>
+        <div class="content">
+          <h1>로그인</h1>
+          <h2>{{ emailCompany }}</h2>
+        </div>
+        <div>
+          <p>회원 탈퇴</p>
+        </div>
       </div>
     </div>
   </div>
@@ -31,11 +47,16 @@ import { mapState } from 'vuex'
 import '@/assets/css/components/profile.scss'
 
 export default {
-  goProfile() {
-    this.$router.push({ name: 'Profile' })
+  methods: {
+    goProfile() {
+      this.$router.push({ name: 'Profile' })
+    },
+    goUpdate() {
+      this.$router.push({ name: 'MyInfoUpdate' })
+    },
   },
   computed: {
-    ...mapState(['filePath', 'nickname']),
+    ...mapState(['filePath', 'nickname', 'email', 'emailCompany']),
   },
 }
 </script>

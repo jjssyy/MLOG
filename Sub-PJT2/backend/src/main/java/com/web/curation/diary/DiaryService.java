@@ -8,13 +8,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.web.curation.config.KeyConfig;
+import com.web.curation.music.MusicInfo;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.web.curation.member.MemberAuthDao;
-import com.web.curation.member.MemberProfileDao;
-import com.web.curation.member.MemberService;
 import com.web.curation.member.UserAuth;
 
 import lombok.AllArgsConstructor;
@@ -29,9 +34,9 @@ public class DiaryService {
 	private DiaryAnalyticsSentimentDao diaryAnalyticsSentimentDao;
 	private DiaryMusicDao diaryMusicDao;
 	private MemberAuthDao memberAuthDao;
-	
-	
-	
+
+	private final KeyConfig keyConfig;
+
 	
 	public DiaryDto getDiaryByUidAndDiaryDate(String Uid, LocalDate DiaryDate) {
 		DiaryDto result =new DiaryDto(); 
@@ -153,5 +158,78 @@ public class DiaryService {
 		}
 		
 		return null;
+	}
+
+
+	/**
+	 * getSentiment의 설명을 작성
+	 * diaryDto의 content를 GCP로 보내
+	 * diaryDto의 accuracy, sentiment에 값을 저장
+	**/
+	public DiaryDto getSentiment(DiaryDto diaryDto){
+		JSONObject data=new JSONObject();
+		JSONObject document=new JSONObject();
+		document.put("type", "PLAIN_TEXT");
+		document.put("content", diaryDto.getContent());
+		data.put("document", document);
+
+		System.out.println(keyConfig.getGCPKey());
+
+		HttpURLConnection conn=null;
+		String reqURL= "https://language.googleapis.com/v1/documents:analyzeSentiment?key=" + keyConfig.getGCPKey();
+		try {
+			URL url = new URL(reqURL);
+			conn=(HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Content-Type", "application/json");
+			conn.setRequestProperty("Content-Length", Integer.toString(data.toJSONString().length()));
+			conn.setDoOutput(true);
+			conn.connect();
+
+			//Post방식으로 스트링을통한 JSON전송
+			BufferedWriter bw= new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			bw.write(data.toString());
+			bw.flush();
+			bw.close();
+
+			//서버에서 보낸 응답 데이터 수신 받기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			StringBuilder result = new StringBuilder();
+
+			while ((line = br.readLine()) != null) {
+				result.append(line);
+			}
+
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result.toString());
+
+			JsonObject documentSentiment = element.getAsJsonObject().get("documentSentiment").getAsJsonObject();
+
+			String magnitude = documentSentiment.getAsJsonObject().get("magnitude").getAsString();
+			String score = documentSentiment.getAsJsonObject().get("score").getAsString();
+
+			diaryDto.setAccuracy(Float.parseFloat(magnitude));
+			diaryDto.setSentiment(Float.parseFloat(score));
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return diaryDto;
+	}
+	public DiaryAnalyticsSentiment getDiaryAnalyticsSentiment(int DiaryID){
+		DiaryAnalyticsSentiment diarySentiment = diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(DiaryID);
+
+		return diarySentiment;
+	}
+
+	public MusicInfo getMusicInfo(int diaryId){
+		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiaryId(diaryId);
+		if(diaryMusic == null){
+			System.out.println("null 값임");
+		}
+		MusicInfo musicInfo = diaryMusic.getMusicInfo();
+		return musicInfo;
 	}
 }

@@ -1,55 +1,62 @@
-// 태그 전체
 .diary-container {
   background-color: white;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   padding-top: 5%;
-  .diary-title {
-    display: flex;
-    margin: 0% 5%;
-    .center {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.6rem;
-      margin-bottom: 5%;
-      p {
-        padding-left: 1rem;
-        font-weight: 800;
-      }
-    }
-  }
-  &>p {
-    padding-left: 4.2%;
-    font-size: 1rem;
-    font-weight: 800;
-  }
 }
+
+.diary-container .diary-title {
+  display: flex;
+  margin: 0% 5%;
+}
+
+.diary-container .diary-title .center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  margin-bottom: 5%;
+}
+
+.diary-container .diary-title .center p {
+  padding-left: 1rem;
+  font-weight: 800;
+}
+
+.diary-container > p {
+  padding-left: 4.2%;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
 .diary-hover:hover {
   animation-name: boxHover;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
+
 @keyframes boxHover {
   0% {
     box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0);
   }
-  100%{
+  100% {
     box-shadow: 3px 3px 9px 0px rgba(0, 0, 0, 0.5);
   }
 }
+
 .side-menu {
   margin-left: auto;
   margin-right: 0;
   position: relative;
   padding: 0 0.7rem;
 }
+
 .diary-content {
   width: 100%;
   height: 80%;
   margin: 0 auto;
 }
-// diary 내용
+
 .diary-content textarea {
   color: #000000;
   border: 1px solid #EEEEEE;
@@ -64,28 +71,30 @@
   width: 80%;
   background-color: #FFFFFF;
   border-radius: 1rem;
-  background-image: -moz-linear-gradient(top, transparent, transparent 19px, #E7EFF8 0px), -moz-radial-gradient(4% 50%, circle closest-corner, #f5f5f5, #f5f5f5 39%, transparent 0%), -moz-radial-gradient(3.9% 46%, circle closest-corner, #CCCCCC, #CCCCCC 43.5%, transparent 0%);
   background-image: -webkit-linear-gradient(top, transparent, transparent 19px, #E7EFF8 0);
   background-size: 100% 20px;
-  &:focus {
-    outline: none;
-  }
 }
+
+.diary-content textarea:focus {
+  outline: none;
+}
+
 .sub-textarea {
   min-height: 200px;
 }
-// diary 버튼
+
 .diary-btn {
   background-color: #83c9e7;
-  padding: 0.5rem 1rem; 
-  margin: 0.5rem; 
+  padding: 0.5rem 1rem;
+  margin: 0.5rem;
   font-size: 1rem;
   font-weight: 800;
-  &:hover {
-    animation-name: btnHover;
-    animation-duration: 0.2s;
-    animation-fill-mode: forwards;
-  }
+}
+
+.diary-btn:hover {
+  animation-name: btnHover;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
 }
 
 .modal {
@@ -96,23 +105,26 @@
   border-radius: 0.5rem;
   background: white;
   width: 4rem;
-  padding:0.5rem 0.5rem;
+  padding: 0.5rem 0.5rem;
 }
 
 .dialog {
   width: 100%;
   padding: 0;
-  span {
-    padding: 0.1rem 0.1rem;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    &:hover {
-      border-radius: 0.2rem;
-      background-color: #e9e9e9;
-    }
-  }
 }
+
+.dialog span {
+  padding: 0.1rem 0.1rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dialog span:hover {
+  border-radius: 0.2rem;
+  background-color: #e9e9e9;
+}
+
 .menu-border {
   border-radius: 50%;
   background-color: #e9e9e9;
@@ -126,3 +138,4 @@
   font-size: 1.3rem;
   font-weight: bold;
 }
+/*# sourceMappingURL=diary.css.map */
