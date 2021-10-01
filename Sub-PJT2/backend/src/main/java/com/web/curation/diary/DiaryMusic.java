@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.web.curation.music.MusicInfo;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +28,9 @@ public class DiaryMusic {
 	private int diaryId;
 	
 	@Column(nullable = false)
-	private int mid;
+	@MapsId
+	@JoinColumn(name="mid")
+	private MusicInfo musicInfo;
 	
 	@OneToOne
 	@MapsId
