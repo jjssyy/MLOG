@@ -2,6 +2,7 @@ package com.web.curation.member.emotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
@@ -19,6 +20,10 @@ public class UserEmotionPK implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Genre genre;
+
+	public Genre getGenre() {
+		return this.genre;
+	}
 
 
 }
