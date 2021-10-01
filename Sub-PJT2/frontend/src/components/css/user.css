@@ -26,9 +26,8 @@
 }
 
 .user {
-  width: 100%;
-  float: left;
   min-height: 100%;
+  padding-top: 50px;
   box-sizing: border-box;
   /*로그인*/
 }

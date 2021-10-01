@@ -1,12 +1,10 @@
 <template>
   <div style="background-color: #DAEEDC;">
-    <p>내 일기장</p>
+    <br />
     <!-- Content -->
-    <ReadContent :content="content"></ReadContent>
+    <ReadContent :diary="content"></ReadContent>
     <!-- additional Content -->
     <ReadAddContent></ReadAddContent>
-    <button @click="moveUpdate">UPDATE</button>
-    <button @click="clickDelete">DELETE</button>
     <div v-if="isClkDelBtn">
       <DeleteModal @answer="confirmDelete"></DeleteModal>
     </div>
@@ -18,6 +16,9 @@ import ReadContent from '@/components/diary/ReadContent.vue'
 import ReadAddContent from '@/components/diary/ReadAddContent.vue'
 import DeleteModal from '@/components/diary/DeleteModal.vue'
 import { fetchDiary, deleteDiary } from '@/api/diary.js'
+
+import '../../assets/css/views/init.scss'
+import '@/components/css/diary.scss'
 export default {
   components: {
     ReadContent,
@@ -31,9 +32,6 @@ export default {
     }
   },
   methods: {
-    moveUpdate() {
-      this.$router.push(`/diary/${this.$route.params.date}/update`)
-    },
     clickDelete() {
       this.isClkDelBtn = true
     },
@@ -49,13 +47,15 @@ export default {
     let date =
       this.$route.params.date.substring(0, 4) +
       '-' +
-      this.$route.params.date.substring(4, 2) +
+      this.$route.params.date.substring(4, 6) +
       '-' +
-      this.$route.params.date.substring(6, 2)
+      this.$route.params.date.substring(6, 8)
 
     const data = {
       date: date,
     }
+    console.log(data)
+    console.log(this.$store.state.uid)
     const response = await fetchDiary(this.$store.state.uid, data)
     console.log(response.data)
     this.content = response.data

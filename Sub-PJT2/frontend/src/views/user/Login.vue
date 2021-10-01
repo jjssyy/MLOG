@@ -1,5 +1,6 @@
 <template>
   <div class="user" id="login">
+    <p @click="moveMain">testing</p>
     <div class="loginBox">
       <div class="logo"></div>
       <h1 class="loginText">
@@ -44,6 +45,9 @@ export default {
   watch: {},
   methods: {
     onLogin() {},
+    moveMain() {
+      this.$router.push('/main')
+    },
   },
 }
 </script>
