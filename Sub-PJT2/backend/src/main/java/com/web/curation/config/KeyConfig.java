@@ -1,0 +1,18 @@
+package com.web.curation.config;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+
+@Configuration
+@RequiredArgsConstructor
+@PropertySource("classpath:application-API-KEY.properties")
+public class KeyConfig {
+
+    private final Environment environment;
+
+    public String getGCPKey(){
+        return environment.getProperty("GCP-API-KEY");
+    }
+}
