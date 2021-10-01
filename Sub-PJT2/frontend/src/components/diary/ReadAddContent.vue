@@ -1,6 +1,15 @@
 <template>
-  <div>
-    <p>이 날의 일기도 확인해보세요.</p>
+  <div class="read-container-box">
+    <p class="my-sub-title">이 날의 일기도 확인해보세요.</p>
+    <div class="diary-content">
+      <textarea
+        style="min-height: 2rem;"
+        class="sub-textarea"
+        readonly="readonly"
+        id="content"
+        type="text"
+      ></textarea>
+    </div>
   </div>
 </template>
 

@@ -36,15 +36,15 @@
 
 #app {
   margin: 0 auto;
-  background-color: #DAEEDC;
   width: 450px;
   min-height: 100%;
   position: relative;
   text-align: center;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 580px) {
   #app {
+    height: 100%;
     width: 100%;
     border-left: 0;
     border-right: 0;
@@ -54,17 +54,19 @@
 html {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-size: 14px;
+  height: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
   user-select: none;
 }
 
-/*html {margin: 0; padding: 0; height: 100%;}*/
 ul {
   margin: 0;
   padding: 0;
