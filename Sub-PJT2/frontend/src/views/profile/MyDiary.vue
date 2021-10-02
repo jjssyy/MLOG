@@ -1,6 +1,6 @@
 <template>
   <div class="mydiary">
-    <div class="profile-header">
+    <div class="profile-header2">
       <button class="back" @click="goProfile">
         <i class="fas fa-arrow-left fa-2x"></i>
       </button>
