@@ -1,5 +1,6 @@
 package com.web.curation.survey;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.web.curation.member.emotion.Genre;
 import com.web.curation.member.emotion.UserEmotion;
 import com.web.curation.member.emotion.UserEmotionPK;
@@ -24,6 +25,10 @@ public class SurveyController {
     public ResponseEntity<Map<String, Object>> surveyStart(){
         Map<String, Object> resultMap = new HashMap<>();
         List<Survey> surveyList = surveyService.getAllSurvey();
+        if(surveyList.isEmpty()){
+            resultMap.put("message", "DB 비어있음");
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
         resultMap.put("message", "설문조사 리스트");
         resultMap.put("Survey", surveyList);
 
