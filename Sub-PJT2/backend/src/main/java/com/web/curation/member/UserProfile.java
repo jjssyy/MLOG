@@ -29,4 +29,11 @@ public class UserProfile {
 	@MapsId
 	@JoinColumn(name = "uid")
 	private UserAuth userAuth;
+
+	public void setHasSurveyedTrue() {
+		this.hasSurveyed=true;
+	}
+	public void setHasSurveyedFalse() {
+		this.hasSurveyed=false;
+	}
 }

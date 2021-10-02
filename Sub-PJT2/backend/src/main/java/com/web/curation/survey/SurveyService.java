@@ -1,7 +1,9 @@
 package com.web.curation.survey;
 
 import com.web.curation.member.MemberAuthDao;
+import com.web.curation.member.MemberProfileDao;
 import com.web.curation.member.UserAuth;
+import com.web.curation.member.UserProfile;
 import com.web.curation.member.emotion.Genre;
 import com.web.curation.member.emotion.UserEmotion;
 import com.web.curation.member.emotion.UserEmotionDao;
@@ -20,6 +22,7 @@ import java.util.Optional;
 public class SurveyService {
     private SurveyDao surveyDao;
     private MemberAuthDao memberAuthDao;
+    private MemberProfileDao memberProfileDao;
     private UserEmotionDao userEmotionDao;
 
     public List<Survey> getAllSurvey(){
@@ -44,5 +47,10 @@ public class SurveyService {
                 .build();
 
         userEmotionDao.save(userEmotion);
+        
+        //설문조사 여부 변경
+        UserProfile userProfile = memberProfileDao.getUserProfileByUserAuth(userAuth);
+        userProfile.setHasSurveyedTrue();
+        memberProfileDao.save(userProfile);
     }
 }
