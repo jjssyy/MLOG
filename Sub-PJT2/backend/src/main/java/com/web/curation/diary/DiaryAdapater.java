@@ -19,8 +19,8 @@ public class DiaryAdapater {
 				.sadness(diaryAnalytics.getSadness())
 				.anger(diaryAnalytics.getAnger())
 				.fear(diaryAnalytics.getFear())
-//				.sentiment(diaryAnalyticsSentiment.getSentiment())
-//				.accuracy(diaryAnalyticsSentiment.getAccuracy())
+				.sentiment(diaryAnalyticsSentiment.getSentiment())
+				.accuracy(diaryAnalyticsSentiment.getAccuracy())
 //				.mid(diaryMusic.getMusicInfo().getMid())
 				.build();
 	}
