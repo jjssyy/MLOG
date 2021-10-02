@@ -54,16 +54,20 @@ public class DiaryService {
 		Diary diary=diaryDao.getDiaryByUserAuthAndDiaryDateAndIsDeletedIsFalse(userAuth, DiaryDate);
 		if(diary!=null) {
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary.getDiaryId());
-//			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(diary.getDiaryId());
+			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(diary.getDiaryId());
 //			DiaryMusic diaryMusic=diaryMusicDao.getDiaryMusicByDiaryId(diary.getDiaryId());
 //			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, diaryMusic);
-			result=DiaryAdapater.entityToDto(diaryAnalytics, null, diary, null);
+			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, null);
 		}
 		return result;
 	}
 	public void WriteDiary(String Uid,String content,LocalDate date) {
 		float[] emotion=new float[5];
 		emotion=find(content);
+		DiaryDto dto=new DiaryDto();
+		dto.setContent(content);;
+		dto=getSentiment(dto);
+		
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
 		Diary diary_info=Diary.builder()
 				.userAuth(userAuth)
@@ -81,12 +85,21 @@ public class DiaryService {
 				.fear(emotion[4])
 				.build();
 		diaryAnalyticsDao.save(diaryAnalytics);
+		DiaryAnalyticsSentiment diaryAnalyticsSentiment=DiaryAnalyticsSentiment.builder()
+				.diary(diary)
+				.accuracy(dto.getAccuracy())
+				.sentiment(dto.getSentiment())
+				.build();
+		diaryAnalyticsSentimentDao.save(diaryAnalyticsSentiment);
+		
 	}
 	
 	public void modifyDiary(int diary_id,String content,LocalDate date) {
 		float[] emotion = new float[5];
 		emotion = find(content);
-	
+		DiaryDto dto=new DiaryDto();
+		dto.setContent(content);;
+		dto=getSentiment(dto);
 		Diary deleteDiary=diaryDao.getDiaryByDiaryId(diary_id);
 		deleteDiary.deletediary();
 		UserAuth userAuth=deleteDiary.getUserAuth();
@@ -96,17 +109,23 @@ public class DiaryService {
 				.diaryDate(date)
 				.isDeleted(false)
 				.build();
+		Diary diary=diaryDao.save(diary_info);
 		DiaryAnalytics diaryAnalytics=DiaryAnalytics.builder()
-				.diary(diary_info)
+				.diary(diary)
 				.neutral(emotion[0])
 				.joy(emotion[1])
 				.sadness(emotion[2])
 				.anger(emotion[3])
 				.fear(emotion[4])
 				.build();
-		diaryDao.save(deleteDiary);
-		diaryDao.save(diary_info);
+		DiaryAnalyticsSentiment diaryAnalyticsSentiment=DiaryAnalyticsSentiment.builder()
+				.diary(diary)
+				.accuracy(dto.getAccuracy())
+				.sentiment(dto.getSentiment())
+				.build();
+		diaryAnalyticsSentimentDao.save(diaryAnalyticsSentiment);
 		diaryAnalyticsDao.save(diaryAnalytics);
+		diaryDao.save(deleteDiary);
 		
 	}
 	
