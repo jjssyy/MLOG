@@ -42,7 +42,7 @@ public class SurveyController {
                                                           @RequestParam List<String> fearList){
         Map<String, Object> resultMap = new HashMap<>();
         Optional<List<UserEmotion>> userEmotionList = userEmotionService.getUserEmotion(uid);
-        if(userEmotionList.isPresent()){
+        if(userEmotionList.get().size()==12){
             resultMap.put("message", "이미 설문조사 진행함");
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
