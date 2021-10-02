@@ -55,12 +55,17 @@ public class DiaryController {
 		LocalDate localdate = LocalDate.parse(date,DateTimeFormatter.ISO_DATE);
 		
 		Map<String, Object> resultmap= new HashMap<String, Object>();
-		DiaryDto dto=diarySerivce.getDiaryByUidAndDiaryDate(id, localdate);
+		DiaryDto currentDiary=diarySerivce.getDiaryByUidAndDiaryDate(id, localdate);
+		//일기, 일기감정분석, 일기감성분석
+		DiaryDto recommendDiary=diarySerivce.getSimilarDiary(currentDiary);
 		
-		
+
 		resultmap.put("status", HttpStatus.OK);
         resultmap.put("message", "일기 정보");
-		resultmap.put("diaryInfo",dto);
+		resultmap.put("diaryInfo",currentDiary);
+		resultmap.put("recommendDiary", recommendDiary);
+		
+		
 		
 		return new ResponseEntity<>(resultmap,HttpStatus.OK); 
 	}
