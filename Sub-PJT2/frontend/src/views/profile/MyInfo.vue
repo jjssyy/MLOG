@@ -35,7 +35,11 @@
           <h2>{{ emailCompany }}</h2>
         </div>
         <div>
-          <p>회원 탈퇴</p>
+          <p>
+            <span>
+              회원 탈퇴
+            </span>
+          </p>
         </div>
       </div>
     </div>

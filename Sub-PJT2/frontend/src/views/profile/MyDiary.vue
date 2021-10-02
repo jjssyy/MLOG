@@ -14,6 +14,14 @@
           </span>
         </h1>
       </div>
+      <div class="mydiary-list">
+        <MyDiaryItem
+          v-for="(myDiary, idx) in myDiaryList"
+          :key="idx"
+          :myDiary="myDiary"
+          :idx="idx"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -22,8 +30,12 @@
 import '@/assets/css/views/mydiary.scss'
 import { getMyDiary } from '@/api/ProfileApi.js'
 import { mapState } from 'vuex'
+import MyDiaryItem from '@/components/profile/MyDiaryItem.vue'
 
 export default {
+  components: {
+    MyDiaryItem,
+  },
   data() {
     return {
       myDiaryList: [],
@@ -35,7 +47,7 @@ export default {
     }
     const response = await getMyDiary(data)
     console.log(response.data)
-    this.myDiaryList = response.data
+    this.myDiaryList = response.data.diaryList
   },
   methods: {
     goProfile() {
