@@ -1,19 +1,19 @@
 <template>
-  <div class="google-login">
-    <div class="g-logo">
-      <!-- <img
-        src="@/assets/images/g_icon.png"
-        alt=""
-        width="33"
-        @click="onGoogleLogin"
-      /> -->
-      <GoogleLogin
-        :params="params"
-        :renderParams="renderParams"
-        :onSuccess="onSuccess"
-        :onFailure="onFailure"
-      ></GoogleLogin>
-    </div>
+  <div class="google-login image-animation">
+    <img
+      src="@/assets/images/googleLogin.png"
+      alt=""
+      width="56%"
+      height="53px"
+      @click="buttonClick"
+    />
+    <GoogleLogin
+      id="googlebtn"
+      :params="params"
+      :renderParams="renderParams"
+      :onSuccess="onSuccess"
+      :onFailure="onFailure"
+    ></GoogleLogin>
   </div>
 </template>
 
@@ -68,6 +68,10 @@ export default {
     },
     onFailure(error) {
       console.log(error)
+    },
+    buttonClick() {
+      const test = document.querySelector('#googlebtn')
+      test.click()
     },
   },
   computed: {

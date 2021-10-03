@@ -1,6 +1,9 @@
 export default {
   LOGOUT(state) {
-    state.authToken = ''
+    state.isUser = false
+    state.initNickname = ''
+    state.initProfileimg = ''
+    state.token = ''
     state.uid = ''
     state.filePath = ''
     state.nickname = ''

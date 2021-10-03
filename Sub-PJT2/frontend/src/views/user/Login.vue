@@ -1,30 +1,16 @@
 <template>
   <div class="user" id="login">
-    <p @click="moveMain">testing</p>
     <div class="loginBox">
-      <div class="logo"></div>
-      <h1 class="loginText">
-        과거를 회상,
-        <br />현재를 기억, <br />미래를 계획,
-      </h1>
+      <br />
+      <div class="loginContentBox">
+        <p class="introText">
+          과거를 회상
+          <br />현재를 기억 <br />미래를 계획
+        </p>
+        <p class="loginText">Log in <span>to your account</span></p>
 
-      <div class="sns-login">
-        <h1>login</h1>
-        <hr class="bar" />
-        <div class="login-logo">
-          <div class="naver">
-            <img src="@/assets/images/n_icon.png" width="50" />
-          </div>
-          <kakaoLogin />
-          <GoogleLogin />
-          <div class="facebook">
-            <img
-              src="@/assets/images/f_icon.png"
-              width="50"
-              style="border-radius: 5px;"
-            />
-          </div>
-        </div>
+        <kakaoLogin />
+        <GoogleLogin />
       </div>
     </div>
   </div>
@@ -45,9 +31,6 @@ export default {
   watch: {},
   methods: {
     onLogin() {},
-    moveMain() {
-      this.$router.push('/main')
-    },
   },
 }
 </script>
