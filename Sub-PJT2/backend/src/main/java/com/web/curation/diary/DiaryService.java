@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -17,9 +18,12 @@ import com.google.gson.JsonParser;
 import com.web.curation.config.KeyConfig;
 import com.web.curation.music.MusicDao;
 import com.web.curation.music.MusicInfo;
+import io.swagger.models.auth.In;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +48,7 @@ public class DiaryService {
 	private MemberAuthDao memberAuthDao;
 	private UserEmotionDao userEmotionDao;
 	private MusicDao musicDao;
+	private RedisTemplate<String, Integer> redisTemplate;
 
 	private final KeyConfig keyConfig;
 
@@ -66,7 +71,8 @@ public class DiaryService {
 		DiaryDto result =new DiaryDto();
 		UserAuth userAuth =memberAuthDao.getUserAuthByUid(dto.getUid());
 		LocalDate startdate=dto.getDiaryDate().minusMonths(2);
-		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, dto.getDiaryDate());
+		LocalDate enddate=dto.getDiaryDate().minusDays(1);
+		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, enddate);
 		if (diaryList.size()==0) {
 			return null;
 		}
@@ -182,7 +188,7 @@ public class DiaryService {
 		diaryDao.save(deleteDiary);
 	}
 	
-	public MusicInfo[] getMusicList(int diary_id,String uid) {
+	public MusicInfo[] getMusicList(int diary_id, String uid) {
 		MusicInfo[] result=new MusicInfo[5];
 		Diary diary=diaryDao.getDiaryByDiaryId(diary_id);
 		float[] Diary_Anlatics=new float[5];
@@ -217,18 +223,36 @@ public class DiaryService {
 		for(int i=0;i<12;i++) {
 			System.out.println(rank[i].cosine);
 		}
+
+		ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+		ArrayList<Integer> selectedMusicList = new ArrayList<>();
+		LocalDate localDate = LocalDate.now();
+		for (long i = 0; i < 7; i++){
+			selectedMusicList.add(valueOperations.get(uid + localDate.minusDays(i)));
+		}
+
 		for(int i=0;i<3;i++) {
 			String genre=rank[i].genre;
 			List<MusicInfo> musicList=musicDao.getMusicInfoByMusicGenre(genre);
-			int random=(int) (Math.random()*musicList.size());
-			//중간에 체크하는 과정 추가.해야함
+
+			// TODO 중간에 체크하는 과정 추가.해야함
+			int random;
+			loop:
+			do {
+				random=(int) (Math.random()*musicList.size());
+
+				for(int mid : selectedMusicList){
+					if(musicList.get(random).getMid() == mid) continue loop;
+				}
+			}while (false);
+
 			result[i]=musicList.get(random);
 		}
 		int v=0;
 		int CheckDuplicate=0;
 		for(int i=3;i<5;i++) {
 			while(true) {
-				int min=4;
+				int min=3;
 				int max=12;
 				v=(int) (Math.random()*(max-min)+min);
 				System.out.println(v);
@@ -237,8 +261,18 @@ public class DiaryService {
 			}
 			String genre=rank[v].genre;
 			List<MusicInfo> musicList=musicDao.getMusicInfoByMusicGenre(genre);
-			int random_value=(int) (Math.random()*musicList.size());
-			//중간에 체크하는 과정 추가.해야함
+
+			// TODO 중간에 체크하는 과정 추가.해야함
+			int random_value;
+			loop:
+			do {
+				random_value=(int) (Math.random()*musicList.size());
+
+				for(int mid : selectedMusicList){
+					if(musicList.get(random_value).getMid() == mid) continue loop;
+				}
+			}while (false);
+
 			result[i]=musicList.get(random_value);
 			CheckDuplicate+=v;
 		}
@@ -365,8 +399,8 @@ public class DiaryService {
 		return diarySentiment;
 	}
 
-	public MusicInfo getMusicInfo(int diaryId){
-		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiaryId(diaryId);
+	public MusicInfo getMusicInfo(Diary diary){
+		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiary(diary);
 		if(diaryMusic == null){
 			System.out.println("null 값임");
 		}
@@ -402,6 +436,11 @@ public class DiaryService {
 	    double tmp=dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 	    float result=(float)tmp;
 	    return result;
+	}
+
+	public void putSelectedMusic(String uid, LocalDate localDate, int mid){
+		ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
+		valueOperations.set(uid + localDate.toString(), mid);
 	}
 }
 
