@@ -1,5 +1,7 @@
 package com.web.curation.member.emotion;
 
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.UserAuth;
 import lombok.AllArgsConstructor;
@@ -18,9 +20,7 @@ public class UserEmotionService {
 
     public Optional<List<UserEmotion>> getUserEmotion(String uid){
         UserAuth userAuth = memberAuthDao.getUserAuthByUid(uid);
-
         Optional<List<UserEmotion>> userEmotion = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
-        userEmotion = Optional.ofNullable(null);
 
         return userEmotion;
     }
