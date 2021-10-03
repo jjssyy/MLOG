@@ -81,3 +81,17 @@
     line-height: 1.5;
   }
 }
+
+.myplay-item{
+  margin: 10px 10px 10px 10px;
+  text-align: start;
+  .myplay-item-box{
+    box-shadow: 2px 2px 5px 2px #cce3d0;
+    // border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+    .myplay-item-contents{
+      display: flex;
+    }
+  }
+}

@@ -14,6 +14,14 @@
           </span>
         </h1>
       </div>
+      <div class="myplay-list">
+        <MyPlaylistItem
+          v-for="(myPlay, idx) in myPlayList"
+          :key="idx"
+          :myPlay="myPlay"
+          :idx="idx"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -22,11 +30,58 @@
 import '@/assets/css/views/mydiary.scss'
 import { getMyPlaylist } from '@/api/ProfileApi.js'
 import { mapState } from 'vuex'
+import MyPlaylistItem from '@/components/profile/MyPlaylistItem.vue'
 
 export default {
+  components: {
+    MyPlaylistItem,
+  },
   data() {
     return {
-      myPlayList: [],
+      myPlayList: [
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+        {
+          date: '20210910',
+          musicTitle: '바라만본다',
+          musicArtist: 'MSG워너비(MOM)',
+          videoId: 'rM5JjNfPHA',
+        },
+      ],
     }
   },
   async created() {
@@ -35,7 +90,7 @@ export default {
     }
     const response = await getMyPlaylist(data)
     console.log(response.data)
-    this.myPlayList = response.data
+    this.myPlayList = response.data.playList
   },
   methods: {
     goProfile() {
