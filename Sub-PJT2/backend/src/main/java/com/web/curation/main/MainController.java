@@ -64,7 +64,7 @@ public class MainController {
 
             int diaryId = diary.getDiaryId();
             DiaryAnalyticsSentiment diaryAnalyticsSentiment = diaryService.getDiaryAnalyticsSentiment(diaryId);
-            MusicInfo musicInfo = diaryService.getMusicInfo(diaryId);
+            MusicInfo musicInfo = diaryService.getMusicInfo(diary);
             if(diaryAnalyticsSentiment == null){
                 resultMap.put("message", "긍부정 정보 없음");
                 return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);

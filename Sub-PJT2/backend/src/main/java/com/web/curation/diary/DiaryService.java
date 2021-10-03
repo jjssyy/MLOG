@@ -66,7 +66,8 @@ public class DiaryService {
 		DiaryDto result =new DiaryDto();
 		UserAuth userAuth =memberAuthDao.getUserAuthByUid(dto.getUid());
 		LocalDate startdate=dto.getDiaryDate().minusMonths(2);
-		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, dto.getDiaryDate());
+		LocalDate enddate=dto.getDiaryDate().minusDays(1);
+		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, enddate);
 		if (diaryList.size()==0) {
 			return null;
 		}
@@ -365,8 +366,8 @@ public class DiaryService {
 		return diarySentiment;
 	}
 
-	public MusicInfo getMusicInfo(int diaryId){
-		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiaryId(diaryId);
+	public MusicInfo getMusicInfo(Diary diary){
+		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiary(diary);
 		if(diaryMusic == null){
 			System.out.println("null 값임");
 		}

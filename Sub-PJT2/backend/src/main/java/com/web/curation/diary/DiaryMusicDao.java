@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DiaryMusicDao extends JpaRepository<DiaryMusic, String>{
 	
-	DiaryMusic getDiaryMusicByDiaryId(int DiaryId);
+	DiaryMusic getDiaryMusicByDiary(Diary diary);
 
 }
