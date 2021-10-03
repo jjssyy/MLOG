@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.Member;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +37,7 @@ public class SurveyService {
         }
         return survey;
     }
-
-    public void saveSurvey(Genre genre, String uid, float neutral, float joy, float sadness, float anger, float fear){
+    public void initialSurvey(Genre genre, String uid, float neutral, float joy, float sadness, float anger, float fear) {
         UserAuth userAuth = memberAuthDao.getUserAuthByUid(uid);
         UserEmotionPK embGenre = UserEmotionPK.builder()
                 .genre(genre)
@@ -54,10 +54,27 @@ public class SurveyService {
                 .build();
 
         userEmotionDao.save(userEmotion);
-        
+    }
+    public void saveSurvey(Genre genre, String uid, float neutral, float joy, float sadness, float anger, float fear){
+        UserEmotionPK embGenre = UserEmotionPK.builder()
+                .genre(genre)
+                .uid(uid)
+                .build();
+
+        UserEmotion userEmotion = UserEmotion.builder()
+                .embGenre(embGenre)
+                .neutral(neutral)
+                .joy(joy)
+                .sadness(sadness)
+                .anger(anger)
+                .fear(fear)
+                .build();
+
+        userEmotionDao.save(userEmotion);
+
         //설문조사 여부 변경
-        UserProfile userProfile = memberProfileDao.getUserProfileByUserAuth(userAuth);
-        userProfile.setHasSurveyedTrue();
-        memberProfileDao.save(userProfile);
+        Optional<UserProfile> userProfile = memberProfileDao.findById(uid);
+        userProfile.get().setHasSurveyedTrue();
+        memberProfileDao.save(userProfile.get());
     }
 }
