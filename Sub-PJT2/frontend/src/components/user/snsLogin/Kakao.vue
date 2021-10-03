@@ -1,9 +1,10 @@
 <template>
-  <div id="kakao-login">
+  <div id="kakao-login" class="image-animation">
     <img
-      src="@/assets/images/k_icon.png"
+      src="@/assets/images/kakaoLogin.png"
       alt=""
-      width="28"
+      width="54%"
+      height="47px"
       @click="loginWithKakao"
     />
   </div>

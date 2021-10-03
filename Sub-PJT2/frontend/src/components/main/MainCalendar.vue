@@ -39,32 +39,44 @@
         ></tbody>
       </table>
     </div>
-
-    <p style="font-weight: bold;">아직 이날의 일기를 쓰지 않았어요.</p>
-    <button @click="moveCreate" class="createBtn">
-      일기 쓰기
-    </button>
-    <button @click="moveRead">
-      일기 읽기
-    </button>
-    <!-- <div>이 날은 {{ sentiment }}</div>
-    <p>MainCalendar 컴포넌트이다.</p>
-    <p>monthDiary: {{ monthDiary }}</p> -->
+    <div style="font-weight: bold;">
+      <div v-if="!isDiary">
+        <div class="opercityAnim">
+          <p style="font-weight: bold;">아직 이날의 일기를 쓰지 않았어요.</p>
+          <button @click="moveCreate" class="createBtn">
+            일기 작성
+          </button>
+        </div>
+      </div>
+      <div v-else class="opercityAnim">
+        <div v-if="currentDiary.sentiment >= 0" class="centerBox">
+          <span>이 날은 </span>
+          <i style="font-size:1.6rem; font-style: normal">&#128522;</i>
+        </div>
+        <div v-else class="centerBox">
+          <span>이 날은 </span
+          ><i style="font-size:1.6rem; font-style: normal">&#128543;</i>
+        </div>
+        {{ currentDiary.music_title }} -
+        {{ currentDiary.music_artist }}
+        <button @click="moveRead" class="createBtn">
+          일기 보기
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import '@/assets/css/views/init.scss'
 import '@/components/css/calendar.scss'
+import { fetchMonthDiary } from '@/api/main.js'
 export default {
-  props: {
-    monthDiary: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
+      monthDiary: [],
+      isDiary: null,
+      currentDiary: {},
       currentDate: null,
       calMonth: null,
       calYear: null,
@@ -134,7 +146,7 @@ export default {
     moveRead() {
       this.$router.push(`/diary/${this.currentDate}`)
     },
-    loadYYMM(fullDate) {
+    async loadYYMM(fullDate) {
       let yy = fullDate.getFullYear()
       let mm = fullDate.getMonth()
       let firstDay = this.init.getFirstDay(yy, mm)
@@ -164,11 +176,11 @@ export default {
           } else {
             let fullDate =
               yy +
-              '.' +
+              '-' +
               this.init.addZero(mm + 1) +
-              '.' +
+              '-' +
               this.init.addZero(countDay + 1)
-            trtd += '<td class="day'
+            trtd += '<td class="day atom-parent'
             if (markToday && markToday === countDay + 1) {
               trtd += ' today" '
             } else if (
@@ -191,6 +203,7 @@ export default {
         trtd += '</tr>'
       }
       this.calBody = trtd
+      await this.fetchDiary(fullDate)
     },
     changeTag(e) {
       if (this.clickedDate) {
@@ -229,10 +242,66 @@ export default {
           (this.clickedMonth + 1).toString() +
           tempDate +
           this.clickedDate.toString()
+        let tmpCurrentDate =
+          this.clickedYear.toString() +
+          '-' +
+          tempMonth +
+          (this.clickedMonth + 1).toString() +
+          '-' +
+          tempDate +
+          this.clickedDate.toString()
+        let comfirmMonthDiary = false
+        for (let i = 0; i < this.monthDiary.length; i++) {
+          if (this.monthDiary[i].date == tmpCurrentDate) {
+            this.isDiary = true
+            this.currentDiary = this.monthDiary[i]
+            comfirmMonthDiary = true
+            break
+          }
+        }
+        if (comfirmMonthDiary == false) {
+          this.isDiary = false
+        }
       }
     },
     initCalendar() {
       this.loadYYMM(this.init.today)
+    },
+    async fetchDiary(fullDate) {
+      let yy = fullDate.getFullYear().toString()
+      let mm = (fullDate.getMonth() + 1).toString()
+      let firstDay = this.init
+        .getFirstDay(yy, mm)
+        .getDate()
+        .toString()
+      let lastDay = this.init
+        .getLastDay(yy, mm)
+        .getDate()
+        .toString()
+      if (mm.length == 1) {
+        mm = '0' + mm
+      }
+      if (firstDay.length == 1) {
+        firstDay = '0' + firstDay
+      }
+      const data = {
+        uid: this.$store.state.uid,
+        startDate: `${yy}-${mm}-${firstDay}`,
+        endDate: `${yy}-${mm}-${lastDay}`,
+      }
+      console.log(data)
+      const response = await fetchMonthDiary(data)
+      this.monthDiary = response.data.data
+      for (let i = 0; i < this.monthDiary.length; i++) {
+        let replaceDate = this.monthDiary[i].date
+        let target = document.querySelector(`td[data-fdate="${replaceDate}"]`)
+        target.innerHTML += '<i class="fas fa-circle fa-xs atom"></i>'
+        if (this.monthDiary[i].sentiment >= 0) {
+          target.classList.add('atom-positive')
+        } else {
+          target.classList.add('atom-negative')
+        }
+      }
     },
   },
   created() {

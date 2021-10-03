@@ -15,7 +15,7 @@ function fetchDiary(uid, data) {
 // 특정 일기 수정하기 API
 function updateDiary(data) {
   return instance.put(
-    `/diary/${data['diary_id']}/edit?date=${data['date']}/content=${data['content']}`,
+    `/diary/${data['diary_id']}/edit?content=${data['content']}&date=${data['date']}`,
   )
 }
 
