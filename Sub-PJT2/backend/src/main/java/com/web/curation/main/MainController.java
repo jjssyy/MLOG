@@ -39,7 +39,7 @@ public class MainController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @GetMapping("/main/{id}/{startDate}/{endDate}")
+    @GetMapping("/{id}/{startDate}/{endDate}")
     public ResponseEntity<Map<String, Object>> MonthlyDiaryInfo(@PathVariable String id,
                                                                 @PathVariable String startDate,
                                                                 @PathVariable String endDate){
