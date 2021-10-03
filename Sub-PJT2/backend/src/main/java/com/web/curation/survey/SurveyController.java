@@ -25,10 +25,7 @@ public class SurveyController {
     public ResponseEntity<Map<String, Object>> surveyStart(){
         Map<String, Object> resultMap = new HashMap<>();
         List<Survey> surveyList = surveyService.getAllSurvey();
-        if(surveyList.isEmpty()){
-            resultMap.put("message", "DB 비어있음");
-            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-        }
+
         resultMap.put("message", "설문조사 리스트");
         resultMap.put("Survey", surveyList);
 
@@ -42,13 +39,9 @@ public class SurveyController {
                                                           @RequestParam List<String> fearList){
         Map<String, Object> resultMap = new HashMap<>();
         Optional<List<UserEmotion>> userEmotionList = userEmotionService.getUserEmotion(uid);
-        if(userEmotionList.get().size()==12){
-            resultMap.put("message", "이미 설문조사 진행함");
-            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-        }
 
         HashMap<String, ArrayList<String>> map = new HashMap<>();
-        
+        //s : genre
         for(String s : neutralList){
             if(map.get(s) == null){
                 ArrayList<String> list = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.web.curation.survey;
 
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.MemberProfileDao;
 import com.web.curation.member.UserAuth;
@@ -10,6 +12,8 @@ import com.web.curation.member.emotion.UserEmotionDao;
 import com.web.curation.member.emotion.UserEmotionPK;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Member;
@@ -27,6 +31,9 @@ public class SurveyService {
 
     public List<Survey> getAllSurvey(){
         List<Survey> survey = surveyDao.findAll();
+        if(survey.size()<12){
+            throw new CustomException(ErrorCode.SURVEY_LIST_NOT_FOUND);
+        }
         return survey;
     }
 

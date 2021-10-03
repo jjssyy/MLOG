@@ -1,5 +1,7 @@
 package com.web.curation.member.emotion;
 
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.UserAuth;
 import lombok.AllArgsConstructor;
@@ -20,7 +22,9 @@ public class UserEmotionService {
         UserAuth userAuth = memberAuthDao.getUserAuthByUid(uid);
 
         Optional<List<UserEmotion>> userEmotion = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
-
+        if(userEmotion.get().size()==12){
+            throw new CustomException(ErrorCode.ALREADY_SURVEYED);
+        }
         return userEmotion;
     }
 }
