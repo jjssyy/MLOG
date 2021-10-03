@@ -55,7 +55,7 @@ public class MainController {
 
         List<Diary> diaryList = mainService.getMontlyDiary(id, start, end);
         if(diaryList.isEmpty()){
-            resultMap.put("message", "없음");
+            resultMap.put("message", "해당 사용자의 일기 정보가 존재하지 않습니다.");
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
         }
 
@@ -65,14 +65,6 @@ public class MainController {
             int diaryId = diary.getDiaryId();
             DiaryAnalyticsSentiment diaryAnalyticsSentiment = diaryService.getDiaryAnalyticsSentiment(diaryId);
             MusicInfo musicInfo = diaryService.getMusicInfo(diary);
-            if(diaryAnalyticsSentiment == null){
-                resultMap.put("message", "긍부정 정보 없음");
-                return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-            }
-            if(musicInfo == null){
-                resultMap.put("message", "음악 정보 없음");
-                return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-            }
 
             mainDiaryDto.setDate(diary.getDiaryDate());
             mainDiaryDto.setSentiment(diaryAnalyticsSentiment.getSentiment());
