@@ -53,17 +53,68 @@ public class DiaryService {
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
 		Diary diary=diaryDao.getDiaryByUserAuthAndDiaryDateAndIsDeletedIsFalse(userAuth, DiaryDate);
 		if(diary!=null) {
-			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary.getDiaryId());
-//			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(diary.getDiaryId());
+			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
+			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
 //			DiaryMusic diaryMusic=diaryMusicDao.getDiaryMusicByDiaryId(diary.getDiaryId());
 //			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, diaryMusic);
-			result=DiaryAdapater.entityToDto(diaryAnalytics, null, diary, null);
+			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, null);
 		}
 		return result;
 	}
+	
+	public DiaryDto getSimilarDiary(DiaryDto dto) {
+		DiaryDto result =new DiaryDto();
+		UserAuth userAuth =memberAuthDao.getUserAuthByUid(dto.getUid());
+		LocalDate startdate=dto.getDiaryDate().minusMonths(2);
+		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, dto.getDiaryDate());
+		if (diaryList.size()==0) {
+			return null;
+		}
+		
+		//비슷한 일기 찾기
+		float[] currentDiary_Anlatics=new float[5];
+		currentDiary_Anlatics[0]=dto.getNeutral();
+		currentDiary_Anlatics[1]=dto.getJoy();
+		currentDiary_Anlatics[2]=dto.getSadness();
+		currentDiary_Anlatics[3]=dto.getAnger();
+		currentDiary_Anlatics[4]=dto.getFear();
+		
+		//코사인 유사도 구하는 작업
+		int ans=-1;
+		int ans_value=Integer.MIN_VALUE;
+		for(int i=0;i<diaryList.size();i++) {
+			Diary tmp=diaryList.get(i);
+			DiaryAnalytics compareDiary=diaryAnalyticsDao.getDiaryAnalyticsByDiary(tmp); 
+			int tmp_index=tmp.getDiaryId();
+			float[] compare=new float[5];
+			compare[0]=compareDiary.getNeutral();
+			compare[1]=compareDiary.getJoy();
+			compare[2]=compareDiary.getSadness();
+			compare[3]=compareDiary.getAnger();
+			compare[4]=compareDiary.getFear();
+			float score=cosineSimilarity(currentDiary_Anlatics, compare);
+			if(ans_value<=score)ans=tmp_index;
+		}
+		if(ans==-1)return null;
+		Diary diary=diaryDao.getDiaryByDiaryId(ans);
+		DiaryAnalytics diaryAnalytics =diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
+		DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
+		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, null);
+//		
+		return result;
+	}
+	
+	
+	
+	
+	
 	public void WriteDiary(String Uid,String content,LocalDate date) {
 		float[] emotion=new float[5];
 		emotion=find(content);
+		DiaryDto dto=new DiaryDto();
+		dto.setContent(content);;
+		dto=getSentiment(dto);
+		
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
 		Diary diary_info=Diary.builder()
 				.userAuth(userAuth)
@@ -81,12 +132,21 @@ public class DiaryService {
 				.fear(emotion[4])
 				.build();
 		diaryAnalyticsDao.save(diaryAnalytics);
+		DiaryAnalyticsSentiment diaryAnalyticsSentiment=DiaryAnalyticsSentiment.builder()
+				.diary(diary)
+				.accuracy(dto.getAccuracy())
+				.sentiment(dto.getSentiment())
+				.build();
+		diaryAnalyticsSentimentDao.save(diaryAnalyticsSentiment);
+		
 	}
 	
 	public void modifyDiary(int diary_id,String content,LocalDate date) {
 		float[] emotion = new float[5];
 		emotion = find(content);
-	
+		DiaryDto dto=new DiaryDto();
+		dto.setContent(content);;
+		dto=getSentiment(dto);
 		Diary deleteDiary=diaryDao.getDiaryByDiaryId(diary_id);
 		deleteDiary.deletediary();
 		UserAuth userAuth=deleteDiary.getUserAuth();
@@ -96,17 +156,23 @@ public class DiaryService {
 				.diaryDate(date)
 				.isDeleted(false)
 				.build();
+		Diary diary=diaryDao.save(diary_info);
 		DiaryAnalytics diaryAnalytics=DiaryAnalytics.builder()
-				.diary(diary_info)
+				.diary(diary)
 				.neutral(emotion[0])
 				.joy(emotion[1])
 				.sadness(emotion[2])
 				.anger(emotion[3])
 				.fear(emotion[4])
 				.build();
-		diaryDao.save(deleteDiary);
-		diaryDao.save(diary_info);
+		DiaryAnalyticsSentiment diaryAnalyticsSentiment=DiaryAnalyticsSentiment.builder()
+				.diary(diary)
+				.accuracy(dto.getAccuracy())
+				.sentiment(dto.getSentiment())
+				.build();
+		diaryAnalyticsSentimentDao.save(diaryAnalyticsSentiment);
 		diaryAnalyticsDao.save(diaryAnalytics);
+		diaryDao.save(deleteDiary);
 		
 	}
 	
@@ -118,8 +184,9 @@ public class DiaryService {
 	
 	public MusicInfo[] getMusicList(int diary_id,String uid) {
 		MusicInfo[] result=new MusicInfo[5];
+		Diary diary=diaryDao.getDiaryByDiaryId(diary_id);
 		float[] Diary_Anlatics=new float[5];
-		DiaryAnalytics emotion=diaryAnalyticsDao.getDiaryAnalyticsByDiaryId(diary_id);
+		DiaryAnalytics emotion=diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
 		Diary_Anlatics[0]=emotion.getNeutral();
 		Diary_Anlatics[1]=emotion.getJoy();
 		Diary_Anlatics[2]=emotion.getSadness();
@@ -128,6 +195,7 @@ public class DiaryService {
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(uid);
 		Optional<List<UserEmotion>> optional=userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
 		List<UserEmotion> userEmotionList=optional.get();
+		
 		rank[] rank=new rank[12];
 		for(int i=0;i<12;i++) {
 			UserEmotion userEmotion=userEmotionList.get(i);
@@ -291,7 +359,8 @@ public class DiaryService {
 		return diaryDto;
 	}
 	public DiaryAnalyticsSentiment getDiaryAnalyticsSentiment(int DiaryID){
-		DiaryAnalyticsSentiment diarySentiment = diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiaryId(DiaryID);
+		Diary diary=diaryDao.getDiaryByDiaryId(DiaryID);
+		DiaryAnalyticsSentiment diarySentiment = diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
 
 		return diarySentiment;
 	}

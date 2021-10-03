@@ -221,6 +221,9 @@
         padding: 300px 50px 30px 50px;
         font-size: 1rem;
         color: grey;
+        span {
+          cursor: pointer;
+        }
       }
     }
   }
