@@ -7,7 +7,7 @@
     <!-- 달력(해당 월의 일기 정보 조회) -->
     <MainCalendar @moveMonth="moveMonth"></MainCalendar>
     <!-- 해당 월의 차트 조회 -->
-    <MainChart :chart="chart" :month="month"></MainChart>
+    <MainChart :chart="chart"></MainChart>
     <br />
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
   data() {
     return {
       totalCnt: 0,
-      month: null,
       chart: {},
     }
   },
@@ -37,21 +36,21 @@ export default {
       const data = {
         id: this.$store.state.uid,
       }
-      console.log(data)
       const response = await fetchTotalCnt(data)
-      console.log(response)
       this.totalCnt = response.data.totalCnt
     },
-    async moveMonth(month, start, end) {
+    async moveMonth(month, start, end, total) {
       const data = {
         startDate: start,
         endDate: end,
         id: this.$store.state.uid,
       }
-      console.log('차트', month)
       const response = await fetchChart(data)
-      this.chart = response.data
-      this.month = month
+      this.chart = response.data.data[0]
+      this.chart['month'] = month
+      this.chart['total'] = total
+      // this.month = month
+      // this.total = total
     },
   },
   async created() {

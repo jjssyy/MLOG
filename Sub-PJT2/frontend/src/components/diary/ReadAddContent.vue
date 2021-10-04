@@ -8,13 +8,21 @@
         readonly="readonly"
         id="content"
         type="text"
+        v-model="diary.content"
       ></textarea>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    diary: {
+      type: Object,
+      required: true,
+    },
+  },
+}
 </script>
 
 <style></style>

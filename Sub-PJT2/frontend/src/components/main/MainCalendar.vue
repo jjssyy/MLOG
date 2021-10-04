@@ -45,7 +45,7 @@
         ></tbody>
       </table>
     </div>
-    <div style="font-weight: bold;">
+    <div v-if="!isfutureDiary" style="font-weight: bold;">
       <div v-if="!isDiary">
         <div class="opercityAnim">
           <p style="font-weight: bold;">아직 이날의 일기를 쓰지 않았어요.</p>
@@ -55,9 +55,13 @@
         </div>
       </div>
       <div v-else class="opercityAnim">
-        <div v-if="currentDiary.sentiment >= 0" class="centerBox">
+        <div v-if="currentDiary.sentiment > 0.2" class="centerBox">
           <span>이 날은 </span>
           <i style="font-size:1.6rem; font-style: normal">&#128522;</i>
+        </div>
+        <div v-else-if="currentDiary.sentiment >= -0.2" class="centerBox">
+          <span>이 날은 </span>
+          <i style="font-size:1.6rem; font-style: normal">&#128528;</i>
         </div>
         <div v-else class="centerBox">
           <span>이 날은 </span
@@ -70,6 +74,11 @@
         </button>
       </div>
     </div>
+    <div v-else style="font-weight: bold;">
+      <div class="opercityAnim">
+        <p style="font-weight: bold;">미래일기는 작성할 수 없어요.</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -80,6 +89,7 @@ import { fetchMonthDiary } from '@/api/main.js'
 export default {
   data() {
     return {
+      isfutureDiary: false,
       monthDiary: [],
       isDiary: null,
       currentDiary: {},
@@ -228,12 +238,6 @@ export default {
         e.target.classList.add('day-active')
         this.init.activeDTag = e.target
         this.init.activeDate.setDate(day)
-        console.log(
-          '여기',
-          this.clickedYear,
-          this.clickedMonth + 1,
-          this.clickedDate,
-        )
         let tempMonth = ''
         let tempDate = ''
         if ((this.clickedMonth + 1).toString().length == 1) {
@@ -268,6 +272,12 @@ export default {
         if (comfirmMonthDiary == false) {
           this.isDiary = false
         }
+        if (this.clickedDate > this.init.today.getDate()) {
+          console.log('여기지?')
+          this.isfutureDiary = true
+        } else {
+          this.isfutureDiary = false
+        }
       }
     },
     initCalendar() {
@@ -276,14 +286,10 @@ export default {
     async fetchDiary(fullDate) {
       let yy = fullDate.getFullYear().toString()
       let mm = (fullDate.getMonth() + 1).toString()
-      let firstDay = this.init
-        .getFirstDay(yy, mm - 1)
-        .getDate()
-        .toString()
-      let lastDay = this.init
-        .getLastDay(yy, mm - 1)
-        .getDate()
-        .toString()
+      let firstDayTmp = this.init.getFirstDay(yy, mm - 1).getDate()
+      let lastDayTmp = this.init.getLastDay(yy, mm - 1).getDate()
+      let firstDay = firstDayTmp.toString()
+      let lastDay = lastDayTmp.toString()
       if (mm.length == 1) {
         mm = '0' + mm
       }
@@ -300,19 +306,22 @@ export default {
         (fullDate.getMonth() + 1).toString(),
         data.startDate,
         data.endDate,
+        lastDayTmp - firstDayTmp + 1,
       )
       const response = await fetchMonthDiary(data)
       this.monthDiary = response.data.data
-      for (let i = 0; i < this.monthDiary.length; i++) {
-        let replaceDate = this.monthDiary[i].date
-        let target = document.querySelector(`td[data-fdate="${replaceDate}"]`)
-        target.innerHTML += '<i class="fas fa-circle fa-xs atom"></i>'
-        if (this.monthDiary[i].sentiment > 0.2) {
-          target.classList.add('atom-positive')
-        } else if (this.monthDiary[i].sentiment >= -0.2) {
-          target.classList.add('atom-neutral')
-        } else {
-          target.classList.add('atom-negative')
+      if (this.monthDiary != undefined) {
+        for (let i = 0; i < this.monthDiary.length; i++) {
+          let replaceDate = this.monthDiary[i].date
+          let target = document.querySelector(`td[data-fdate="${replaceDate}"]`)
+          target.innerHTML += '<i class="fas fa-circle fa-xs atom"></i>'
+          if (this.monthDiary[i].sentiment > 0.2) {
+            target.classList.add('atom-positive')
+          } else if (this.monthDiary[i].sentiment >= -0.2) {
+            target.classList.add('atom-neutral')
+          } else {
+            target.classList.add('atom-negative')
+          }
         }
       }
     },
