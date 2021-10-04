@@ -8,7 +8,16 @@
       </div>
       <div class="image-box">
         <label for="file">
-          <img :src="profileImg" style="cursor: pointer" />
+          <div id="header-img">
+            <div>
+              <img
+                :src="profileImg"
+                style="cursor: pointer; border-radius: 50%;"
+                width="100%"
+                height="100%"
+              />
+            </div>
+          </div>
         </label>
         <div style="display: none">
           <input type="file" accept="image/*" id="file" @change="loadf" />

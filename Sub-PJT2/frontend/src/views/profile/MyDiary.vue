@@ -38,7 +38,13 @@ export default {
   },
   data() {
     return {
-      myDiaryList: [],
+      myDiaryList: [
+        {
+          date: '20210202',
+          content:
+            '지는 노을에 그대를 숨겨두고 어딘지 묻지 않았지 \n 침묵은 다시 당신 이름이 되어 나의 내일을 채우네 \n ​아 잠시 기다렸던 마음은 참 빨라',
+        },
+      ],
     }
   },
   async created() {
