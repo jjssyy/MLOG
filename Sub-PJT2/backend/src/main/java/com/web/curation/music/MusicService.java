@@ -1,22 +1,37 @@
 package com.web.curation.music;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
+import com.web.curation.diary.Diary;
+import com.web.curation.diary.DiaryAnalytics;
+import com.web.curation.diary.DiaryAnalyticsDao;
+import com.web.curation.diary.DiaryDao;
+import com.web.curation.diary.DiaryMusic;
+import com.web.curation.diary.DiaryMusicDao;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.MemberProfileDao;
 import com.web.curation.member.MemberService;
+import com.web.curation.member.UserAuth;
+import com.web.curation.member.emotion.Genre;
+import com.web.curation.member.emotion.UserEmotion;
+import com.web.curation.member.emotion.UserEmotionDao;
+import com.web.curation.member.emotion.UserEmotionPK;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.border.TitledBorder;
 
 import org.hibernate.internal.build.AllowSysOut;
+import org.joda.time.DateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -28,7 +43,13 @@ import org.json.simple.parser.ParseException;
 public class MusicService {
 	
 	private MusicDao musicDao;
-	
+	private DiaryDao diaryDao;
+	private DiaryAnalyticsDao diaryAnalyticsDao;
+	private UserEmotionDao userEmotionDao;
+	private MemberAuthDao memberAuthDao;
+	private DiaryMusicDao diaryMusicDao;
+	private RedisTemplate<String, String> redisTemplate;
+ 
 	
 	public void updateMusic() throws IOException, ParseException {		
 		for(int i=3550;i<3575;i++) {
@@ -44,7 +65,7 @@ public class MusicService {
 			JSONObject jsonObj = (JSONObject) obj;
 			JSONObject data=(JSONObject)jsonObj.get("data");
 			JSONArray track=(JSONArray) data.get("trackList");
-			for(int j=0;j<1;j++) {
+			for(int j=0;j<2;j++) {
 				JSONObject music=(JSONObject) track.get(j);
 				JSONObject music_artist=(JSONObject) music.get("representationArtist");
 				String title=(String) music.get("name");
@@ -70,6 +91,37 @@ public class MusicService {
 			}	
 			
 		}
+	}
+	 
+	public void enrollMusic(String uid,int diary_id,int mid) {
+		MusicInfo musicInfo=musicDao.getMusicInfoByMid(mid);
+		
+		Diary diary=diaryDao.getDiaryByDiaryId(diary_id);
+		DiaryAnalytics diaryAnalytics=diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
+		String tmpgenre=musicInfo.getMusicGenre();
+		
+		Genre genre=Genre.valueOf(tmpgenre);
+		UserEmotionPK userEmotionPK=UserEmotionPK.builder()
+				.uid(uid)
+				.genre(genre)
+				.build();
+		UserEmotion tmpUserEmotion=userEmotionDao.getOne(userEmotionPK);
+		float sadness=(tmpUserEmotion.getSadness()+diaryAnalytics.getSadness())/2;
+		float joy=(tmpUserEmotion.getJoy()+diaryAnalytics.getJoy())/2;
+		float neutral=(tmpUserEmotion.getNeutral()+diaryAnalytics.getNeutral())/2;
+		float anger=(tmpUserEmotion.getAnger()+diaryAnalytics.getAnger())/2;
+		float fear=(tmpUserEmotion.getFear()+diaryAnalytics.getFear())/2;
+		tmpUserEmotion.updateUserEmotion(neutral, joy, anger, sadness, fear);
+		userEmotionDao.save(tmpUserEmotion);
+		
+		DiaryMusic diaryMusic=DiaryMusic.builder()
+				.diary(diary)
+				.musicInfo(musicInfo)
+				.build();
+		diaryMusicDao.save(diaryMusic);
+		ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
+		valueOperations.set(uid + LocalDate.now(),Integer.toString(mid), 7*24*60*60,TimeUnit.SECONDS);			
+		
 	}
 
 	private String getVideoid(String artist, String title) throws ParseException {

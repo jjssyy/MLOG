@@ -48,7 +48,7 @@ public class DiaryService {
 	private MemberAuthDao memberAuthDao;
 	private UserEmotionDao userEmotionDao;
 	private MusicDao musicDao;
-	private RedisTemplate<String, Integer> redisTemplate;
+	private RedisTemplate<String, String> redisTemplate;
 
 	private final KeyConfig keyConfig;
 
@@ -224,9 +224,9 @@ public class DiaryService {
 			System.out.println(rank[i].cosine);
 		}
 
-		ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
-		ArrayList<Integer> selectedMusicList = new ArrayList<>();
-		LocalDate localDate = LocalDate.now();
+		ValueOperations<String, String>valueOperations = redisTemplate.opsForValue();
+        ArrayList<String> selectedMusicList = new ArrayList<>();
+        LocalDate localDate = LocalDate.now();
 		for (long i = 0; i < 7; i++){
 			selectedMusicList.add(valueOperations.get(uid + localDate.minusDays(i)));
 		}
@@ -237,14 +237,17 @@ public class DiaryService {
 
 			// TODO 중간에 체크하는 과정 추가.해야함
 			int random;
-			loop:
-			do {
-				random=(int) (Math.random()*musicList.size());
-
-				for(int mid : selectedMusicList){
-					if(musicList.get(random).getMid() == mid) continue loop;
-				}
-			}while (false);
+            loop:
+            do {
+                random=(int) (Math.random()*musicList.size());
+                for(String mid : selectedMusicList){
+                    if(mid!=null&&musicList.get(random).getMid() == Integer.parseInt(mid)) {
+                    	System.out.println("중복되는 노래발견=============");
+                    	continue loop;
+                    }
+                }
+                break;
+            }while (true);
 
 			result[i]=musicList.get(random);
 		}
@@ -263,17 +266,20 @@ public class DiaryService {
 			List<MusicInfo> musicList=musicDao.getMusicInfoByMusicGenre(genre);
 
 			// TODO 중간에 체크하는 과정 추가.해야함
-			int random_value;
-			loop:
-			do {
-				random_value=(int) (Math.random()*musicList.size());
+			int random;
+            loop:
+            do {
+                random=(int) (Math.random()*musicList.size());
+                for(String mid : selectedMusicList){
+                    if(mid!=null&&musicList.get(random).getMid() == Integer.parseInt(mid)) {
+                    	System.out.println("중복되는 노래발견");
+                    	continue loop;
+                    }
+                }
+                break;
+            }while (true);
 
-				for(int mid : selectedMusicList){
-					if(musicList.get(random_value).getMid() == mid) continue loop;
-				}
-			}while (false);
-
-			result[i]=musicList.get(random_value);
+			result[i]=musicList.get(random);
 			CheckDuplicate+=v;
 		}
 		
@@ -438,10 +444,6 @@ public class DiaryService {
 	    return result;
 	}
 
-	public void putSelectedMusic(String uid, LocalDate localDate, int mid){
-		ValueOperations<String, Integer> valueOperations = redisTemplate.opsForValue();
-		valueOperations.set(uid + localDate.toString(), mid);
-	}
 }
 
 
