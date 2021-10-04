@@ -293,7 +293,7 @@ public class DiaryService {
 		data.put("content", content);
 //		Flask호출부분
 		HttpURLConnection conn=null;
-		String reqURL= "http://172.30.1.45:5000/predict";
+		String reqURL= "http://localhost:5000/predict";
 		try {
 			URL url = new URL(reqURL);
 			conn=(HttpURLConnection) url.openConnection();
