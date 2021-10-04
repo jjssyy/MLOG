@@ -6,8 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserEmotionDao extends JpaRepository<UserEmotion, String> {
+public interface UserEmotionDao extends JpaRepository<UserEmotion, UserEmotionPK> {
 
     //where id={id} and is_deleted=false
     Optional<List<UserEmotion>> getUserEmotionByUserAuthAndIsDeletedIsFalse(UserAuth userAuth);
+    UserEmotion getUserEmotionByUserAuthAndEmbGenre(UserAuth userAuth,UserEmotionPK embGenre);
 }

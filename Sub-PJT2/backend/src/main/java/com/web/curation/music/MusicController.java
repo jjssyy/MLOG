@@ -1,9 +1,14 @@
 package com.web.curation.music;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.simple.parser.ParseException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,5 +38,15 @@ public class MusicController {
 	public String UpdateMusic() throws IOException, ParseException {
 		musicService.updateMusic();
 		return "heelo";
+	}
+	@GetMapping("/{id}/{diary_id}/{mid}")
+	public ResponseEntity<Map<String, Object>> enrollMusic(
+			@PathVariable int diary_id,
+			@PathVariable int mid,
+			@PathVariable String id){
+		HashMap<String, Object> resultMap = new HashMap<>();
+		musicService.enrollMusic(id, diary_id, mid);
+		return new ResponseEntity<>(resultMap,HttpStatus.OK);
+		
 	}
 }
