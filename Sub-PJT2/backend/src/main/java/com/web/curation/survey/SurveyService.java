@@ -83,17 +83,17 @@ public class SurveyService {
         UserAuth userAuth = memberAuthDao.findById(uid)
                 .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
 
-        Optional<UserProfile> userProfile = memberProfileDao.findById(uid);
+        UserProfile userProfile = memberProfileDao.getUserProfileByUserAuth(userAuth);
 
         Optional<List<UserEmotion>> userEmotionList = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
 
-        if(!userProfile.get().isHasSurveyed() && userEmotionList == null){
+        if(!userProfile.isHasSurveyed() && !userEmotionList.isPresent()){
             throw new CustomException(ErrorCode.ALREADY_RESET_SURVEYED);
         }
 
         List<UserEmotion> userEmotion = userEmotionList.get();
-        userProfile.get().setHasSurveyedFalse();
-        memberProfileDao.save(userProfile.get());
+        userProfile.setHasSurveyedFalse();
+        memberProfileDao.save(userProfile);
 
         for(UserEmotion u : userEmotion){
             u.setIsDeletedTrue();
