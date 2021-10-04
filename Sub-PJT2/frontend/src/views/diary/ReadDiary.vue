@@ -4,7 +4,7 @@
     <!-- Content -->
     <ReadContent :diary="content"></ReadContent>
     <!-- additional Content -->
-    <ReadAddContent></ReadAddContent>
+    <ReadAddContent :diary="addContent"></ReadAddContent>
     <div v-if="isClkDelBtn">
       <DeleteModal @answer="confirmDelete"></DeleteModal>
     </div>
@@ -27,7 +27,8 @@ export default {
   },
   data() {
     return {
-      content: {},
+      content: { diaryInfo: { content: '' } },
+      addContent: {},
       isClkDelBtn: false,
     }
   },
@@ -59,6 +60,7 @@ export default {
     const response = await fetchDiary(this.$store.state.uid, data)
     console.log(response.data)
     this.content = response.data
+    this.addContent = response.data.recommendDiary
   },
 }
 </script>
