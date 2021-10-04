@@ -48,5 +48,10 @@ public class UserEmotion {
     @ColumnDefault("false")
     private boolean isDeleted;
 
-
+    public void setIsDeletedTrue() {
+        this.isDeleted=true;
+    }
+    public void setIsDeletedFalse() {
+        this.isDeleted=false;
+    }
 }

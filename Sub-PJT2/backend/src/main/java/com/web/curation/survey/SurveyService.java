@@ -10,6 +10,7 @@ import com.web.curation.member.emotion.Genre;
 import com.web.curation.member.emotion.UserEmotion;
 import com.web.curation.member.emotion.UserEmotionDao;
 import com.web.curation.member.emotion.UserEmotionPK;
+import com.web.curation.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -76,5 +77,23 @@ public class SurveyService {
         Optional<UserProfile> userProfile = memberProfileDao.findById(uid);
         userProfile.get().setHasSurveyedTrue();
         memberProfileDao.save(userProfile.get());
+    }
+
+    public void resetSurvey(String uid){
+        UserAuth userAuth = memberAuthDao.findById(uid)
+                .orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+        Optional<UserProfile> userProfile = memberProfileDao.findById(uid);
+
+        Optional<List<UserEmotion>> userEmotionList = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
+        List<UserEmotion> userEmotion = userEmotionList.get();
+
+        userProfile.get().setHasSurveyedFalse();
+        memberProfileDao.save(userProfile.get());
+
+        for(UserEmotion u : userEmotion){
+            u.setIsDeletedTrue();
+            userEmotionDao.save(u);
+        }
     }
 }
