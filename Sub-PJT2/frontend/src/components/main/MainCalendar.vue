@@ -1,5 +1,11 @@
 <template>
   <div class="calendar-box">
+    <!-- 부정 빨강-->
+    <!-- -0.2미만 -->
+    <!-- 중립 초록-->
+    <!-- -0.2 ~ +0.2 -->
+    <!-- 긍정 파랑-->
+    <!-- -0.2초과 -->
     <p class="my-sub-title">나의 기록</p>
     <div class="container-box">
       <div class="ctr-box">
@@ -271,11 +277,11 @@ export default {
       let yy = fullDate.getFullYear().toString()
       let mm = (fullDate.getMonth() + 1).toString()
       let firstDay = this.init
-        .getFirstDay(yy, mm)
+        .getFirstDay(yy, mm - 1)
         .getDate()
         .toString()
       let lastDay = this.init
-        .getLastDay(yy, mm)
+        .getLastDay(yy, mm - 1)
         .getDate()
         .toString()
       if (mm.length == 1) {
@@ -289,15 +295,22 @@ export default {
         startDate: `${yy}-${mm}-${firstDay}`,
         endDate: `${yy}-${mm}-${lastDay}`,
       }
-      console.log(data)
+      this.$emit(
+        'moveMonth',
+        (fullDate.getMonth() + 1).toString(),
+        data.startDate,
+        data.endDate,
+      )
       const response = await fetchMonthDiary(data)
       this.monthDiary = response.data.data
       for (let i = 0; i < this.monthDiary.length; i++) {
         let replaceDate = this.monthDiary[i].date
         let target = document.querySelector(`td[data-fdate="${replaceDate}"]`)
         target.innerHTML += '<i class="fas fa-circle fa-xs atom"></i>'
-        if (this.monthDiary[i].sentiment >= 0) {
+        if (this.monthDiary[i].sentiment > 0.2) {
           target.classList.add('atom-positive')
+        } else if (this.monthDiary[i].sentiment >= -0.2) {
+          target.classList.add('atom-neutral')
         } else {
           target.classList.add('atom-negative')
         }
