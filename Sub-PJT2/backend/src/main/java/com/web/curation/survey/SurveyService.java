@@ -86,8 +86,12 @@ public class SurveyService {
         Optional<UserProfile> userProfile = memberProfileDao.findById(uid);
 
         Optional<List<UserEmotion>> userEmotionList = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
-        List<UserEmotion> userEmotion = userEmotionList.get();
 
+        if(!userProfile.get().isHasSurveyed() && userEmotionList == null){
+            throw new CustomException(ErrorCode.ALREADY_RESET_SURVEYED);
+        }
+
+        List<UserEmotion> userEmotion = userEmotionList.get();
         userProfile.get().setHasSurveyedFalse();
         memberProfileDao.save(userProfile.get());
 
