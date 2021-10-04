@@ -81,4 +81,37 @@ public class MainController {
 
     }
 
+    @GetMapping("/{id}/{startDate}/{endDate}/chart")
+    public ResponseEntity<Map<String, Object>> MonthlyDiaryChart(@PathVariable String id,
+                                                                 @PathVariable String startDate,
+                                                                 @PathVariable String endDate){
+        Map<String, Object> resultMap = new HashMap();
+
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+
+        List<MainChartDto> resultList = new ArrayList<>();
+        MainChartDto mainChartDto = new MainChartDto();
+
+        List<Diary> diaryList = mainService.getMontlyDiary(id, start, end);
+        int MonthlyDiaryCount = diaryList.size();
+        mainChartDto.setCount(MonthlyDiaryCount);
+
+        List<Float> sentimentList = new ArrayList<>();
+        for(Diary diary : diaryList){
+            int diaryId = diary.getDiaryId();
+            DiaryAnalyticsSentiment diaryAnalyticsSentiment = diaryService.getDiaryAnalyticsSentiment(diaryId);
+
+            sentimentList.add(diaryAnalyticsSentiment.getSentiment());
+        }
+        mainChartDto.setSentiment(sentimentList);
+
+        resultList.add(mainChartDto);
+
+        resultMap.put("message", "월별 차트 정보");
+        resultMap.put("data", resultList);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
 }
