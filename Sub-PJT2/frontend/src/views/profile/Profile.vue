@@ -1,7 +1,7 @@
 <template>
   <div class="profile">
     <div class="profile-header2">
-      <button class="back">
+      <button class="back" @click="goMain">
         <i class="fas fa-arrow-left fa-2x"></i>
       </button>
       <div class="userinfo">
@@ -66,7 +66,7 @@
           </h2>
           <h2>
             <i class="fas fa-undo-alt"></i>
-            <span>
+            <span @click="resetSurvey">
               설문조사 초기화
             </span>
           </h2>
@@ -78,6 +78,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import SurveyApi from '@/api/SurveyApi'
 import '@/assets/css/components/profile.scss'
 
 export default {
@@ -85,6 +86,9 @@ export default {
     logout() {
       this.$store.dispatch('logout')
       this.$router.push({ name: 'Login' })
+    },
+    goMain() {
+      this.$router.push({ name: 'Main' })
     },
     goMyInfo() {
       this.$router.push({ name: 'MyInfo' })
@@ -101,9 +105,23 @@ export default {
     goEmoReport() {
       this.$router.push({ name: 'EmotionReport' })
     },
+    resetSurvey() {
+      let data = {
+        id: this.uid,
+      }
+      SurveyApi.resetSurvey(
+        data,
+        res => {
+          console.log(res)
+        },
+        err => {
+          console.log(err)
+        },
+      )
+    },
   },
   computed: {
-    ...mapState(['filePath', 'nickname']),
+    ...mapState(['filePath', 'nickname', 'uid']),
   },
 }
 </script>
