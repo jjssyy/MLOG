@@ -7,14 +7,14 @@ function fetchTotalCnt(data) {
 
 // 해당 월의 차트 조회 API
 function fetchChart(data) {
-  return instance.get(`/main/${data['uid']}/${data['month']}/chart`)
+  return instance.get(
+    `/main/${data['id']}/${data['startDate']}/${data['endDate']}/chart`,
+  )
 }
 
 // 해당 월의 일기 정보 조회 API
 function fetchMonthDiary(data) {
-  return instance.get(
-    `/main/main/${data.uid}/${data.startDate}/${data.endDate}`,
-  )
+  return instance.get(`/main/${data.uid}/${data.startDate}/${data.endDate}`)
 }
 
 export { fetchTotalCnt, fetchChart, fetchMonthDiary }

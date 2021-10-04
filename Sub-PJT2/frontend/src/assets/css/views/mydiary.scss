@@ -31,6 +31,12 @@
   overflow-x: hidden;
   flex-wrap: wrap;
 }
+.myplay-list{
+  height: 85%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex-wrap: wrap;
+}
 .profile-header2{
   height: 8.5%;
   padding: 0px;
@@ -57,7 +63,7 @@
   margin: 10px 10px 10px 10px;
   text-align: start;
   .item-box{
-    box-shadow: 2px 2px 5px 2px #cce3d0;
+    box-shadow: 2px 2px 5px 2px #dee2e6;
     // border-radius: 10px;
     cursor: pointer;
     padding: 10px;
@@ -70,6 +76,7 @@
   .item-date{
     margin-bottom: 10px;
     font-size: 16px;
+    margin-left:  5px;
   }
   .item-contents{
     font-size: 14px;
@@ -79,5 +86,37 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     line-height: 1.5;
+  }
+}
+
+.myplay-item{
+  margin: 10px 10px 10px 10px;
+  text-align: start;
+  @media(hover: hover) {
+    .myplay-item-box:hover{
+      box-shadow: none;
+    }
+  }
+  .myplay-item-date{
+    margin:  5px;
+  }
+  .myplay-item-box{
+    box-shadow: 2px 2px 5px 2px #dee2e6;
+    margin-bottom: 10px;
+    // border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+    .myplay-item-contents{
+      // padding-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      .myplay-btn{
+        background-color: white;
+        margin-top: 10px;
+        svg{
+          font-size: 13px;
+        }
+      }
+    }
   }
 }
