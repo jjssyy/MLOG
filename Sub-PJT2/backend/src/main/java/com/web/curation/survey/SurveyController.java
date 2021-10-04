@@ -128,10 +128,9 @@ public class SurveyController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/reset/{id}")
     public ResponseEntity<Map<String, Object>> resetSurvey(@PathVariable String id){
         Map<String, Object> resultMap = new HashMap<>();
-
         surveyService.resetSurvey(id);
 
         resultMap.put("message", "설문조사 초기화 성공");
