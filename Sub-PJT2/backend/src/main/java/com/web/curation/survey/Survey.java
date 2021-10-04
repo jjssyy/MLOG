@@ -15,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Survey {
     @Id
-    private Genre genre;
+    private String genre;
 
     @Column(nullable = false)
     private String videoId;
