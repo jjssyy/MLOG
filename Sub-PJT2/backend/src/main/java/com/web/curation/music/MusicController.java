@@ -39,6 +39,7 @@ public class MusicController {
 	@ApiOperation(value="음악 최신화작업")
 	public String UpdateMusic() throws IOException, ParseException {
 		musicService.updateMusic();
+		
 		return "Success";
 	}
 	@GetMapping("/{id}/{diary_id}/{mid}")
