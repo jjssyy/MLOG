@@ -91,7 +91,7 @@ export default {
     return {
       isfutureDiary: false,
       monthDiary: [],
-      isDiary: null,
+      isDiary: true,
       currentDiary: {},
       currentDate: null,
       calMonth: null,
@@ -287,8 +287,8 @@ export default {
         }
       }
     },
-    initCalendar() {
-      this.loadYYMM(this.init.today)
+    async initCalendar() {
+      await this.loadYYMM(this.init.today)
     },
     async fetchDiary(fullDate) {
       let yy = fullDate.getFullYear().toString()
@@ -317,7 +317,6 @@ export default {
       )
       const response = await fetchMonthDiary(data)
       this.monthDiary = response.data.data
-      console.log(this.monthDiary)
       if (this.monthDiary != undefined) {
         for (let i = 0; i < this.monthDiary.length; i++) {
           let replaceDate = this.monthDiary[i].date
@@ -334,8 +333,8 @@ export default {
       }
     },
   },
-  created() {
-    this.initCalendar()
+  async created() {
+    await this.initCalendar()
     let date = new Date()
     let tempMonth = ''
     let tempDate = ''
@@ -351,6 +350,22 @@ export default {
       (date.getMonth() + 1).toString() +
       tempDate +
       date.getDate().toString()
+    let temp =
+      date.getFullYear().toString() +
+      '-' +
+      tempMonth +
+      (date.getMonth() + 1).toString() +
+      '-' +
+      tempDate +
+      date.getDate().toString()
+    if (this.monthDiary != undefined) {
+      for (let i = 0; i < this.monthDiary.length; i++) {
+        if (this.monthDiary[i].date == temp) {
+          this.currentDiary = this.monthDiary[i]
+          break
+        }
+      }
+    }
   },
 }
 </script>

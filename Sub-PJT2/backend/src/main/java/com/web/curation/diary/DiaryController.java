@@ -89,7 +89,7 @@ public class DiaryController {
 		return new ResponseEntity<>(resultMap,HttpStatus.OK);
 	}
 	
-	@PutMapping("/{diary_id}/edit")
+	@PostMapping("/{diary_id}/edit")
 	public ResponseEntity<Map<String , Object>> modifyDiary(
 			@PathVariable int diary_id,
 			@RequestParam String content,

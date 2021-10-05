@@ -1,5 +1,5 @@
 <template>
-  <div style="background-color: #DAEEDC;">
+  <div style="background-color: #DAEEDC; height: 770px; overflow-y: scroll;">
     <Header></Header>
     <br />
     <!-- 총 일기 작성글 수 -->

@@ -14,7 +14,7 @@ function fetchDiary(uid, data) {
 
 // 특정 일기 수정하기 API
 function updateDiary(data) {
-  return instance.put(
+  return instance.post(
     `/diary/${data['diary_id']}/edit?content=${data['content']}&date=${data['date']}`,
   )
 }
@@ -29,4 +29,16 @@ function fetchRcdMusic(uid, data) {
   return instance.get(`/diary/music/${data}/${uid}`)
 }
 
-export { createDiary, fetchDiary, updateDiary, deleteDiary, fetchRcdMusic }
+// 특정 일기의 선택된 음악 보내기 API
+function submitMusic(uid, data) {
+  return instance.get(`/music/${uid}/${data['diary_id']}/${data['mid']}`)
+}
+
+export {
+  createDiary,
+  fetchDiary,
+  updateDiary,
+  deleteDiary,
+  fetchRcdMusic,
+  submitMusic,
+}
