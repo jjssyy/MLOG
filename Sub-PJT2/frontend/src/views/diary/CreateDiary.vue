@@ -1,5 +1,9 @@
 <template>
-  <div style="background-color: #DAEEDC;">
+  <div
+    id="create-diary"
+    style="background-color: #DAEEDC; position: relative;  height: auto; overflow-y: scroll;"
+  >
+    <Header></Header>
     <br />
     <div class="diary-container">
       <div class="diary-title">
@@ -21,13 +25,16 @@
 import CreateForm from '@/components/diary/CreateForm.vue'
 import '../../assets/css/views/init.scss'
 import '@/components/css/diary.scss'
+import Header from '@/components/profile/Header.vue'
 export default {
   components: {
     CreateForm,
+    Header,
   },
   data() {
     return {
       date: this.$route.params.date,
+      isLoading: false,
     }
   },
   computed: {

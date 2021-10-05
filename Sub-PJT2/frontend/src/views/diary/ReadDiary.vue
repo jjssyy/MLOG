@@ -1,5 +1,9 @@
 <template>
-  <div style="background-color: #DAEEDC;">
+  <div
+    id="read-diary"
+    style="background-color: #DAEEDC; height: 770px; overflow-y: scroll;"
+  >
+    <Header></Header>
     <br />
     <!-- Content -->
     <ReadContent :diary="content"></ReadContent>
@@ -14,16 +18,19 @@
 <script>
 import ReadContent from '@/components/diary/ReadContent.vue'
 import ReadAddContent from '@/components/diary/ReadAddContent.vue'
+import Header from '@/components/profile/Header.vue'
 import DeleteModal from '@/components/diary/DeleteModal.vue'
 import { fetchDiary, deleteDiary } from '@/api/diary.js'
 
 import '../../assets/css/views/init.scss'
 import '@/components/css/diary.scss'
+
 export default {
   components: {
     ReadContent,
     ReadAddContent,
     DeleteModal,
+    Header,
   },
   data() {
     return {
