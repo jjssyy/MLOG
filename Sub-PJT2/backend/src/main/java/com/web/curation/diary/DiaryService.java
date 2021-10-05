@@ -60,9 +60,8 @@ public class DiaryService {
 		if(diary!=null) {
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
 			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
-//			DiaryMusic diaryMusic=diaryMusicDao.getDiaryMusicByDiaryId(diary.getDiaryId());
-//			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, diaryMusic);
-			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, null);
+			DiaryMusic diaryMusic=diaryMusicDao.getDiaryMusicByDiary(diary);
+			result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, diaryMusic);
 		}
 		return result;
 	}

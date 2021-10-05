@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.web.curation.diary.DiaryAnalyticsSentiment;
 import com.web.curation.diary.DiaryDto;
 import com.web.curation.diary.DiaryService;
+import com.web.curation.music.MusicDto;
 import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class ProfileController {
 	@GetMapping("/{id}/playlist")
 	public ResponseEntity<Map<String, Object>> getMyPlayList(@PathVariable String id){
 		Map<String, Object> resultmap= new HashMap<String, Object>();
-		List<MusicInfo> MusicInfoList=profileService.getMyPlayList(id);
+		List<MusicDto> MusicInfoList=profileService.getMyPlayList(id);
 		
 		resultmap.put("status", HttpStatus.OK);
         resultmap.put("message", "플레이리스트 정보");

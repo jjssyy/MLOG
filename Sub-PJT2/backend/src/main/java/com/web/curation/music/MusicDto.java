@@ -1,5 +1,7 @@
 package com.web.curation.music;
 
+import java.time.LocalDate;
+
 import com.web.curation.member.MemberDto;
 
 import lombok.AllArgsConstructor;
@@ -20,4 +22,5 @@ public class MusicDto {
 	private String musicAritst;
 	private String videoId;
 	private String musicGenre;
+	private LocalDate date;
 }
