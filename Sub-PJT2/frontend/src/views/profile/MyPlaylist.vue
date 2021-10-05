@@ -81,7 +81,7 @@ export default {
     }
     const response = await getMyPlaylist(data)
     console.log(response.data)
-    this.myPlayList = response.data.playList
+    this.myPlayList = response.data.MusicInfoList
   },
   methods: {
     goProfile() {
@@ -112,11 +112,11 @@ export default {
   filters: {
     customDate(myPlay) {
       return (
-        myPlay.date.substring(0, 4) +
+        myPlay.diaryDate.substring(0, 4) +
         '년 ' +
-        myPlay.date.substring(4, 6) +
+        myPlay.diaryDate.substring(5, 7) +
         '월 ' +
-        myPlay.date.substring(6, 8) +
+        myPlay.diaryDate.substring(8, 10) +
         '일 '
       )
     },

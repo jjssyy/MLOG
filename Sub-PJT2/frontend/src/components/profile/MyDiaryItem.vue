@@ -28,18 +28,18 @@ export default {
     goDiary() {
       this.$router.push({
         name: 'ReadDiary',
-        params: { date: this.myDiary.date },
+        params: { date: this.myDiary.diaryDate },
       })
     },
   },
   computed: {
     customDate() {
       return (
-        this.myDiary.date.substring(0, 4) +
+        this.myDiary.diaryDate.substring(0, 4) +
         '년 ' +
-        this.myDiary.date.substring(4, 6) +
+        this.myDiary.diaryDate.substring(5, 7) +
         '월 ' +
-        this.myDiary.date.substring(6, 8) +
+        this.myDiary.diaryDate.substring(8, 10) +
         '일 '
       )
     },
