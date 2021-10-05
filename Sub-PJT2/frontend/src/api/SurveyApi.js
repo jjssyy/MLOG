@@ -20,7 +20,7 @@ const enrollSurvey = (data, frm, callback, errorCallback) => {
 
 const resetSurvey = (data, callback, errorCallback) => {
   instance
-    .post(`/survey/reset/${data['id']}`)
+    .delete(`/survey/reset/${data['id']}`)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }

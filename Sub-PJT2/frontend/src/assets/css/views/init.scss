@@ -1,11 +1,28 @@
 @charset "utf-8";
+@media(max-width:580px){
+  .init-box{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media(min-width:580px){
+  .init-box{
+    height:770px;
+  }
+}
 
 button {
   background-color: #DAEEDE;
-  font-size: larger;
+  font-size: 20px;
   padding: 8px 14px;
-  margin-top: 20px;
+  margin-top: 50px;
   border-radius: 7px;
+  &:hover {
+    animation-name: btnHover;
+    animation-duration: 0.2s;
+    animation-fill-mode: forwards;
+  }
 }
 
 .init-box{
@@ -13,38 +30,39 @@ button {
   padding: 30px 30px 0px 30px;
   box-sizing: border-box;
   width: 100%;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  .logo{
-    display: inline-block;
-    width: 100%;
-    height: 170px;
-    background-color: #DAEEDE;
-  }
   .nickname-box, .profileimg-box, .surveyStart-box{
     .input-title{
       width: 100%;
       margin: 30px 0px 30px 0px;
+      font-size: 17px;
       h1{
         text-align: end;
       }
     }
     .input-box{
       input{
-        width: 230px;
+        margin-top: 50px;
+        width: 260px;
+        height: 30px;
+        font-size: 1.2rem;
         text-align: center;
+        border: none;
+        border-bottom: 1px solid grey;
+      }
+      p{
+        margin: 15px;
+        font-size: 0.7rem;
       }
     }
     .image-box{
       margin-top: 60px;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
       #header-img { 
         position: relative; 
-        width: 150px;
+        width: 6.5rem;
         // margin-bottom: 30px;
       } 
       #header-img:before { 
