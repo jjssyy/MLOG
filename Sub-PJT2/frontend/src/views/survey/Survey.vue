@@ -126,19 +126,61 @@ export default {
   },
   methods: {
     async endSurvey() {
-      for (let i = 0; i < this.emotion.length; i++) {
-        this.saveSurveyList(i)
+      var frm = new FormData()
+      // for (let i = 0; i < this.emotion.length; i++) {
+      //   this.saveSurveyList(i)
+      // }
+      for (let i = 0; i < 3; i++) {
+        if (this.surveyMusicSelect[0][i] != null) {
+          frm.append(
+            'neutralList[' + i + ']',
+            this.musicList[this.surveyMusicSelect[0][i]].genre,
+          )
+        }
+        if (this.surveyMusicSelect[1][i] != null) {
+          frm.append(
+            'joyList[' + i + ']',
+            this.musicList[this.surveyMusicSelect[1][i]].genre,
+          )
+        }
+        if (this.surveyMusicSelect[2][i] != null) {
+          frm.append(
+            'sadnessList[' + i + ']',
+            this.musicList[this.surveyMusicSelect[2][i]].genre,
+          )
+        }
+        if (this.surveyMusicSelect[3][i] != null) {
+          frm.append(
+            'angetList[' + i + ']',
+            this.musicList[this.surveyMusicSelect[3][i]].genre,
+          )
+        }
+        if (this.surveyMusicSelect[4][i] != null) {
+          frm.append(
+            'fearList[' + i + ']',
+            this.musicList[this.surveyMusicSelect[4][i]].genre,
+          )
+        }
       }
       const data = {
         id: this.uid,
-        neutralList: this.neutral,
-        joyList: this.joy,
-        sadnessList: this.sadness,
-        angerList: this.anger,
-        fearList: this.fear,
+      }
+      // console.log(data.neutralList)
+      // console.log(data.joyList)
+      // console.log(typeof data.neutralList)
+      // console.log(typeof data.neutralList[0])
+      // console.log(typeof data)
+
+      for (var key of frm.keys()) {
+        console.log(key)
+      }
+
+      for (var value of frm.values()) {
+        console.log(value)
       }
       SurveyApi.enrollSurvey(
         data,
+        frm,
         res => {
           console.log(res)
         },
