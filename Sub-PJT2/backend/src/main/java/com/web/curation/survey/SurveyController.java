@@ -18,6 +18,7 @@ import java.util.*;
 @Slf4j
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 @RequestMapping("/survey")
 public class SurveyController {
     private SurveyService surveyService;
@@ -35,19 +36,23 @@ public class SurveyController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> surveySave(@PathVariable("id") String uid,
-                                                          @RequestParam List<String> neutralList, @RequestParam List<String> joyList,
-                                                          @RequestParam List<String> sadnessList, @RequestParam List<String> angerList,
-                                                          @RequestParam List<String> fearList){
+    public ResponseEntity<Map<String, Object>> surveySave(@PathVariable("id") String id,
+                                                          SurveyDto surveyDto){
         Map<String, Object> resultMap = new HashMap<>();
 
         //시작전에 이미 설문조사를 진행한 사용자인지 체크
-        Optional<List<UserEmotion>> userEmotionList = userEmotionService.getUserEmotion(uid);
+        Optional<List<UserEmotion>> userEmotionList = userEmotionService.getUserEmotion(id);
         if(userEmotionList.isPresent() && userEmotionList.get().size()==12){
             throw new CustomException(ErrorCode.ALREADY_SURVEYED);
         }
 
         HashMap<String, ArrayList<String>> map = new HashMap<>();
+
+        List<String> neutralList = surveyDto.neutralList;
+        List<String> joyList = surveyDto.joyList;
+        List<String> sadnessList = surveyDto.sadnessList;
+        List<String> angerList = surveyDto.angerList;
+        List<String> fearList = surveyDto.fearList;
 
         for(String s : neutralList){
             if(map.get(s) == null){
@@ -92,7 +97,7 @@ public class SurveyController {
             float anger = 0;
             float fear = 0;
 
-            surveyService.initialSurvey(genre, uid, neutral, joy, sadness, anger, fear);
+            surveyService.initialSurvey(genre, id, neutral, joy, sadness, anger, fear);
         }
 
         for(String s : map.keySet()){
@@ -120,7 +125,7 @@ public class SurveyController {
                     fear = 10;
                 }
             }
-            surveyService.saveSurvey(genre, uid, neutral, joy, sadness, anger, fear);
+            surveyService.saveSurvey(genre, id, neutral, joy, sadness, anger, fear);
         }
 
         resultMap.put("message", "설문조사 결과 저장 성공");
