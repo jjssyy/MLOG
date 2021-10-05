@@ -261,22 +261,29 @@ export default {
           tempDate +
           this.clickedDate.toString()
         let comfirmMonthDiary = false
-        for (let i = 0; i < this.monthDiary.length; i++) {
-          if (this.monthDiary[i].date == tmpCurrentDate) {
-            this.isDiary = true
-            this.currentDiary = this.monthDiary[i]
-            comfirmMonthDiary = true
-            break
+        if (typeof this.monthDiary !== 'undefined') {
+          for (let i = 0; i < this.monthDiary.length; i++) {
+            if (this.monthDiary[i].date == tmpCurrentDate) {
+              this.isDiary = true
+              this.currentDiary = this.monthDiary[i]
+              comfirmMonthDiary = true
+              break
+            }
           }
         }
         if (comfirmMonthDiary == false) {
           this.isDiary = false
         }
-        if (this.clickedDate > this.init.today.getDate()) {
-          console.log('여기지?')
-          this.isfutureDiary = true
-        } else {
+        if (this.clickedMonth == this.init.today.getMonth()) {
+          if (this.clickedDate > this.init.today.getDate()) {
+            this.isfutureDiary = true
+          } else {
+            this.isfutureDiary = false
+          }
+        } else if (this.clickedMonth < this.init.today.getMonth()) {
           this.isfutureDiary = false
+        } else {
+          this.isfutureDiary = true
         }
       }
     },
@@ -310,6 +317,7 @@ export default {
       )
       const response = await fetchMonthDiary(data)
       this.monthDiary = response.data.data
+      console.log(this.monthDiary)
       if (this.monthDiary != undefined) {
         for (let i = 0; i < this.monthDiary.length; i++) {
           let replaceDate = this.monthDiary[i].date

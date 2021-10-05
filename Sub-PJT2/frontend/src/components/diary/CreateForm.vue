@@ -31,6 +31,7 @@ export default {
       console.log(data)
       const response = await createDiary(this.$store.state.uid, data)
       console.log(response)
+      this.$router.push(`/diary/${this.$route.params.date}/music`)
     },
   },
 }

@@ -23,4 +23,10 @@ function updateDiary(data) {
 function deleteDiary(data) {
   return instance.delete(`/diary/${data['diary_id']}/delete`)
 }
-export { createDiary, fetchDiary, updateDiary, deleteDiary }
+
+// 특정 일기 추천음악들 불러오기 API
+function fetchRcdMusic(uid, data) {
+  return instance.get(`/diary/music/${data}/${uid}`)
+}
+
+export { createDiary, fetchDiary, updateDiary, deleteDiary, fetchRcdMusic }

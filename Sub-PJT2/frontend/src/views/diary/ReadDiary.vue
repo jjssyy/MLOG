@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      content: { diaryInfo: { content: '' } },
+      content: { diaryInfo: { content: '', sentiment: 0 } },
       addContent: {},
       isClkDelBtn: false,
     }
