@@ -11,7 +11,17 @@
       </div>
       <p class="diary-title">
         {{ customDate }}
-        <i style="font-size:1.6rem; font-style: normal">&#128521;</i>
+        <i
+          v-if="diary.diaryInfo.sentiment > 0.2"
+          style="font-size:1.6rem; font-style: normal"
+          >&#128522;</i
+        >
+        <i
+          v-else-if="diary.diaryInfo.sentiment >= -0.2"
+          style="font-size:1.6rem; font-style: normal"
+          >&#128528;</i
+        >
+        <i v-else style="font-size:1.6rem; font-style: normal">&#128543;</i>
         <span
           v-if="!isUpdate"
           @click="ellipsisMenu"
@@ -37,7 +47,6 @@
       </p>
       <div class="diary-content">
         <textarea
-          style="min-height: auto;"
           readonly="readonly"
           id="content"
           type="text"

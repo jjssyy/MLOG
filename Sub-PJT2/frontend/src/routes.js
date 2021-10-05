@@ -15,6 +15,7 @@ import Main from './views/main/Main.vue'
 import CreateDiary from './views/diary/CreateDiary.vue'
 import ReadDiary from './views/diary/ReadDiary.vue'
 import UpdateDiary from './views/diary/UpdateDiary.vue'
+import Music from './views/diary/Music.vue'
 
 export default [
   {
@@ -102,5 +103,10 @@ export default [
     path: '/diary/:date/update',
     name: 'UpdateDiary',
     component: UpdateDiary,
+  },
+  {
+    path: '/diary/:date/music',
+    name: 'MusicDiary',
+    component: Music,
   },
 ]
