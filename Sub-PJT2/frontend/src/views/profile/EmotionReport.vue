@@ -14,51 +14,138 @@
           </span>
         </h1>
       </div>
+      <div class="chart-date">
+        <div>
+          <v-date-picker v-model="range" is-range>
+            <template v-slot="{ inputValue, inputEvents }">
+              <div class="date-select">
+                <input :value="inputValue.start" v-on="inputEvents.start" />
+                <span>
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+                <input :value="inputValue.end" v-on="inputEvents.end" />
+              </div>
+            </template>
+          </v-date-picker>
+        </div>
+        <div class="diary-chart">
+          <vc-donut
+            background="white"
+            foreground="#e9e9e9"
+            :size="50"
+            unit="%"
+            has-legend
+            legend-placement="bottom"
+            :thickness="75"
+            :sections="section"
+            :total="DiaryList.length || defaultTotal"
+            :start-angle="0"
+            :auto-adjust-text-size="true"
+            @section-click="handleSectionClick"
+          >
+          </vc-donut>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import '@/assets/css/views/report.scss'
+import 'vue-css-donut-chart/dist/vcdonut.css'
 import { getEmotionReport } from '@/api/ProfileApi.js'
 import { mapState } from 'vuex'
+import VDatePicker from 'v-calendar/lib/components/date-picker.umd'
 
 export default {
+  components: {
+    VDatePicker,
+  },
   data() {
     return {
+      section: [],
+      range: {
+        start: '',
+        end: '',
+      },
       startDate: '',
       endDate: '',
+      month: 0,
+      defaultTotal: 1,
+      DiaryList: [],
     }
   },
   async created() {
-    this.startDate = this.getDay(false)
-    this.endDate = this.getDay(true)
-    console.log(this.startDate)
-    console.log(this.endDate)
-    const data = {
-      id: this.uid,
-      startDate: this.startDate,
-      endDate: this.endDate,
-    }
-    const response = await getEmotionReport(data)
-    console.log(response.data)
+    var date = new Date()
+
+    var oneMonthAgo = new Date(date.setMonth(date.getMonth() - 1))
+    var Today = new Date()
+
+    this.range.start = oneMonthAgo
+    this.range.end = Today
+
+    this.startDate = this.getDay(oneMonthAgo)
+    this.endDate = this.getDay(Today)
+    this.getEmotionCnt()
+  },
+  watch: {
+    range(oldValue) {
+      this.startDate = this.getDay(oldValue.start)
+      this.endDate = this.getDay(oldValue.end)
+      this.getEmotionCnt()
+    },
   },
   methods: {
+    async getEmotionCnt() {
+      const data = {
+        id: this.uid,
+        startDate: this.startDate,
+        endDate: this.endDate,
+      }
+      const response = await getEmotionReport(data)
+      this.DiaryList = response.data.DiaryList
+      this.calChart()
+    },
     goProfile() {
       this.$router.push({ name: 'Profile' })
     },
-    getDay(num) {
-      var date = new Date()
+    getDay(date) {
       var year = date.getFullYear()
       var month = ('0' + (1 + date.getMonth())).slice(-2)
-      var day
-      if (num) {
-        day = ('0' + date.getDate()).slice(-2)
-      } else {
-        day = '01'
+      var day = ('0' + date.getDate()).slice(-2)
+      return year + '-' + month + '-' + day
+    },
+    handleSectionClick(section) {
+      console.log(`${section.label} clicked.`)
+    },
+    calChart() {
+      let positive = 0
+      let negative = 0
+      let neutral = 0
+      let noneValue = 0
+      for (let i = 0; i < this.DiaryList.length; i++) {
+        if (this.DiaryList[i].sentiment > 0.2) {
+          positive += 1
+        } else if (this.DiaryList[i].sentiment >= -0.2) {
+          neutral += 1
+        } else {
+          negative += 1
+        }
       }
-
-      return year + month + day
+      if (positive == 0 && neutral == 0 && negative == 0) {
+        noneValue = this.DiaryList.length
+      }
+      if (noneValue != 0) {
+        this.section = [
+          { label: '작성글 없음', value: noneValue, color: '#e9e9e9' },
+        ]
+      } else {
+        this.section = [
+          { label: '긍정', value: positive, color: '#83c9e7' },
+          { label: '중립', value: neutral, color: '#81c147' },
+          { label: '부정', value: negative, color: '#ff8585' },
+        ]
+      }
     },
   },
   computed: {
