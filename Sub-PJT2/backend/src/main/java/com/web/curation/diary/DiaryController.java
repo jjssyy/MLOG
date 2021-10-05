@@ -80,12 +80,12 @@ public class DiaryController {
 			){
 		LocalDate localdate= LocalDate.parse(date,DateTimeFormatter.ISO_DATE);
 		Map<String, Object> resultMap=new HashMap<>();
-		diarySerivce.WriteDiary(id, content, localdate);
+		int result=diarySerivce.WriteDiary(id, content, localdate);
 		
 		
 		resultMap.put("status", HttpStatus.OK);
 		resultMap.put("meesage", "success");
-		
+		resultMap.put("diary_id", result);
 		return new ResponseEntity<>(resultMap,HttpStatus.OK);
 	}
 	
@@ -97,10 +97,10 @@ public class DiaryController {
 			){
 		LocalDate localdate= LocalDate.parse(date,DateTimeFormatter.ISO_DATE);
 		Map<String , Object> resultMap=new HashMap<>();
-		diarySerivce.modifyDiary(diary_id, content,localdate);
+		int result=diarySerivce.modifyDiary(diary_id, content,localdate);
 		resultMap.put("status", HttpStatus.OK);
 		resultMap.put("meesage", "success");
-		
+		resultMap.put("diary_id",result);
 		
 		return new ResponseEntity<>(resultMap,HttpStatus.OK);
 	}

@@ -114,7 +114,7 @@ public class DiaryService {
 	
 	
 	
-	public void WriteDiary(String Uid,String content,LocalDate date) {
+	public int WriteDiary(String Uid,String content,LocalDate date) {
 		float[] emotion=new float[5];
 		emotion=find(content);
 		DiaryDto dto=new DiaryDto();
@@ -145,9 +145,10 @@ public class DiaryService {
 				.build();
 		diaryAnalyticsSentimentDao.save(diaryAnalyticsSentiment);
 		
+		return diary.getDiaryId(); 
 	}
 	
-	public void modifyDiary(int diary_id,String content,LocalDate date) {
+	public int modifyDiary(int diary_id,String content,LocalDate date) {
 		float[] emotion = new float[5];
 		emotion = find(content);
 		DiaryDto dto=new DiaryDto();
@@ -180,6 +181,7 @@ public class DiaryService {
 		diaryAnalyticsDao.save(diaryAnalytics);
 		diaryDao.save(deleteDiary);
 		
+		return diary.getDiaryId();
 	}
 	
 	public void deleteDiary(int diary_id) {
