@@ -233,4 +233,15 @@ public class MemberController {
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable String id){
+        Map<String, Object> resultMap = new HashMap<>();
+
+        memberService.deleteUser(id);
+
+        resultMap.put("message", "회원 탈퇴 성공");
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
 }
