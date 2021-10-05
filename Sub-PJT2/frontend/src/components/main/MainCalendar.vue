@@ -91,7 +91,7 @@ export default {
     return {
       isfutureDiary: false,
       monthDiary: [],
-      isDiary: true,
+      isDiary: false,
       currentDiary: {},
       currentDate: null,
       calMonth: null,
@@ -334,6 +334,7 @@ export default {
     },
   },
   async created() {
+    console.log(date)
     await this.initCalendar()
     let date = new Date()
     let tempMonth = ''
@@ -362,6 +363,7 @@ export default {
       for (let i = 0; i < this.monthDiary.length; i++) {
         if (this.monthDiary[i].date == temp) {
           this.currentDiary = this.monthDiary[i]
+          this.isDiary = true
           break
         }
       }
