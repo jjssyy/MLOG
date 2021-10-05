@@ -18,7 +18,11 @@
         </div>
         <h2 class="nickname">{{ nickname }} 님</h2>
       </div>
-      <h3 class="logout" @click="logout">로그아웃</h3>
+      <h3 class="logout" @click="logout">
+        <span>
+          로그아웃
+        </span>
+      </h3>
     </div>
     <div class="profile-contents">
       <div class="task">
@@ -106,18 +110,25 @@ export default {
       this.$router.push({ name: 'EmotionReport' })
     },
     resetSurvey() {
-      let data = {
-        id: this.uid,
+      if (
+        confirm(
+          '설문조사 초기화를 하시면 지금까지의 추천 데이터가 다 사라집니다. 그래도 초기화하겠습니까?',
+        )
+      ) {
+        let data = {
+          id: this.uid,
+        }
+        SurveyApi.resetSurvey(
+          data,
+          res => {
+            console.log(res)
+            this.$router.push({ name: 'SurveyStart' })
+          },
+          err => {
+            console.log(err)
+          },
+        )
       }
-      SurveyApi.resetSurvey(
-        data,
-        res => {
-          console.log(res)
-        },
-        err => {
-          console.log(err)
-        },
-      )
     },
   },
   computed: {
