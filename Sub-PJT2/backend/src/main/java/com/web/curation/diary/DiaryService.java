@@ -104,7 +104,8 @@ public class DiaryService {
 		Diary diary=diaryDao.getDiaryByDiaryId(ans);
 		DiaryAnalytics diaryAnalytics =diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
 		DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
-		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary, null);
+		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiary(diary);
+		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary,diaryMusic );
 //		
 		return result;
 	}
