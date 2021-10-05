@@ -44,29 +44,17 @@ public class UserEmotion {
     @ColumnDefault("0")
     private float fear;
 
-    @Column(nullable = false)
-    @ColumnDefault("false")
-    private boolean isDeleted;
-
-    
     public void updateUserEmotion(
-    		float neutral,
-    		float joy,
-    		float anger,
-    		float sadness,
-    		float fear) {
-    	this.anger=anger;
-    	this.fear=fear;
-    	this.neutral=neutral;
-    	this.sadness=sadness;
-    	this.joy=joy;
+            float neutral,
+            float joy,
+            float anger,
+            float sadness,
+            float fear) {
+        this.anger=anger;
+        this.fear=fear;
+        this.neutral=neutral;
+        this.sadness=sadness;
+        this.joy=joy;
     }
 
-    
-    public void setIsDeletedTrue() {
-        this.isDeleted=true;
-    }
-    public void setIsDeletedFalse() {
-        this.isDeleted=false;
-    }
 }

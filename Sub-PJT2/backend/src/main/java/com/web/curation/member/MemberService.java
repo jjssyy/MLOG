@@ -77,4 +77,11 @@ public class MemberService {
 	private String insertImage(MultipartFile image) throws IOException {
 		return s3Uploader.upload(image, "static");
 	}
+
+	public void deleteUser(String uid){
+		memberAuthDao.findById(uid)
+				.orElseThrow(() -> new CustomException(ErrorCode.MEMBER_NOT_FOUND));
+
+		memberAuthDao.deleteUserAuthByUid(uid);
+	}
 }

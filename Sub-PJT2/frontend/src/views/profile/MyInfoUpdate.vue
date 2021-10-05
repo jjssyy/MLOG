@@ -12,7 +12,7 @@
               alt=""
               width="100%"
               height="100%"
-              style="border-radius: 50%;"
+              style="border-radius: 50%; cursor: pointer;"
             />
           </label>
           <div style="display: none">

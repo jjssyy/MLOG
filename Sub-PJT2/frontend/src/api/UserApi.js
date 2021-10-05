@@ -25,6 +25,13 @@ const googleLogin = (data, callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
+const deleteMember = (data, callback, errorCallback) => {
+  http
+    .delete(`/member/${data['id']}`)
+    .then(res => callback(res))
+    .catch(err => errorCallback(err))
+}
+
 const UserApi = {
   initProfile: (data, callback, errorCallback) =>
     initProfile(data, callback, errorCallback),
@@ -32,6 +39,8 @@ const UserApi = {
     kakaoLogin(data, callback, errorCallback),
   googleLogin: (data, callback, errorCallback) =>
     googleLogin(data, callback, errorCallback),
+  deleteMember: (data, callback, errorCallback) =>
+    deleteMember(data, callback, errorCallback),
 }
 
 export default UserApi

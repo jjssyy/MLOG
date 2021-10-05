@@ -201,7 +201,7 @@ public class DiaryService {
 		Diary_Anlatics[3]=emotion.getAnger();
 		Diary_Anlatics[4]=emotion.getFear();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(uid);
-		Optional<List<UserEmotion>> optional=userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
+		Optional<List<UserEmotion>> optional=userEmotionDao.getUserEmotionByUserAuth(userAuth);
 		List<UserEmotion> userEmotionList=optional.get();
 		
 		rank[] rank=new rank[12];

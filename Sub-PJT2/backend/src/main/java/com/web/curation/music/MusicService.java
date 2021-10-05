@@ -65,7 +65,7 @@ public class MusicService {
 			JSONObject jsonObj = (JSONObject) obj;
 			JSONObject data=(JSONObject)jsonObj.get("data");
 			JSONArray track=(JSONArray) data.get("trackList");
-			for(int j=0;j<2;j++) {
+			for(int j=0;j<100;j++) {
 				
 				JSONObject music=(JSONObject) track.get(j);
 				JSONObject music_artist=(JSONObject) music.get("representationArtist");

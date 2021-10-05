@@ -36,7 +36,7 @@
         </div>
         <div>
           <p>
-            <span>
+            <span @click="withdraw">
               회원 탈퇴
             </span>
           </p>
@@ -48,6 +48,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import UserApi from '@/api/UserApi'
 import '@/assets/css/components/profile.scss'
 
 export default {
@@ -58,9 +59,27 @@ export default {
     goUpdate() {
       this.$router.push({ name: 'MyInfoUpdate' })
     },
+    withdraw() {
+      if (
+        confirm('회원 탈퇴를 하시면 돌이킬 수 없습니다. 그래도 하시겠습니까?')
+      ) {
+        let data = {
+          id: this.uid,
+        }
+        UserApi.deleteMember(
+          data,
+          res => {
+            console.log(res)
+          },
+          err => {
+            console.log(err)
+          },
+        )
+      }
+    },
   },
   computed: {
-    ...mapState(['filePath', 'nickname', 'email', 'emailCompany']),
+    ...mapState(['filePath', 'nickname', 'email', 'emailCompany', 'uid']),
   },
 }
 </script>
