@@ -7,7 +7,7 @@ import org.springframework.core.env.Environment;
 
 @Configuration
 @RequiredArgsConstructor
-@PropertySource("classpath:application-API-KEY.properties")
+@PropertySource("classpath:application.properties")
 public class KeyConfig {
 
     private final Environment environment;
