@@ -57,7 +57,7 @@ export default {
 
       const file = document.getElementById('file').files[0]
       if (this.isChange && file == null) {
-        alert('이미지를 선택해주세요')
+        this.$swal('이미지를 선택해주세요')
         return
       } else if (this.isChange) {
         formData.append('image', file)
