@@ -18,6 +18,8 @@ import com.web.curation.diary.DiaryMusic;
 import com.web.curation.diary.DiaryMusicDao;
 import com.web.curation.member.MemberAuthDao;
 import com.web.curation.member.UserAuth;
+import com.web.curation.music.MusicAdapater;
+import com.web.curation.music.MusicDto;
 import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
@@ -33,13 +35,15 @@ public class ProfileService {
 	DiaryMusicDao diaryMusicDao;
 	DiaryAnalyticsDao diaryAnalyticsDao;
 	DiaryAnalyticsSentimentDao diaryAnalyticsSentimentDao;
-	public List<MusicInfo> getMyPlayList(String id){
-		List<MusicInfo> result=new ArrayList<MusicInfo>();
+	public List<MusicDto> getMyPlayList(String id){
+		List<MusicDto> result=new ArrayList<MusicDto>();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
 		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuth(userAuth);
 		for(int i=0;i<tmp_DiaryList.size();i++) {
+			MusicDto musicDto=new MusicDto();
 			DiaryMusic currentDiaryMusic=diaryMusicDao.getDiaryMusicByDiary(tmp_DiaryList.get(i));
-			result.add(currentDiaryMusic.getMusicInfo());
+			musicDto=MusicAdapater.entityToDto(tmp_DiaryList.get(i), currentDiaryMusic.getMusicInfo());
+			result.add(musicDto);
 		}
 		return result;
 	}
