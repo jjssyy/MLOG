@@ -151,7 +151,7 @@ export default {
         }
         if (this.surveyMusicSelect[3][i] != null) {
           frm.append(
-            'angetList[' + i + ']',
+            'angerList[' + i + ']',
             this.musicList[this.surveyMusicSelect[3][i]].genre,
           )
         }
