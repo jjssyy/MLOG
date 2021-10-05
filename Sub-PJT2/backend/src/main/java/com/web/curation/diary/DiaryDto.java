@@ -3,6 +3,7 @@ package com.web.curation.diary;
 import java.time.LocalDate;
 
 import com.web.curation.member.MemberDto;
+import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,12 @@ public class DiaryDto {
 	private float sentiment;
 	private float accuracy;
 	private int mid;
+	private String musicTitle;
+	private String musicArtist;
+	private String videoId;
+	private String musicGenre;
+	private String filePath;
+	
 	
 	
 	
