@@ -9,6 +9,8 @@ import java.util.Optional;
 public interface UserEmotionDao extends JpaRepository<UserEmotion, UserEmotionPK> {
 
     //where id={id} and is_deleted=false
-    Optional<List<UserEmotion>> getUserEmotionByUserAuthAndIsDeletedIsFalse(UserAuth userAuth);
+    Optional<List<UserEmotion>> getUserEmotionByUserAuth(UserAuth userAuth);
     UserEmotion getUserEmotionByUserAuthAndEmbGenre(UserAuth userAuth,UserEmotionPK embGenre);
+
+    void deleteUserEmotionByUserAuth(UserAuth userAuth);
 }
