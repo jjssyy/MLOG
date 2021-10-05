@@ -15,6 +15,7 @@ public class MusicAdapater {
 				.musicGenre(musicInfo.getMusicGenre())
 				.videoId(musicInfo.getVideoId())
 				.musicTitle(musicInfo.getMusicTitle())
+				.filePath(musicInfo.getFilePath())
 				.build();
 	}
 

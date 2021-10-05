@@ -1,5 +1,7 @@
 package com.web.curation.diary;
 
+import com.web.curation.music.MusicInfo;
+
 public class DiaryAdapater {
 	
 	public static DiaryDto entityToDto(
@@ -22,6 +24,11 @@ public class DiaryAdapater {
 				.sentiment(diaryAnalyticsSentiment.getSentiment())
 				.accuracy(diaryAnalyticsSentiment.getAccuracy())
 				.mid(diaryMusic.getMusicInfo().getMid())
+				.musicTitle(diaryMusic.getMusicInfo().getMusicTitle())
+				.musicArtist(diaryMusic.getMusicInfo().getMusicArtist())
+				.musicGenre(diaryMusic.getMusicInfo().getMusicGenre())
+				.videoId(diaryMusic.getMusicInfo().getVideoId())
+				.filePath(diaryMusic.getMusicInfo().getFilePath())
 				.build();
 	}
 	

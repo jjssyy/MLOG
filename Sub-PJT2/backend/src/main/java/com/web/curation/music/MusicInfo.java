@@ -33,4 +33,7 @@ public class MusicInfo {
 	
 	@Column(nullable = false, length = 20)
 	private String musicGenre;
+	
+	@Column(nullable = false, length = 255)
+	private String filePath;
 }

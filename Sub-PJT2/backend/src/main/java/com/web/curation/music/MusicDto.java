@@ -23,4 +23,5 @@ public class MusicDto {
 	private String videoId;
 	private String musicGenre;
 	private LocalDate date;
+	private String filePath;
 }

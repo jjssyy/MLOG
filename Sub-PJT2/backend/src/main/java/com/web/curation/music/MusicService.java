@@ -66,10 +66,17 @@ public class MusicService {
 			JSONObject data=(JSONObject)jsonObj.get("data");
 			JSONArray track=(JSONArray) data.get("trackList");
 			for(int j=0;j<2;j++) {
+				
 				JSONObject music=(JSONObject) track.get(j);
 				JSONObject music_artist=(JSONObject) music.get("representationArtist");
+				JSONObject album=(JSONObject) music.get("album");
+				JSONArray imgList=(JSONArray) album.get("imgList");	
+				JSONObject img=(JSONObject) imgList.get(0);
+		
+	
 				String title=(String) music.get("name");
 				String Artist=(String) music_artist.get("name");
+				String url=(String) img.get("url");
 				MusicInfo music_info=musicDao.getMusicInfoByMusicTitleAndMusicArtistAndMusicGenre(
 						title, Artist, Genre);
 				
@@ -81,6 +88,7 @@ public class MusicService {
 							.musicArtist(Artist)
 							.videoId(videoid)
 							.musicGenre(Genre)
+							.filePath(url)
 							.build();
 					musicDao.save(musicInfo);				
 				}
