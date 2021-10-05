@@ -61,7 +61,7 @@
       >
         취소
       </button>
-      <button v-if="isUpdate" class="diary-btn" @click="submitForm">
+      <button v-if="isUpdate" class="diary-btn" @click="showAlert">
         수정 완료
       </button>
     </div>
@@ -126,8 +126,44 @@ export default {
         content: this.diary.diaryInfo.content,
         date: date,
       }
+      this.$swal({
+        title: '분석중',
+        html: '잠시만 기다려 주세요.',
+        timerProgressBar: true,
+        target: '#read-diary',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+        didOpen: () => {
+          this.$swal.showLoading()
+        },
+      }).then(result => {
+        if (result.dismiss === this.$Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
       const response = await updateDiary(data)
       console.log(response)
+      this.$router.push(`/diary/${this.$route.params.date}/music`)
+    },
+    showAlert() {
+      // Use sweetalert2
+      this.$swal({
+        title: '수정하시겠습니까?',
+        showDenyButton: true,
+        confirmButtonText: '수정',
+        denyButtonText: '취소',
+        target: '#read-diary',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.submitForm()
+        }
+      })
     },
   },
 }

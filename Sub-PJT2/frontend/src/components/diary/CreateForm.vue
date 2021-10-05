@@ -3,7 +3,7 @@
     <div class="diary-content">
       <textarea id="content" type="text" v-model="content"></textarea>
     </div>
-    <button class="diary-btn" @click="submitForm">작성 완료</button>
+    <button class="diary-btn" @click="showAlert">작성 완료</button>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   data() {
     return {
       content: null,
+      loading: false,
     }
   },
   methods: {
@@ -29,9 +30,47 @@ export default {
       }
       console.log(this.$store.state.uid)
       console.log(data)
+      this.$swal({
+        title: '분석중',
+        html: '잠시만 기다려 주세요.',
+        timerProgressBar: true,
+        target: '#create-diary',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+        didOpen: () => {
+          this.$swal.showLoading()
+        },
+      }).then(result => {
+        if (result.dismiss === this.$Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
       const response = await createDiary(this.$store.state.uid, data)
       console.log(response)
       this.$router.push(`/diary/${this.$route.params.date}/music`)
+    },
+    testing() {
+      console.log('완료..')
+    },
+    showAlert() {
+      // Use sweetalert2
+      this.$swal({
+        title: '작성하시겠습니까?',
+        showDenyButton: true,
+        confirmButtonText: '작성',
+        denyButtonText: '취소',
+        target: '#create-diary',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.submitForm()
+        }
+      })
     },
   },
 }
