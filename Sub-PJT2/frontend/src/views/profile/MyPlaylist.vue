@@ -34,7 +34,7 @@
                     {{ myPlay.musicTitle }}
                   </h2>
                   <p style="cursor: pointer;">
-                    {{ myPlay.musicArtist }}
+                    {{ myPlay.musicAritst }}
                   </p>
                 </div>
                 <div>
@@ -112,11 +112,11 @@ export default {
   filters: {
     customDate(myPlay) {
       return (
-        myPlay.diaryDate.substring(0, 4) +
+        myPlay.date.substring(0, 4) +
         '년 ' +
-        myPlay.diaryDate.substring(5, 7) +
+        myPlay.date.substring(5, 7) +
         '월 ' +
-        myPlay.diaryDate.substring(8, 10) +
+        myPlay.date.substring(8, 10) +
         '일 '
       )
     },
