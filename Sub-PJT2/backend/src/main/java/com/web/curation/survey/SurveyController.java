@@ -133,7 +133,7 @@ public class SurveyController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @PostMapping("/reset/{id}")
+    @DeleteMapping ("/reset/{id}")
     public ResponseEntity<Map<String, Object>> resetSurvey(@PathVariable String id){
         Map<String, Object> resultMap = new HashMap<>();
         surveyService.resetSurvey(id);
