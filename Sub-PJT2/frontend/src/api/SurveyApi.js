@@ -7,9 +7,13 @@ const getSurveyMusicList = (callback, errorCallback) => {
     .catch(err => errorCallback(err))
 }
 
-const enrollSurvey = (data, callback, errorCallback) => {
+const enrollSurvey = (data, frm, callback, errorCallback) => {
   instance
-    .post(`/survey/${data['id']}`, data)
+    .post(`/survey/${data['id']}`, frm, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }
@@ -24,8 +28,8 @@ const resetSurvey = (data, callback, errorCallback) => {
 const SurveyApi = {
   getSurveyMusicList: (callback, errorCallback) =>
     getSurveyMusicList(callback, errorCallback),
-  enrollSurvey: (data, callback, errorCallback) =>
-    enrollSurvey(data, callback, errorCallback),
+  enrollSurvey: (data, frm, callback, errorCallback) =>
+    enrollSurvey(data, frm, callback, errorCallback),
   resetSurvey: (data, callback, errorCallback) =>
     resetSurvey(data, callback, errorCallback),
 }

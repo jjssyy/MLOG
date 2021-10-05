@@ -21,8 +21,8 @@
           :size="50"
           unit="%"
           :thickness="33"
-          :sections="sectionTwo"
-          :total="chart.total"
+          :sections="section"
+          :total="total[month - 1]"
           :start-angle="0"
           :auto-adjust-text-size="true"
           @section-click="handleSectionClick"
@@ -48,8 +48,11 @@ export default {
   },
   data() {
     return {
+      section: [],
       startDate: '',
       endDate: '',
+      month: 0,
+      total: [31, 30, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
     }
   },
   async created() {
@@ -78,6 +81,7 @@ export default {
     getToday(date) {
       var year = date.getFullYear()
       var month = ('0' + (1 + date.getMonth())).slice(-2)
+      this.month = date.getMonth
       var day = ('0' + date.getDate()).slice(-2)
       return year + '-' + month + '-' + day
     },
