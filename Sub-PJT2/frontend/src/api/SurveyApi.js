@@ -9,15 +9,7 @@ const getSurveyMusicList = (callback, errorCallback) => {
 
 const enrollSurvey = (data, callback, errorCallback) => {
   instance
-    .post(`/survey/${data['id']}`, {
-      params: {
-        neutralList: data.neutral,
-        joyList: data.joy,
-        sadnessList: data.sadness,
-        angerList: data.anger,
-        fearList: data.fear,
-      },
-    })
+    .post(`/survey/${data['id']}`, data)
     .then(res => callback(res))
     .catch(err => errorCallback(err))
 }

@@ -131,11 +131,11 @@ export default {
       }
       const data = {
         id: this.uid,
-        neutral: this.neutral,
-        joy: this.joy,
-        sadness: this.sadness,
-        anger: this.anger,
-        fear: this.fear,
+        neutralList: this.neutral,
+        joyList: this.joy,
+        sadnessList: this.sadness,
+        angerList: this.anger,
+        fearList: this.fear,
       }
       SurveyApi.enrollSurvey(
         data,
