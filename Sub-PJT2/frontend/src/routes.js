@@ -69,7 +69,7 @@ export default [
     component: DiaryReport,
   },
   {
-    path: '/profile/mydiaryreport',
+    path: '/profile/emotionreport',
     name: 'EmotionReport',
     component: EmotionReport,
   },

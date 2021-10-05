@@ -44,4 +44,24 @@
     padding-bottom: 15px;
     font-size: 13px;
   }
+  .diary-chart{
+    margin-top: 70px;
+  }
+  .date-select{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    input{
+      width: 40%;
+      height: 30px;
+      border: none;
+      background-color: #e9e9e9;
+      border-radius: 10px;
+    }
+    span{
+      margin: 10px;
+    }
+  }
 }
