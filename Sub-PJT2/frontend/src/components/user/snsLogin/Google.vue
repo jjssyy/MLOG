@@ -56,7 +56,11 @@ export default {
           this.$store.commit('SAVE_TOKEN', data.id_token)
           this.$store.commit('LOGIN', res.data['User Dto'])
           if (this.hasSurveyed) {
-            this.$router.push({ name: 'Main' })
+            if (this.nickname == 'defalut') {
+              this.$router.push({ name: 'InitNickname' })
+            } else {
+              this.$router.push({ name: 'Main' })
+            }
           } else {
             this.$router.push({ name: 'InitNickname' })
           }
@@ -75,7 +79,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['hasSurveyed']),
+    ...mapState(['nickname', 'hasSurveyed']),
   },
 }
 </script>
