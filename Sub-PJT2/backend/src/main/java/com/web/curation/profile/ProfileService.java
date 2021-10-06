@@ -56,7 +56,8 @@ public class ProfileService {
 			DiaryDto tmpDiaryDto=new DiaryDto();
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiary(tmp_DiaryList.get(i));
 			DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(tmp_DiaryList.get(i));
-			tmpDiaryDto=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, tmp_DiaryList.get(i), null);
+		    DiaryMusic diaryMusic=diaryMusicDao.getDiaryMusicByDiary(tmp_DiaryList.get(i));
+            tmpDiaryDto=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, tmp_DiaryList.get(i), diaryMusic);
 			result.add(tmpDiaryDto);
 		}
 		

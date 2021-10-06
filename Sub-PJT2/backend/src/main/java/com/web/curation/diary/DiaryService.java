@@ -16,6 +16,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.web.curation.config.KeyConfig;
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import com.web.curation.music.MusicDao;
 import com.web.curation.music.MusicInfo;
 import io.swagger.models.auth.In;
@@ -120,8 +122,11 @@ public class DiaryService {
 		DiaryDto dto=new DiaryDto();
 		dto.setContent(content);
 		dto=getSentiment(dto);
+
+		if(emotion == null) throw new CustomException(ErrorCode.ANALYSIS_NOT_WORKING);
 		
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
+
 		Diary diary_info=Diary.builder()
 				.userAuth(userAuth)
 				.content(content)

@@ -1,11 +1,5 @@
 <template>
   <div class="calendar-box">
-    <!-- 부정 빨강-->
-    <!-- -0.2미만 -->
-    <!-- 중립 초록-->
-    <!-- -0.2 ~ +0.2 -->
-    <!-- 긍정 파랑-->
-    <!-- -0.2초과 -->
     <p class="my-sub-title">나의 기록</p>
     <div class="container-box">
       <div class="ctr-box">

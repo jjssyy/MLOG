@@ -17,7 +17,7 @@
         ref="youtube"
         style="display:none;"
       ></youtube>
-      <div v-for="(musicItem, idx) in musicList" :key="idx">
+      <div class="player-item" v-for="(musicItem, idx) in musicList" :key="idx">
         <div
           id="playerdiv"
           :class="{ 'yes-choice': clicked[idx], 'no-choice': !clicked[idx] }"
@@ -26,18 +26,18 @@
           <div>
             {{ musicItem.genre }}
           </div>
-          <div>
-            <span v-show="playing[idx] == 0">
-              <button @click="playVideo(idx)">
-                <i class="fas fa-play"></i>
-              </button>
-            </span>
-            <span v-show="playing[idx] == 1">
-              <button @click="stopVideo(idx)">
-                <i class="fas fa-pause"></i>
-              </button>
-            </span>
-          </div>
+        </div>
+        <div class="play-button">
+          <span v-show="playing[idx] == 0">
+            <button @click="playVideo(idx)">
+              <i class="fas fa-play"></i>
+            </button>
+          </span>
+          <span v-show="playing[idx] == 1">
+            <button @click="stopVideo(idx)">
+              <i class="fas fa-pause"></i>
+            </button>
+          </span>
         </div>
       </div>
     </div>
@@ -45,8 +45,11 @@
       <div class="prev" @click="prevPage">
         <i class="fas fa-arrow-left"></i>
       </div>
-      <div class="next" @click="nextPage">
+      <div v-show="survey_num <= 4" class="next" @click="nextPage">
         <i class="fas fa-arrow-right"></i>
+      </div>
+      <div v-show="survey_num == 5" class="next" @click="nextPage">
+        <i class="fas fa-check"></i>
       </div>
     </div>
   </div>
@@ -89,24 +92,7 @@ export default {
         false,
       ],
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      musicList: [
-        // { genre: '국내 발라드', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '팝/어쿠스틱', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '락/메탈', videoId: 'BBJa32lCaaY', music_title: 'vue' },
-        // { genre: '알앤비', videoId: 'BBJa32lCaaY', music_title: 'vue' },
-        // { genre: '힙합', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '트로트', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '인디', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '클래식', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '뉴에이지', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // {
-        //   genre: '댄스/일레트로닉',
-        //   videoId: 'lG0Ys-2d4MA',
-        //   music_title: 'vue',
-        // },
-        // { genre: 'CCM', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-        // { genre: '포크/블루스', videoId: 'lG0Ys-2d4MA', music_title: 'vue' },
-      ],
+      musicList: [],
     }
   },
   props: {
@@ -115,7 +101,6 @@ export default {
   async created() {
     SurveyApi.getSurveyMusicList(
       res => {
-        console.log(res)
         this.musicList = res.data.Survey
         console.log(this.musicList)
       },
@@ -164,19 +149,6 @@ export default {
       }
       const data = {
         id: this.uid,
-      }
-      // console.log(data.neutralList)
-      // console.log(data.joyList)
-      // console.log(typeof data.neutralList)
-      // console.log(typeof data.neutralList[0])
-      // console.log(typeof data)
-
-      for (var key of frm.keys()) {
-        console.log(key)
-      }
-
-      for (var value of frm.values()) {
-        console.log(value)
       }
       SurveyApi.enrollSurvey(
         data,
@@ -229,7 +201,17 @@ export default {
           this.musicVideoId = ''
           this.selected(survey_num)
         } else {
-          alert('최소 1가지 이상 골라주세요')
+          this.$swal({
+            icon: 'warning',
+            title: '최소 1가지 이상으로 골라주세요.',
+            showConfirmButton: false,
+            target: '.survey-box',
+            width: '370px',
+            timer: 1500,
+            customClass: {
+              container: 'modal-custom',
+            },
+          })
         }
       } else {
         this.selectMusicList(this.survey_num)
@@ -237,12 +219,33 @@ export default {
         this.musicVideoId = ''
         this.count = 0
         this.endSurvey()
+        this.$swal({
+          icon: 'success',
+          title: '완료되었습니다.',
+          showConfirmButton: false,
+          target: '.survey-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
         this.$router.push({ name: 'Main' })
       }
     },
     selectGenre(idx) {
       if (this.count >= 3 && this.clicked[idx] == false) {
-        alert('최대 3가지만 골라주세요.')
+        this.$swal({
+          icon: 'warning',
+          title: '3가지 이하로 골라주세요.',
+          showConfirmButton: false,
+          target: '.survey-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
         return
       }
       this.$set(this.clicked, idx, !this.clicked[idx])

@@ -1,3 +1,7 @@
+.error-text {
+  color: red;
+}
+
 .createBtn {
   padding: 0.5rem 1rem; 
   margin: 0.5rem; 
@@ -29,7 +33,7 @@
 .calendar-box {
   background-color: white;
   border-radius: 1.5rem;
-  height: 590px;
+  height: 600px;
   margin: 0 0.5rem;
   &:hover {
     animation-name: boxHover;
@@ -165,7 +169,7 @@ td.day:hover {
 .atom {
   position: absolute;
   top: 4em;
-  right: 2.5em;
+  right: 2.35em;
   font-size: 10px;
 }
 .atom-positive {

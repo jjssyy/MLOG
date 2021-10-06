@@ -16,6 +16,7 @@ export default {
   data() {
     return {
       date: '',
+      paramsdate: '',
     }
   },
   props: {
@@ -25,10 +26,17 @@ export default {
     idx: Number,
   },
   methods: {
+    customDate2(myDiary) {
+      this.paramsdate =
+        myDiary.diaryDate.substring(0, 4) +
+        myDiary.diaryDate.substring(5, 7) +
+        myDiary.diaryDate.substring(8, 10)
+    },
     goDiary() {
+      this.customDate2(this.myDiary)
       this.$router.push({
         name: 'ReadDiary',
-        params: { date: this.myDiary.diaryDate },
+        params: { date: this.paramsdate },
       })
     },
   },

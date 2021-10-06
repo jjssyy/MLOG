@@ -110,25 +110,34 @@ export default {
       this.$router.push({ name: 'EmotionReport' })
     },
     resetSurvey() {
-      if (
-        confirm(
+      this.$swal({
+        icon: 'question',
+        text:
           '설문조사 초기화를 하시면 지금까지의 추천 데이터가 다 사라집니다. 그래도 초기화하겠습니까?',
-        )
-      ) {
-        let data = {
-          id: this.uid,
+        showConfirmButton: true,
+        showCancelButton: true,
+        target: '.profile',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          let data = {
+            id: this.uid,
+          }
+          SurveyApi.resetSurvey(
+            data,
+            res => {
+              console.log(res)
+              this.$router.push({ name: 'SurveyStart' })
+            },
+            err => {
+              console.log(err)
+            },
+          )
         }
-        SurveyApi.resetSurvey(
-          data,
-          res => {
-            console.log(res)
-            this.$router.push({ name: 'SurveyStart' })
-          },
-          err => {
-            console.log(err)
-          },
-        )
-      }
+      })
     },
   },
   computed: {

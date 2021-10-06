@@ -46,6 +46,28 @@
           </vc-donut>
         </div>
       </div>
+      <!-- <div class="report-ment">
+        <h2 v-if="max_v == 'positive'">
+          좋은 하루들이 많았네요
+          <br />
+          내일도 행복한 하루가 될 거에요! 😆
+        </h2>
+        <h2 v-if="max_v == 'negative'">
+          지친 하루들이 많았네요
+          <br />
+          앞으로는 좋은 하루가 가득할 거에요! 😉
+        </h2>
+        <h2 v-if="max_v == 'neutral'">
+          무난한 하루들이 많았네요
+          <br />
+          감정을 드러내는 일기를 써보세요! 😊
+        </h2>
+        <h2 v-if="max_v == 'noneValue'">
+          일기를 아직 안 쓰셨군요.
+          <br />
+          오늘 하루를 기록해보세요. 😃
+        </h2>
+      </div> -->
     </div>
   </div>
 </template>
@@ -63,6 +85,8 @@ export default {
   },
   data() {
     return {
+      max_senti: '',
+      max_value: { positive: 0, negative: 0, neutral: 0, noneValue: 0 },
       section: [],
       range: {
         start: '',
@@ -126,15 +150,20 @@ export default {
       for (let i = 0; i < this.DiaryList.length; i++) {
         if (this.DiaryList[i].sentiment > 0.2) {
           positive += 1
+          this.max_value['positive'] += 1
         } else if (this.DiaryList[i].sentiment >= -0.2) {
           neutral += 1
+          this.max_value['neutral'] += 1
         } else {
           negative += 1
+          this.max_value['negative'] += 1
         }
       }
       if (positive == 0 && neutral == 0 && negative == 0) {
         noneValue = this.DiaryList.length
+        this.max_value['noneValue'] = this.DiaryList.length
       }
+
       if (noneValue != 0) {
         this.section = [
           { label: '작성글 없음', value: noneValue, color: '#e9e9e9' },
@@ -149,6 +178,32 @@ export default {
     },
   },
   computed: {
+    max_v() {
+      let emotion = ''
+      let temp = 0
+      if (
+        this.max_value['positive'] == 0 &&
+        this.max_value['neutral'] == 0 &&
+        this.max_value['negative'] == 0
+      ) {
+        emotion = 'noneValue'
+      } else if (
+        (this.max_value['positive'] == this.max_value['neutral']) ==
+        this.max_value['negative']
+      ) {
+        emotion = 'neutral'
+      } else {
+        for (var i in this.max_value) {
+          if (temp < this.max_value[i]) {
+            temp = this.max_value[i]
+            emotion = i
+            console.log(i)
+          }
+        }
+      }
+      console.log(emotion)
+      return emotion
+    },
     ...mapState(['uid']),
   },
 }
