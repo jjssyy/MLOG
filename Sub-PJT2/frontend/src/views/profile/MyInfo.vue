@@ -78,6 +78,7 @@ export default {
           UserApi.deleteMember(
             data,
             () => {
+              this.$store.dispatch('logout')
               this.$router.push({ name: 'Login' })
             },
             err => {
