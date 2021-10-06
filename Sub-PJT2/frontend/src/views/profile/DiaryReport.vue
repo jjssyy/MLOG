@@ -36,14 +36,36 @@
             unit="%"
             :thickness="33"
             :sections="section"
-            :total="total"
+            :total="total || defaultTotal"
             :start-angle="0"
             :auto-adjust-text-size="true"
             @section-click="handleSectionClick"
           >
-            <h1>{{ parseInt((this.diaryCnt / this.total) * 100) }}%</h1>
+            <h1>{{ calPercent }}%</h1>
           </vc-donut>
         </div>
+      </div>
+      <div class="report-ment">
+        <h2 v-if="calPercent >= 70">
+          일기를 {{ calPercent }}%나 쓰셨네요.
+          <br />
+          정말 잘하고 있어요! 😆
+        </h2>
+        <h2 v-else-if="calPercent >= 40">
+          일기를 {{ calPercent }}% 쓰셨군요.
+          <br />
+          지금도 잘하고 있어요! 😉
+        </h2>
+        <h2 v-else-if="calPercent > 0">
+          일기를 {{ calPercent }}% 쓰셨군요.
+          <br />
+          조금 더 분발해주세요! 😎
+        </h2>
+        <h2 v-else-if="calPercent == 0">
+          일기를 아직 안쓰셨네요.
+          <br />
+          오늘 하루를 기록해보세요. 😊
+        </h2>
       </div>
     </div>
   </div>
@@ -68,6 +90,7 @@ export default {
         start: '',
         end: '',
       },
+      defaultTotal: 1,
       startDate: '',
       endDate: '',
       month: 0,
@@ -76,7 +99,6 @@ export default {
   },
   async created() {
     var date = new Date()
-    console.log(date)
     var oneMonthAgo = new Date(date.setMonth(date.getMonth() - 1))
     var Today = new Date()
     var milliSecond = Today - oneMonthAgo
@@ -98,7 +120,11 @@ export default {
   },
   methods: {
     async getDiaryCnt(milli) {
-      this.total = Math.floor(milli / 1000 / 60 / 60 / 24)
+      if (this.startDate != this.endDate) {
+        this.total = Math.floor(milli / 1000 / 60 / 60 / 24) + 1
+      } else {
+        this.total = 1
+      }
       const data = {
         id: this.uid,
         startDate: this.startDate,
@@ -124,6 +150,13 @@ export default {
     },
   },
   computed: {
+    calPercent() {
+      if (this.range.start != this.range.end) {
+        return parseInt((this.diaryCnt / this.total) * 100)
+      } else {
+        return 0
+      }
+    },
     ...mapState(['uid']),
   },
 }

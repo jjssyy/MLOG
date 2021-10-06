@@ -1,17 +1,25 @@
 <template>
-  <div id="kakao-login" class="image-animation">
+  <div id="kakao-login">
     <img
+      src="@/assets/images/k_icon.png"
+      alt=""
+      width="35"
+      @click="loginWithKakao"
+    />
+    <!-- <img
       src="@/assets/images/kakaoLogin.png"
       alt=""
       width="54%"
       height="47px"
       @click="loginWithKakao"
-    />
+    /> -->
   </div>
 </template>
 
 <script>
-import UserApi from "@/api/UserApi";
+import { mapState } from 'vuex'
+import UserApi from '@/api/UserApi'
+
 export default {
   created() {
     if (this.$route.query.code != null) {
@@ -20,10 +28,18 @@ export default {
       };
       UserApi.kakaoLogin(
         data,
-        (res) => {
-          this.$store.commit("SAVE_TOKEN", res.data.token);
-          this.$store.commit("LOGIN", res.data.userInfo);
-          this.$router.push({ name: "InitNickname" });
+        res => {
+          this.$store.commit('SAVE_TOKEN', res.data.token)
+          this.$store.commit('LOGIN', res.data.userInfo)
+          if (this.hasSurveyed) {
+            if (this.nickname == 'defalut') {
+              this.$router.push({ name: 'InitNickname' })
+            } else {
+              this.$router.push({ name: 'Main' })
+            }
+          } else {
+            this.$router.push({ name: 'InitNickname' })
+          }
         },
         (err) => {
           console.log(err);
@@ -38,5 +54,8 @@ export default {
       );
     },
   },
-};
+  computed: {
+    ...mapState(['hasSurveyed', 'nickname']),
+  },
+}
 </script>

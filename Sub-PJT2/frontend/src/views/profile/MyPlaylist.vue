@@ -29,13 +29,18 @@
             </div>
             <div class="myplay-item-box">
               <div class="myplay-item-contents">
-                <div @click="goDiary(idx)">
-                  <h2 style="cursor: pointer;">
-                    {{ myPlay.musicTitle }}
-                  </h2>
-                  <p style="cursor: pointer;">
-                    {{ myPlay.musicAritst }}
-                  </p>
+                <div class="myplay-item-right" @click="goDiary(idx)">
+                  <div class="myplay-item-img">
+                    <img :src="myPlay.filePath" alt="" />
+                  </div>
+                  <div class="myplay-item-title">
+                    <h2 style="cursor: pointer;">
+                      {{ myPlay.musicTitle }}
+                    </h2>
+                    <p style="cursor: pointer;">
+                      {{ myPlay.musicAritst }}
+                    </p>
+                  </div>
                 </div>
                 <div>
                   <span v-show="playingIdx != idx">
@@ -66,6 +71,7 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
+      paramsdate: '',
       playerVars: {
         autoplay: 1,
       },
@@ -80,7 +86,6 @@ export default {
       id: this.uid,
     }
     const response = await getMyPlaylist(data)
-    console.log(response.data)
     this.myPlayList = response.data.MusicInfoList
   },
   methods: {
@@ -88,9 +93,10 @@ export default {
       this.$router.push({ name: 'Profile' })
     },
     goDiary(idx) {
+      this.customDate2(this.myPlayList[idx])
       this.$router.push({
         name: 'ReadDiary',
-        params: { date: this.myPlayList[idx].date },
+        params: { date: this.paramsdate },
       })
     },
     async playVideo(idx) {
@@ -101,6 +107,12 @@ export default {
     async stopVideo() {
       this.playingIdx = -1
       await this.player.stopVideo()
+    },
+    customDate2(myPlay) {
+      this.paramsdate =
+        myPlay.date.substring(0, 4) +
+        myPlay.date.substring(5, 7) +
+        myPlay.date.substring(8, 10)
     },
   },
   computed: {
