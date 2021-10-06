@@ -59,7 +59,7 @@ public class DiaryController {
 		Map<String, Object> resultmap= new HashMap<String, Object>();
 		DiaryDto currentDiary=diarySerivce.getDiaryByUidAndDiaryDate(id, localdate);
 		//일기, 일기감정분석, 일기감성분석
-		DiaryDto recommendDiary=diarySerivce.getSimilarDiary(currentDiary);
+		DiaryDto recommendDiary=diarySerivce.getSimilarDiary(id,currentDiary);
 		
 
 		resultmap.put("status", HttpStatus.OK);

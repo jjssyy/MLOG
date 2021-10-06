@@ -66,9 +66,9 @@ public class DiaryService {
 		return result;
 	}
 	
-	public DiaryDto getSimilarDiary(DiaryDto dto) {
+	public DiaryDto getSimilarDiary(String uid,DiaryDto dto) {
 		DiaryDto result =new DiaryDto();
-		UserAuth userAuth =memberAuthDao.getUserAuthByUid(dto.getUid());
+		UserAuth userAuth =memberAuthDao.getUserAuthByUid(uid);
 		LocalDate startdate=dto.getDiaryDate().minusMonths(2);
 		LocalDate enddate=dto.getDiaryDate().minusDays(1);
 		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, enddate);
@@ -105,7 +105,7 @@ public class DiaryService {
 		DiaryAnalytics diaryAnalytics =diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
 		DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
 		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiary(diary);
-		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary,diaryMusic );
+		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary,diaryMusic);
 //		
 		return result;
 	}
@@ -118,7 +118,7 @@ public class DiaryService {
 		float[] emotion=new float[5];
 		emotion=find(content);
 		DiaryDto dto=new DiaryDto();
-		dto.setContent(content);;
+		dto.setContent(content);
 		dto=getSentiment(dto);
 		
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
