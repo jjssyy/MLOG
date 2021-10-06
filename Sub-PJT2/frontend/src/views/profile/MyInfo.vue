@@ -60,22 +60,32 @@ export default {
       this.$router.push({ name: 'MyInfoUpdate' })
     },
     withdraw() {
-      if (
-        confirm('회원 탈퇴를 하시면 돌이킬 수 없습니다. 그래도 하시겠습니까?')
-      ) {
-        let data = {
-          id: this.uid,
+      this.$swal({
+        icon: 'question',
+        text: '회원 탈퇴를 하시면 돌이킬 수 없습니다. 그래도 하시겠습니까?',
+        showConfirmButton: true,
+        showCancelButton: true,
+        target: '.myinfo',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+      }).then(result => {
+        if (result.isConfirmed) {
+          let data = {
+            id: this.uid,
+          }
+          UserApi.deleteMember(
+            data,
+            () => {
+              this.$router.push({ name: 'Login' })
+            },
+            err => {
+              console.log(err)
+            },
+          )
         }
-        UserApi.deleteMember(
-          data,
-          res => {
-            console.log(res)
-          },
-          err => {
-            console.log(err)
-          },
-        )
-      }
+      })
     },
   },
   computed: {

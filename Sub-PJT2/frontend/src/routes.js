@@ -1,3 +1,4 @@
+import PageNotFound from './views/error/PageNotFound.vue'
 import Login from './views/user/Login.vue'
 import InitNickname from './views/user/InitNickname.vue'
 import InitProfileImg from './views/user/InitProfileImg.vue'
@@ -126,5 +127,14 @@ export default [
     name: 'MusicDiary',
     meta: { auth: true },
     component: Music,
+  },
+  {
+    path: '*',
+    redirect: '/404',
+  },
+  {
+    path: '/404',
+    name: 'PageNotFound',
+    component: PageNotFound,
   },
 ]

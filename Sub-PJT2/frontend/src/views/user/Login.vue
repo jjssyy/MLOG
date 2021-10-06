@@ -4,13 +4,19 @@
       <br />
       <div class="loginContentBox">
         <p class="introText">
-          과거를 회상
-          <br />현재를 기억 <br />미래를 계획
+          <span class="intro">
+            하루를
+            <br />음악으로 <br />기록하다<br />
+          </span>
+          <span class="mlog">MLOG</span>
         </p>
-        <p class="loginText">Log in <span>to your account</span></p>
-
-        <kakaoLogin />
-        <GoogleLogin />
+        <p class="loginText">Log in to your account</p>
+        <div class="sns-login">
+          <div class="login-logo">
+            <kakaoLogin />
+            <GoogleLogin />
+          </div>
+        </div>
       </div>
     </div>
   </div>

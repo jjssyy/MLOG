@@ -99,7 +99,6 @@ export default {
   },
   async created() {
     var date = new Date()
-    console.log(date)
     var oneMonthAgo = new Date(date.setMonth(date.getMonth() - 1))
     var Today = new Date()
     var milliSecond = Today - oneMonthAgo

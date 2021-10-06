@@ -1,12 +1,21 @@
 <template>
-  <div class="google-login image-animation">
+  <div class="google-login">
+    <div class="g-logo">
+      <img
+        src="@/assets/images/g_icon.png"
+        alt=""
+        width="40"
+        @click="buttonClick"
+      />
+    </div>
+    <!-- 
     <img
-      src="@/assets/images/googleLogin.png"
+      src="@/assets/images/gicon.png"
       alt=""
       width="56%"
       height="53px"
       @click="buttonClick"
-    />
+    /> -->
     <GoogleLogin
       id="googlebtn"
       :params="params"
@@ -43,10 +52,6 @@ export default {
   },
   methods: {
     onSuccess(googleUser) {
-      console.log(googleUser)
-      console.log(googleUser.getBasicProfile())
-      console.log(googleUser.getAuthResponse().id_token)
-
       let data = {
         id_token: googleUser.getAuthResponse().id_token,
       }
@@ -65,8 +70,8 @@ export default {
             this.$router.push({ name: 'InitNickname' })
           }
         },
-        error => {
-          console.log(error)
+        err => {
+          console.log(err)
         },
       )
     },

@@ -86,7 +86,6 @@ export default {
       id: this.uid,
     }
     const response = await getMyPlaylist(data)
-    console.log(response.data)
     this.myPlayList = response.data.MusicInfoList
   },
   methods: {

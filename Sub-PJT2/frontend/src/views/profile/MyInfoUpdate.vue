@@ -70,7 +70,6 @@ export default {
       UserApi.initProfile(
         data,
         res => {
-          console.log(res)
           this.$router.push({ name: 'MyInfo' })
           this.$store.commit('CHANGEPROFILE', res.data.userInfo)
         },

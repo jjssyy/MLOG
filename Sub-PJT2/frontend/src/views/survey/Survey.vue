@@ -101,9 +101,7 @@ export default {
   async created() {
     SurveyApi.getSurveyMusicList(
       res => {
-        console.log(res)
         this.musicList = res.data.Survey
-        console.log(this.musicList)
       },
       err => {
         console.log(err)
@@ -150,13 +148,6 @@ export default {
       }
       const data = {
         id: this.uid,
-      }
-      for (var key of frm.keys()) {
-        console.log(key)
-      }
-
-      for (var value of frm.values()) {
-        console.log(value)
       }
       SurveyApi.enrollSurvey(
         data,
@@ -231,7 +222,7 @@ export default {
           icon: 'success',
           title: '완료되었습니다.',
           showConfirmButton: false,
-          target: '#music-diary',
+          target: '.survey-box',
           width: '370px',
           timer: 1500,
           customClass: {
