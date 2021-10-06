@@ -41,9 +41,10 @@ export default {
     return {
       content: { diaryInfo: { content: '', sentiment: 0 } },
       // addContent: { diaryDate: 'loading' },
-      addContent: [
-        { diaryDate: '2020-12-23', content: '오늘은 싸피에 합격한 날.!!!!!' },
-      ],
+      addContent: {
+        diaryDate: '2020-12-23',
+        content: '오늘은 싸피에 합격한 날.!!!!!',
+      },
       isClkDelBtn: false,
       isRecdDiary: true,
     }
