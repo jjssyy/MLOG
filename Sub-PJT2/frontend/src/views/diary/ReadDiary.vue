@@ -40,7 +40,10 @@ export default {
   data() {
     return {
       content: { diaryInfo: { content: '', sentiment: 0 } },
-      addContent: { diaryDate: 'loading' },
+      // addContent: { diaryDate: 'loading' },
+      addContent: [
+        { diaryDate: '2020-12-23', content: '오늘은 싸피에 합격한 날.!!!!!' },
+      ],
       isClkDelBtn: false,
       isRecdDiary: true,
     }
@@ -74,7 +77,7 @@ export default {
       if (response.data.recommendDiary == null) {
         this.isRecdDiary = false
       } else {
-        this.addContent = response.data.recommendDiary
+        // this.addContent = response.data.recommendDiary
         this.isRecdDiary = true
       }
     },
