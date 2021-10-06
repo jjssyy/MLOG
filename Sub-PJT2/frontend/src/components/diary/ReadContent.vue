@@ -10,7 +10,15 @@
         </div>
       </div>
       <p class="diary-title">
-        {{ customDate }}
+        {{
+          '' +
+            this.date.substring(0, 4) +
+            '년 ' +
+            this.date.substring(4, 6) +
+            '월 ' +
+            this.date.substring(6, 8) +
+            '일 '
+        }}
         <i
           v-if="diary.diaryInfo.sentiment > 0.2"
           style="font-size:1.6rem; font-style: normal"
@@ -36,7 +44,7 @@
                   <i class="far fa-edit"></i>
                   수정
                 </span>
-                <span @click="clickDelete">
+                <span @click="showDelete">
                   <i class="far fa-trash-alt"></i>
                   삭제
                 </span>
@@ -45,6 +53,34 @@
           </div>
         </span>
       </p>
+      <div style="position: relative; margin-top: 2.25rem;">
+        <div class="music-title-container-two">
+          <img :src="diary.diaryInfo.filePath" alt="음악포스터" />
+          <div class="music-title-two">
+            <p>{{ diary.diaryInfo.musicTitle }}</p>
+            <p>{{ diary.diaryInfo.musicArtist }}</p>
+          </div>
+        </div>
+        <div class="play-stop-btn">
+          <youtube
+            id="genre-music"
+            :video-id="diary.diaryInfo.videoId"
+            ref="youtube"
+            style="display:none;"
+          ></youtube>
+          <button v-if="isStop" class="btn-reset" @click="playStart">
+            <span>
+              <i class="fas fa-play fa-lg"></i>
+            </span>
+          </button>
+          <button v-if="!isStop" class="btn-reset" @click="stopStart">
+            <span>
+              <i class="fas fa-pause fa-lg"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+
       <div class="diary-content">
         <textarea
           readonly="readonly"
@@ -52,6 +88,12 @@
           type="text"
           v-model="diary.diaryInfo.content"
         ></textarea>
+      </div>
+      <div
+        v-if="isUpdate"
+        :class="{ 'error-text': textLength > 255 ? true : false }"
+      >
+        {{ textLength }}/255
       </div>
       <button
         v-if="isUpdate"
@@ -61,7 +103,12 @@
       >
         취소
       </button>
-      <button v-if="isUpdate" class="diary-btn" @click="showAlert">
+      <button
+        v-if="isUpdate"
+        class="diary-btn"
+        :disabled="!diary.diaryInfo.content || textLength > 255"
+        @click="showAlert"
+      >
         수정 완료
       </button>
     </div>
@@ -69,7 +116,7 @@
 </template>
 
 <script>
-import { updateDiary } from '@/api/diary.js'
+import { updateDiary, deleteDiary } from '@/api/diary.js'
 export default {
   props: {
     diary: {
@@ -82,23 +129,35 @@ export default {
       date: this.$route.params.date,
       isMenu: false,
       isUpdate: false,
+      isStop: true,
+      tempContent: '',
     }
   },
   computed: {
-    customDate() {
-      return (
-        this.date.substring(0, 4) +
-        '년 ' +
-        this.date.substring(4, 6) +
-        '월 ' +
-        this.date.substring(6, 8) +
-        '일 '
-      )
+    player() {
+      return this.$refs.youtube.player
+    },
+    textLength() {
+      return this.diary.diaryInfo.content.length
     },
   },
   methods: {
+    async playStart() {
+      this.isStop = false
+      await this.playVideo()
+    },
+    async stopStart() {
+      this.isStop = true
+      await this.stopVideo()
+    },
+    async playVideo() {
+      await this.player.playVideo()
+    },
+    async stopVideo() {
+      await this.player.stopVideo()
+    },
     previousPage() {
-      this.$router.go(-1)
+      this.$router.push('/main')
     },
     ellipsisMenu() {
       this.isMenu = !this.isMenu
@@ -107,12 +166,14 @@ export default {
       let textArea = document.getElementById('content')
       textArea.readOnly = false
       textArea.focus()
+      this.tempContent = this.diary.diaryInfo.content
       this.isUpdate = true
     },
     cancelUpdate() {
       let textArea = document.getElementById('content')
       textArea.readOnly = true
       this.isUpdate = false
+      this.diary.diaryInfo.content = this.tempContent
     },
     async submitForm() {
       let date =
@@ -143,9 +204,24 @@ export default {
           console.log('I was closed by the timer')
         }
       })
-      const response = await updateDiary(data)
+      let response = await updateDiary(data)
       console.log(response)
-      this.$router.push(`/diary/${this.$route.params.date}/music`)
+      if (response == 'error') {
+        this.$swal({
+          icon: 'error',
+          title: '분석 실패',
+          text: '다시 일기를 작성해주세요.',
+          target: '#read-diary',
+          width: '370px',
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
+      } else {
+        this.$router.push(
+          `/diary/${this.$route.params.date}/${response.data['diary_id']}/music`,
+        )
+      }
     },
     showAlert() {
       // Use sweetalert2
@@ -164,6 +240,46 @@ export default {
           this.submitForm()
         }
       })
+    },
+    showDelete() {
+      this.$swal({
+        title: '삭제하시겠습니까?',
+        icon: 'warning',
+        target: '#read-diary',
+        width: '370px',
+        customClass: {
+          container: 'modal-custom',
+        },
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '삭제',
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.$swal({
+            icon: 'success',
+            title: '삭제 완료되었습니다.',
+            showConfirmButton: false,
+            target: '#read-diary',
+            width: '370px',
+            timer: 1500,
+            customClass: {
+              container: 'modal-custom',
+            },
+          })
+          setTimeout(() => {
+            this.submitDelete()
+          }, 1500)
+        }
+      })
+    },
+    async submitDelete() {
+      const data = {
+        diary_id: this.diary.diaryInfo.diary_id,
+      }
+      console.log(data)
+      await deleteDiary(data)
+      this.$router.push('/main')
     },
   },
 }

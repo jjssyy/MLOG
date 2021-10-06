@@ -27,7 +27,6 @@
 
 .user {
   min-height: 100%;
-  padding-top: 50px;
   box-sizing: border-box;
   /*로그인*/
 }
@@ -37,11 +36,16 @@
   font-weight: 500;
 }
 
+.user#login .loginBox {
+  background-image: url("../..//assets/images/loginImage.png");
+  background-size: 100% 320px;
+  background-repeat: no-repeat;
+}
+
 .user#login .loginBox .logo {
   display: inline-block;
-  width: 220px;
-  height: 170px;
-  background-color: #DAEEDE;
+  width: 100%;
+  height: 400px;
 }
 
 .user#login .loginBox h1 {
@@ -95,5 +99,33 @@
 
 .user#login .loginBox .sns-login .login-logo #kakao-login img {
   margin-top: 12px;
+}
+
+.image-animation img {
+  transition: all 0.5s;
+}
+
+.image-animation img:hover {
+  transform: scale(1.1);
+}
+
+.loginContentBox {
+  margin-top: 58%;
+  height: 300px;
+  border-radius: 2.5rem;
+  background-color: white;
+}
+
+.loginContentBox .loginText {
+  padding: 1rem 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.introText {
+  font-weight: bolder;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+  font-size: 1.3rem;
 }
 /*# sourceMappingURL=user.css.map */

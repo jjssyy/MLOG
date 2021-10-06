@@ -8,7 +8,12 @@
     <!-- Content -->
     <ReadContent :diary="content"></ReadContent>
     <!-- additional Content -->
-    <ReadAddContent :diary="addContent"></ReadAddContent>
+
+    <ReadAddContent
+      :isRecdDiary="isRecdDiary"
+      :diary="addContent"
+    ></ReadAddContent>
+
     <div v-if="isClkDelBtn">
       <DeleteModal @answer="confirmDelete"></DeleteModal>
     </div>
@@ -35,8 +40,9 @@ export default {
   data() {
     return {
       content: { diaryInfo: { content: '', sentiment: 0 } },
-      addContent: {},
+      addContent: { diaryDate: 'loading' },
       isClkDelBtn: false,
+      isRecdDiary: true,
     }
   },
   methods: {
@@ -44,30 +50,44 @@ export default {
       this.isClkDelBtn = true
     },
     async confirmDelete(answer) {
-      // true면 삭제해라.
       if (answer) {
         const response = await deleteDiary()
         console.log(response)
       }
     },
+    async fetchCreated() {
+      let date =
+        this.$route.params.date.substring(0, 4) +
+        '-' +
+        this.$route.params.date.substring(4, 6) +
+        '-' +
+        this.$route.params.date.substring(6, 8)
+
+      const data = {
+        date: date,
+      }
+      console.log(data)
+      console.log(this.$store.state.uid)
+      const response = await fetchDiary(this.$store.state.uid, data)
+      console.log(response.data)
+      this.content = response.data
+      if (response.data.recommendDiary == null) {
+        this.isRecdDiary = false
+      } else {
+        this.addContent = response.data.recommendDiary
+        this.isRecdDiary = true
+      }
+    },
   },
   async created() {
-    let date =
-      this.$route.params.date.substring(0, 4) +
-      '-' +
-      this.$route.params.date.substring(4, 6) +
-      '-' +
-      this.$route.params.date.substring(6, 8)
-
-    const data = {
-      date: date,
-    }
-    console.log(data)
-    console.log(this.$store.state.uid)
-    const response = await fetchDiary(this.$store.state.uid, data)
-    console.log(response.data)
-    this.content = response.data
-    this.addContent = response.data.recommendDiary
+    await this.fetchCreated()
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path !== from.path) {
+        this.fetchCreated()
+      }
+    },
   },
 }
 </script>
