@@ -59,6 +59,7 @@ export default {
       const formData = new FormData()
       formData.append('uid', this.uid)
       formData.append('nickname', this.newNickname)
+      formData.append('filePath', this.tempImg)
 
       const file = document.getElementById('file').files[0]
       formData.append('image', file)
