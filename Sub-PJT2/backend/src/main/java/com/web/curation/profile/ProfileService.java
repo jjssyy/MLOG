@@ -38,7 +38,7 @@ public class ProfileService {
 	public List<MusicDto> getMyPlayList(String id){
 		List<MusicDto> result=new ArrayList<MusicDto>();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
-		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuth(userAuth);
+		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth);
 		for(int i=0;i<tmp_DiaryList.size();i++) {
 			MusicDto musicDto=new MusicDto();
 			DiaryMusic currentDiaryMusic=diaryMusicDao.getDiaryMusicByDiary(tmp_DiaryList.get(i));
@@ -51,7 +51,7 @@ public class ProfileService {
 	public List<DiaryDto> getMyDiary(String id){
 		List<DiaryDto> result =new ArrayList<DiaryDto>();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
-		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuth(userAuth);
+		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth);
 		for(int i=0;i<tmp_DiaryList.size();i++) {
 			DiaryDto tmpDiaryDto=new DiaryDto();
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiary(tmp_DiaryList.get(i));
