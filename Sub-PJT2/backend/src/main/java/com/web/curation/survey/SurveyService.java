@@ -85,19 +85,16 @@ public class SurveyService {
 
         UserProfile userProfile = memberProfileDao.getUserProfileByUserAuth(userAuth);
 
-        Optional<List<UserEmotion>> userEmotionList = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
+        Optional<List<UserEmotion>> userEmotionList = userEmotionDao.getUserEmotionByUserAuth(userAuth);
 
         if(!userProfile.isHasSurveyed() && !userEmotionList.isPresent()){
             throw new CustomException(ErrorCode.ALREADY_RESET_SURVEYED);
         }
 
-        List<UserEmotion> userEmotion = userEmotionList.get();
+        userEmotionDao.deleteUserEmotionByUserAuth(userAuth);
+
         userProfile.setHasSurveyedFalse();
         memberProfileDao.save(userProfile);
 
-        for(UserEmotion u : userEmotion){
-            u.setIsDeletedTrue();
-            userEmotionDao.save(u);
-        }
     }
 }

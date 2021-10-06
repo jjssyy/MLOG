@@ -20,8 +20,9 @@ public class UserEmotionService {
 
     public Optional<List<UserEmotion>> getUserEmotion(String uid){
         UserAuth userAuth = memberAuthDao.getUserAuthByUid(uid);
-        Optional<List<UserEmotion>> userEmotion = userEmotionDao.getUserEmotionByUserAuthAndIsDeletedIsFalse(userAuth);
+        Optional<List<UserEmotion>> userEmotion = userEmotionDao.getUserEmotionByUserAuth(userAuth);
 
         return userEmotion;
     }
+
 }

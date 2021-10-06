@@ -39,7 +39,8 @@ public class MusicController {
 	@ApiOperation(value="음악 최신화작업")
 	public String UpdateMusic() throws IOException, ParseException {
 		musicService.updateMusic();
-		return "heelo";
+		
+		return "Success";
 	}
 	@GetMapping("/{id}/{diary_id}/{mid}")
 	public ResponseEntity<Map<String, Object>> enrollMusic(

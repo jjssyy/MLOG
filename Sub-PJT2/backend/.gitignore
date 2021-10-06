@@ -14,6 +14,8 @@ target/
 .sts4-cache
 **/application.properties
 **/application-API-KEY.properties
+**/application.pid
+
 
 ### IntelliJ IDEA ###
 .idea
