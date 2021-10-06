@@ -62,7 +62,22 @@ export default {
       formData.append('filePath', this.tempImg)
 
       const file = document.getElementById('file').files[0]
-      formData.append('image', file)
+      if (this.isChange && file == null) {
+        this.$swal({
+          icon: 'warning',
+          title: '이미지를 선택해주세요',
+          showConfirmButton: false,
+          target: '.init-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
+        return
+      } else if (this.isChange) {
+        formData.append('image', file)
+      }
 
       let data = {
         uid: this.$store.state.uid,
