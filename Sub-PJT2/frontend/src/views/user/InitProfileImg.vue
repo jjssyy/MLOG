@@ -81,7 +81,6 @@ export default {
       UserApi.initProfile(
         data,
         res => {
-          console.log(res)
           this.$router.push({ name: 'SurveyStart' })
           this.$store.commit('CHANGEPROFILE', res.data.userInfo)
         },

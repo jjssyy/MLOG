@@ -230,7 +230,7 @@ export default {
             container: 'modal-custom',
           },
         })
-        this.$router.push({ name: 'Main' })
+        this.$router.push({ name: 'Main' }, 1500)
       }
     },
     selectGenre(idx) {
