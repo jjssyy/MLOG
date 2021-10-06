@@ -17,5 +17,5 @@ public interface DiaryDao extends JpaRepository<Diary, String>{
 
 	List<Diary> findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(UserAuth userAuth, LocalDate start, LocalDate end);
 	
-	List<Diary> getDiaryByUserAuth(UserAuth userAuth);
+	List<Diary> getDiaryByUserAuthAndIsDeletedIsFalse(UserAuth userAuth);
 }

@@ -22,10 +22,10 @@ public class MusicInfo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int mid;
 	
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, length = 255)
 	private String musicTitle;
 	
-	@Column(nullable = false, length = 32)
+	@Column(nullable = false, length = 255)
 	private String musicArtist;
 	
 	@Column(nullable = false, length = 255)

@@ -16,6 +16,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.web.curation.config.KeyConfig;
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import com.web.curation.music.MusicDao;
 import com.web.curation.music.MusicInfo;
 import io.swagger.models.auth.In;
@@ -66,9 +68,9 @@ public class DiaryService {
 		return result;
 	}
 	
-	public DiaryDto getSimilarDiary(DiaryDto dto) {
+	public DiaryDto getSimilarDiary(String uid,DiaryDto dto) {
 		DiaryDto result =new DiaryDto();
-		UserAuth userAuth =memberAuthDao.getUserAuthByUid(dto.getUid());
+		UserAuth userAuth =memberAuthDao.getUserAuthByUid(uid);
 		LocalDate startdate=dto.getDiaryDate().minusMonths(2);
 		LocalDate enddate=dto.getDiaryDate().minusDays(1);
 		List<Diary> diaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startdate, enddate);
@@ -105,7 +107,7 @@ public class DiaryService {
 		DiaryAnalytics diaryAnalytics =diaryAnalyticsDao.getDiaryAnalyticsByDiary(diary);
 		DiaryAnalyticsSentiment diaryAnalyticsSentiment=diaryAnalyticsSentimentDao.getDiaryAnalyticsSentimentByDiary(diary);
 		DiaryMusic diaryMusic = diaryMusicDao.getDiaryMusicByDiary(diary);
-		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary,diaryMusic );
+		result=DiaryAdapater.entityToDto(diaryAnalytics, diaryAnalyticsSentiment, diary,diaryMusic);
 //		
 		return result;
 	}
@@ -118,10 +120,13 @@ public class DiaryService {
 		float[] emotion=new float[5];
 		emotion=find(content);
 		DiaryDto dto=new DiaryDto();
-		dto.setContent(content);;
+		dto.setContent(content);
 		dto=getSentiment(dto);
+
+		if(emotion == null) throw new CustomException(ErrorCode.ANALYSIS_NOT_WORKING);
 		
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(Uid);
+
 		Diary diary_info=Diary.builder()
 				.userAuth(userAuth)
 				.content(content)
