@@ -1,0 +1,308 @@
+@media (max-width: 580px) {
+  .profile {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 580px) {
+  .myinfo {
+    width: 100%;
+    height: 100%;
+  }
+  .myinfo-update {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+@media (min-width: 580px) {
+  .myinfo {
+    height: 700px;
+  }
+  .myinfo-update {
+    height: 700px;
+  }
+}
+
+.profile {
+  background-color: #DAEEDE;
+}
+
+.profile .profile-header2 {
+  height: 17%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.profile .profile-header2 .back {
+  display: flex;
+  margin: 5px 0px 73px 0px;
+}
+
+.profile .profile-header2 .userinfo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.profile .profile-header2 .userinfo h2 {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.profile .profile-header2 .userinfo #header-img {
+  position: relative;
+  width: 65px;
+  margin-left: 0.5rem;
+}
+
+.profile .profile-header2 .userinfo #header-img:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.profile .profile-header2 .userinfo #header-img > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.profile .profile-header2 .logout {
+  display: flex;
+  align-items: flex-end;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin: 0px 20px 5px 0px;
+}
+
+.profile .profile-contents {
+  height: 83%;
+  background-color: white;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+  padding-top: 10px;
+}
+
+.profile .profile-contents .task {
+  padding: 35px 35px 20px 35px;
+  text-align: start;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.profile .profile-contents .task h1 {
+  font-size: 1.5rem;
+}
+
+.profile .profile-contents .task h2 {
+  margin: 10px 0 10px 0;
+}
+
+.profile .profile-contents .task h2 span {
+  cursor: pointer;
+}
+
+.profile .profile-contents .task svg {
+  margin-right: 10px;
+}
+
+.profile .profile-contents .task2 {
+  padding: 35px;
+  text-align: start;
+}
+
+.profile .profile-contents .task2 h2 {
+  margin: 10px 0 10px 0;
+}
+
+.profile .profile-contents .task2 h2 span {
+  cursor: pointer;
+}
+
+.profile .profile-contents .task2 svg {
+  margin-right: 10px;
+}
+
+.profile .profile-contents .subtask {
+  text-align: start;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem 1rem 0 0;
+}
+
+.profile-header #header-img {
+  position: relative;
+  width: 40px;
+  margin-left: 0.5rem;
+}
+
+.profile-header #header-img:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.profile-header #header-img > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.myinfo {
+  background-color: #DAEEDE;
+  width: 100%;
+  position: relative;
+}
+
+.myinfo .profile-img {
+  z-index: 1;
+  position: absolute;
+  height: 17%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myinfo .profile-img h2 {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+  margin-top: 2rem;
+}
+
+.myinfo .profile-img h2 svg {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.myinfo #header-img {
+  position: relative;
+  width: 65px;
+  margin-left: 0.5rem;
+  margin-right: 8px;
+}
+
+.myinfo #header-img:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.myinfo #header-img > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.myinfo .myinfo-header {
+  height: 8.5%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.myinfo .myinfo-header .back {
+  z-index: 2;
+  margin-top: 0px;
+}
+
+.myinfo .myinfo-header .userinfo {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+.myinfo .myinfo-header .userinfo h2 {
+  margin-left: 1rem;
+}
+
+.myinfo .myinfo-contents {
+  height: 91.5%;
+  background-color: white;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+  padding-top: 55px;
+}
+
+.myinfo .myinfo-contents .userinfo {
+  text-align: start;
+}
+
+.myinfo .myinfo-contents .userinfo .content {
+  padding: 35px 50px 30px 50px;
+}
+
+.myinfo .myinfo-contents .userinfo .content h1 {
+  font-size: 1.4rem;
+}
+
+.myinfo .myinfo-contents .userinfo .content h2 {
+  margin-top: 7px;
+  font-size: 1.15rem;
+}
+
+.myinfo .myinfo-contents .userinfo p {
+  padding: 300px 50px 30px 50px;
+  font-size: 1rem;
+  color: grey;
+}
+
+.myinfo .myinfo-contents .userinfo p span {
+  cursor: pointer;
+}
+
+.myinfo-update .back {
+  background-color: white;
+  margin-top: 5px;
+  display: block;
+}
+
+.myinfo-update .update-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.myinfo-update .update-contents #header-img {
+  position: relative;
+  width: 100px;
+  margin-bottom: 30px;
+}
+
+.myinfo-update .update-contents #header-img:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.myinfo-update .update-contents #header-img > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.myinfo-update .update-contents input {
+  border: none;
+  border-bottom: 1px solid black;
+  text-align: center;
+  font-size: 20px;
+}
+
+.myinfo-update .update-contents .save {
+  margin-top: 45px;
+  font-size: 20px;
+}
+/*# sourceMappingURL=profile.css.map */

@@ -2,9 +2,14 @@ import { instance } from '@/util/index'
 
 // 일기 작성 API
 function createDiary(uid, data) {
-  return instance.post(
-    `/diary/${uid}?content=${data.content}&date=${data.date}`,
-  )
+  return instance
+    .post(`/diary/${uid}?content=${data.content}&date=${data.date}`)
+    .then(res => {
+      return res
+    })
+    .catch(() => {
+      return 'error'
+    })
 }
 
 // 특정 일기 불러오기 API
@@ -14,9 +19,16 @@ function fetchDiary(uid, data) {
 
 // 특정 일기 수정하기 API
 function updateDiary(data) {
-  return instance.post(
-    `/diary/${data['diary_id']}/edit?content=${data['content']}&date=${data['date']}`,
-  )
+  return instance
+    .post(
+      `/diary/${data['diary_id']}/edit?content=${data['content']}&date=${data['date']}`,
+    )
+    .then(res => {
+      return res
+    })
+    .catch(() => {
+      return 'error'
+    })
 }
 
 // 특정 일기 삭제하기 API

@@ -19,6 +19,18 @@ const router = new VueRouter({
   mode: 'history',
 })
 
+router.beforeEach((to, from, next) => {
+  console.log(from)
+  if (to.meta.auth && !store.state.token) {
+    next('/')
+    return
+  } else if (!to.meta.auth && store.state.token) {
+    router.go(-1)
+  } else {
+    next()
+  }
+})
+
 new Vue({
   router,
   store,

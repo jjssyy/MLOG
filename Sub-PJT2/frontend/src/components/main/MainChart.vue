@@ -3,7 +3,7 @@
     <div class="container-box">
       <!-- <p>MainChart 컴포넌트이다.</p>
     <p>chart: {{ chart }}</p> -->
-      <div class="chart-box-one">
+      <div class="chart-box-one testing">
         <p class="my-sub-title" style="margin-bottom:1rem;">
           {{ chart.month }}월 일기 감정 비율
         </p>
