@@ -10,6 +10,8 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.web.curation.error.CustomException;
+import com.web.curation.error.ErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,9 @@ public class MemberController {
 
         String token = getKakaoToken(code);
         Map<String, String> userInfo = getKaKaoUserInfo(token);
+
+        if(userInfo.get("email") == null) throw new CustomException(ErrorCode.NEED_EMAIL);
+
         Optional<MemberDto> dto = memberService.getMemberByEmail(userInfo.get("email"));
 
         if(!dto.isPresent()){
