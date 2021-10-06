@@ -46,7 +46,6 @@ export default {
       id: this.uid,
     }
     const response = await getMyDiary(data)
-    console.log(response.data)
     this.myDiaryList = response.data.DiaryList
   },
   methods: {
