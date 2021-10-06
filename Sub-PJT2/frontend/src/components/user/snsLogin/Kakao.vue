@@ -43,9 +43,8 @@ export default {
         },
         (err) => {
           console.log(err);
-          console.log(err.code);
-          console.log(err.httpStatus);
-          if(err.code == 409){
+          console.log(err.response.status);
+          if(err.response.status == 409){
             window.location.replace(
         "https://kauth.kakao.com/oauth/authorize?client_id=2e422a8e10fb191d40ff2b6fb7439b41&redirect_uri=http://j5c104.p.ssafy.io&response_type=code&scope=account_email"
       );
