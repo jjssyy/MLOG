@@ -32,5 +32,5 @@ export default {
   methods: {
     onLogin() {},
   },
-};
+}
 </script>
