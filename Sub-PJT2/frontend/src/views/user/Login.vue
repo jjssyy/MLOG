@@ -5,8 +5,8 @@
       <div class="loginContentBox">
         <p class="introText">
           <span class="intro">
-            하루를
-            <br />음악으로 <br />기록하다<br />
+            음악으로
+            <br />하루를<br />기록하다<br />
           </span>
           <span class="mlog">MLOG</span>
         </p>
