@@ -42,7 +42,7 @@
   text-align: center;
 }
 
-@media (max-width: 580px) {
+@media (max-width: 480px) {
   #app {
     height: 100%;
     width: 100%;
@@ -63,7 +63,7 @@ body {
   font-size: 14px;
   height: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   user-select: none;
 }
 

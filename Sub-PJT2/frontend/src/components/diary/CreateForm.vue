@@ -3,7 +3,16 @@
     <div class="diary-content">
       <textarea id="content" type="text" v-model="content"></textarea>
     </div>
-    <button class="diary-btn" @click="showAlert">작성 완료</button>
+    <div :class="{ 'error-text': textLength > 255 ? true : false }">
+      {{ textLength }}/255
+    </div>
+    <button
+      :disabled="!content || textLength > 255"
+      class="diary-btn"
+      @click="showAlert"
+    >
+      작성 완료
+    </button>
   </div>
 </template>
 
@@ -12,7 +21,7 @@ import { createDiary } from '@/api/diary.js'
 export default {
   data() {
     return {
-      content: null,
+      content: '',
       loading: false,
     }
   },
@@ -47,9 +56,24 @@ export default {
           console.log('I was closed by the timer')
         }
       })
-      const response = await createDiary(this.$store.state.uid, data)
+      let response = await createDiary(this.$store.state.uid, data)
       console.log(response)
-      this.$router.push(`/diary/${this.$route.params.date}/music`)
+      if (response == 'error') {
+        this.$swal({
+          icon: 'error',
+          title: '분석 실패',
+          text: '다시 일기를 작성해주세요.',
+          target: '#create-diary',
+          width: '370px',
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
+      } else {
+        this.$router.push(
+          `/diary/${this.$route.params.date}/${response.data['diary_id']}/music`,
+        )
+      }
     },
     testing() {
       console.log('완료..')
@@ -71,6 +95,11 @@ export default {
           this.submitForm()
         }
       })
+    },
+  },
+  computed: {
+    textLength() {
+      return this.content.length
     },
   },
 }
