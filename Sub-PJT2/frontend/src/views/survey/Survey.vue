@@ -102,6 +102,7 @@ export default {
     SurveyApi.getSurveyMusicList(
       res => {
         this.musicList = res.data.Survey
+        console.log(this.musicList)
       },
       err => {
         console.log(err)

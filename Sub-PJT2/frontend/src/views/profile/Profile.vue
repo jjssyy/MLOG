@@ -116,7 +116,7 @@ export default {
           '설문조사 초기화를 하시면 지금까지의 추천 데이터가 다 사라집니다. 그래도 초기화하겠습니까?',
         showConfirmButton: true,
         showCancelButton: true,
-        target: '.myinfo',
+        target: '.profile',
         width: '370px',
         customClass: {
           container: 'modal-custom',
