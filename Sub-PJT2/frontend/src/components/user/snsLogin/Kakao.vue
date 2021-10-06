@@ -43,7 +43,7 @@ export default {
         },
         (err) => {
           console.log(err);
-          console.log(error.headers.status);
+          console.log(err.headers.status);
           console.log(err.response.status);
           if(err.response.status == 409){
             console.log("in");
