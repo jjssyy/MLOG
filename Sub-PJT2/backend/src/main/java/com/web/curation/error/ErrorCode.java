@@ -15,7 +15,8 @@ public enum ErrorCode {
     /* 409 CONFLICT : Resource 의 현재 상태와 충돌. 중복된 데이터 존재 */
     ALREADY_SURVEYED(HttpStatus.CONFLICT,"이미 설문조사를 완료한 사용자입니다."),
     ALREADY_RESET_SURVEYED(HttpStatus.CONFLICT,"이미 설문조사를 초기화한 사용자입니다."),
-    ANALYSIS_NOT_WORKING(HttpStatus.CONFLICT, "분석이 작동하지 않습니다 다시 시도해주세요")
+    ANALYSIS_NOT_WORKING(HttpStatus.CONFLICT, "분석이 작동하지 않습니다 다시 시도해주세요"),
+    NEED_EMAIL(HttpStatus.CONFLICT, "이메일이 필요합니다")
 
 
     ;
