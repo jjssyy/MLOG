@@ -3,8 +3,7 @@ import store from '@/vuex/store'
 
 function createInstance() {
   return axios.create({
-    // baseURL: process.env.VUE_APP_API_URL,
-    baseURL: process.env.REMOTE_API_URL,
+    baseURL: process.env.VUE_APP_API_URL,
     headers: {
       'Content-type': 'application/json',
       token: store.state.token,
