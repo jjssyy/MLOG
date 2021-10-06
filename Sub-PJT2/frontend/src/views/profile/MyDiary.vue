@@ -47,6 +47,7 @@ export default {
     }
     const response = await getMyDiary(data)
     this.myDiaryList = response.data.DiaryList
+    console.log(this.myDiaryList)
   },
   methods: {
     goProfile() {

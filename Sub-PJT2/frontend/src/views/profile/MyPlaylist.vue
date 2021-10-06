@@ -87,6 +87,7 @@ export default {
     }
     const response = await getMyPlaylist(data)
     this.myPlayList = response.data.MusicInfoList
+    console.log(this.myPlayList)
   },
   methods: {
     goProfile() {
