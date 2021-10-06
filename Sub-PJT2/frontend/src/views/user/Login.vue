@@ -7,7 +7,7 @@
           과거를 회상
           <br />현재를 기억 <br />미래를 계획
         </p>
-        <p class="loginText">Log in <span>to your account</span></p>
+        <p class="loginText">Log in <span>to your acount</span></p>
 
         <kakaoLogin />
         <GoogleLogin />
