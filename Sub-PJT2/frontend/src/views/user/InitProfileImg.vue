@@ -54,10 +54,21 @@ export default {
       const formData = new FormData()
       formData.append('uid', this.$store.state.uid)
       formData.append('nickname', this.$store.state.initNickname)
+      formData.append('filePath', this.profileImg)
 
       const file = document.getElementById('file').files[0]
       if (this.isChange && file == null) {
-        this.$swal('이미지를 선택해주세요')
+        this.$swal({
+          icon: 'warning',
+          title: '이미지를 선택해주세요',
+          showConfirmButton: false,
+          target: '.init-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
         return
       } else if (this.isChange) {
         formData.append('image', file)

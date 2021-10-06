@@ -5,7 +5,9 @@
         <h1>당신의 음악 취향을</h1>
         <h1>알려주세요</h1>
       </div>
-      <div class="logo"></div>
+      <div class="survey-init">
+        <img src="@/assets/images/survey_init.gif" loop="infinite" />
+      </div>
       <div class="btn-box2">
         <button @click="prevPage">이전</button>
         <button @click="startSurvey">시작하기</button>

@@ -37,9 +37,29 @@ export default {
   methods: {
     nextPage() {
       if (this.nickname === 'defalut') {
-        this.$swal('이 닉네임은 사용할 수 없습니다. 다른 닉네임을 적어주세요.')
+        this.$swal({
+          icon: 'warning',
+          title: '이 닉네임은 사용할 수 없습니다. 다른 닉네임을 적어주세요.',
+          showConfirmButton: false,
+          target: '.init-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
       } else if (this.nickname === '') {
-        this.$swal('닉네임을 1자 이상 적어주세요.')
+        this.$swal({
+          icon: 'warning',
+          title: '닉네임을 1자 이상 적어주세요.',
+          showConfirmButton: false,
+          target: '.init-box',
+          width: '370px',
+          timer: 1500,
+          customClass: {
+            container: 'modal-custom',
+          },
+        })
       } else {
         this.$store.state.initNickname = this.nickname
         this.$router.push({ name: 'InitProfileImg' })

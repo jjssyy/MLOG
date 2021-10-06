@@ -54,14 +54,27 @@
     align-items: center;
     width: 100%;
     input{
+      font-weight: 400;
       width: 40%;
       height: 30px;
       border: none;
       background-color: #e9e9e9;
       border-radius: 10px;
+      cursor: pointer;
+      &:hover {
+        animation-name: btnHover;
+        animation-duration: 0.2s;
+        animation-fill-mode: forwards;
+      }
     }
     span{
       margin: 10px;
+    }
+  }
+  .report-ment{
+    margin: 60px;
+    h2{
+      font-size: 1.4rem;
     }
   }
 }
