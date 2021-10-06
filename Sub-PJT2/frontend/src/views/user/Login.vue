@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import "../../components/css/user.scss";
-import KakaoLogin from "../../components/user/snsLogin/Kakao.vue";
-import GoogleLogin from "../../components/user/snsLogin/Google.vue";
+import '../../components/css/user.scss'
+import KakaoLogin from '../../components/user/snsLogin/Kakao.vue'
+import GoogleLogin from '../../components/user/snsLogin/Google.vue'
 // import UserApi from '../../api/UserApi'
 
 export default {
