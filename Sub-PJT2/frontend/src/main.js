@@ -25,7 +25,7 @@ router.beforeEach((to, from, next) => {
     next('/')
     return
   } else if (!to.meta.auth && store.state.token) {
-    router.go(-1)
+    router.push('/main')
   } else {
     next()
   }
