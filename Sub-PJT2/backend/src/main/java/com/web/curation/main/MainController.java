@@ -68,7 +68,7 @@ public class MainController {
             DiaryAnalyticsSentiment diaryAnalyticsSentiment = diaryService.getDiaryAnalyticsSentiment(diaryId);
             MusicInfo musicInfo = diaryService.getMusicInfo(diary);
 
-            mainDiaryDto.setDate(diary.getDiaryDate());
+            mainDiaryDto.setDate(diary.getDiaryDate().toString());
             mainDiaryDto.setSentiment(diaryAnalyticsSentiment.getSentiment());
             mainDiaryDto.setAccuracy(diaryAnalyticsSentiment.getAccuracy());
             mainDiaryDto.setMusic_title(musicInfo.getMusicTitle());

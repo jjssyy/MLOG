@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainDiaryDto {
-    private LocalDate date;
+    private String date;
     private float sentiment;
     private float accuracy;
     private String music_title;
