@@ -10,14 +10,14 @@
       <h1>들으시나요? (최대 3가지)</h1>
     </div>
     <div class="music-list">
-      <div class="video-container">
-        <youtube
-          id="genre-music"
-          :video-id="musicVideoId || defaultVideo"
-          :player-vars="playerVars"
-          ref="youtube"
-        ></youtube>
-      </div>
+      <!-- <div class="video-container"> -->
+      <youtube
+        id="genre-music"
+        :video-id="musicVideoId || defaultVideo"
+        :player-vars="playerVars"
+        ref="youtube"
+      ></youtube>
+      <!-- </div> -->
       <div class="player-item" v-for="(musicItem, idx) in musicList" :key="idx">
         <div
           id="playerdiv"
@@ -75,6 +75,7 @@ export default {
       playerVars: {
         autoplay: 1,
         loop: 1,
+        // playsinline: 1,
       },
       musicVideoId: '',
       defaultVideo: '',
@@ -108,22 +109,96 @@ export default {
         trot: '트로트',
       },
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-      musicList: [],
+      musicList: [
+        {
+          genre: 'ballad',
+          videoId: '-rM5JjNfPHA',
+          musicTitle: '바라만 본다',
+          musicArtist: 'MSG워너비(M.O.M)',
+        },
+        {
+          genre: 'ccm',
+          videoId: 'pZuW2CV0mXY',
+          musicTitle: '은혜 (Feat. 지선,이윤화,하니,강찬,아이빅밴드)',
+          musicArtist: '손경민',
+        },
+        {
+          genre: 'classic',
+          videoId: 'ZE02URmNh8o',
+          musicTitle: '브람스: 자장가 (피아노와 오르골)',
+          musicArtist: '자장가',
+        },
+        {
+          genre: 'dance_electronic',
+          videoId: '4TWR90KJl84',
+          musicTitle: 'Next Level',
+          musicArtist: 'aespa',
+        },
+        {
+          genre: 'folk_blues',
+          videoId: 'K9_VFxzCuQ0',
+          musicTitle: 'Gone',
+          musicArtist: '로제 (ROSÉ)',
+        },
+        {
+          genre: 'hiphop',
+          videoId: 'N6ElB8ysTXM',
+          musicTitle: 'OHAYO MY NIGHT',
+          musicArtist: '디핵 (D-Hack)',
+        },
+        {
+          genre: 'indie',
+          videoId: 'LCBsfLaJl-A',
+          musicTitle: '밤하늘의 별을 (2020)',
+          musicArtist: '경서',
+        },
+        {
+          genre: 'newage',
+          videoId: 'LmxBwGqCn2g',
+          musicTitle: '자장가 (슈베르트) (클래식 피아노)',
+          musicArtist: '자장가',
+        },
+        {
+          genre: 'pop_acoustic',
+          videoId: 'HzOjwL7IP_o',
+          musicTitle: 'Dun Dun Dance',
+          musicArtist: '오마이걸 (OH MY GIRL)',
+        },
+        {
+          genre: 'rock_metal',
+          videoId: 'Fc9fVi-_DWE',
+          musicTitle: '신호등',
+          musicArtist: '이무진',
+        },
+        {
+          genre: 'r_n_b',
+          videoId: '8GPAW4dMxsY',
+          musicTitle: '헤픈 우연',
+          musicArtist: '헤이즈 (Heize)',
+        },
+        {
+          genre: 'trot',
+          videoId: 'kSzraUekkNE',
+          musicTitle: '이제 나만 믿어요',
+          musicArtist: '임영웅',
+        },
+      ],
+      // musicList: [],
     }
   },
   props: {
     survey_num: String,
   },
   async created() {
-    SurveyApi.getSurveyMusicList(
-      res => {
-        this.musicList = res.data.Survey
-        console.log(this.musicList)
-      },
-      err => {
-        console.log(err)
-      },
-    )
+    // SurveyApi.getSurveyMusicList(
+    //   res => {
+    //     this.musicList = res.data.Survey
+    //     console.log(this.musicList)
+    //   },
+    //   err => {
+    //     console.log(err)
+    //   },
+    // )
   },
   methods: {
     async endSurvey() {
@@ -322,7 +397,7 @@ export default {
   },
 }
 </script>
-<style>
+<style scoped>
 .video-container {
   position: relative;
   padding-bottom: 0%;
