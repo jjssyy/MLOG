@@ -10,13 +10,14 @@
       <h1>들으시나요? (최대 3가지)</h1>
     </div>
     <div class="music-list">
-      <youtube
-        id="genre-music"
-        :video-id="musicVideoId || defaultVideo"
-        :player-vars="playerVars"
-        ref="youtube"
-        style="display:none;"
-      ></youtube>
+      <div class="video-container">
+        <youtube
+          id="genre-music"
+          :video-id="musicVideoId || defaultVideo"
+          :player-vars="playerVars"
+          ref="youtube"
+        ></youtube>
+      </div>
       <div class="player-item" v-for="(musicItem, idx) in musicList" :key="idx">
         <div
           id="playerdiv"
@@ -73,7 +74,7 @@ export default {
       surveyMusicSelect: Array.from(Array(5), () => Array(3).fill(null)),
       playerVars: {
         autoplay: 1,
-        playsinline: 1,
+        loop: 1,
       },
       musicVideoId: '',
       defaultVideo: '',
@@ -194,11 +195,9 @@ export default {
           params: { survey_num: String(survey_num) },
         })
         this.stopingIdx()
-        this.musicVideoId = ''
         this.selected(survey_num)
       } else {
         this.stopingIdx()
-        this.musicVideoId = ''
         this.count = 0
         this.$router.push({ name: 'SurveyStart' })
       }
@@ -213,7 +212,6 @@ export default {
             params: { survey_num: String(survey_num) },
           })
           this.stopingIdx()
-          this.musicVideoId = ''
           this.selected(survey_num)
         } else {
           this.$swal({
@@ -231,7 +229,6 @@ export default {
       } else {
         this.selectMusicList(this.survey_num)
         this.stopingIdx()
-        this.musicVideoId = ''
         this.count = 0
         this.endSurvey()
         this.$swal({
@@ -275,6 +272,7 @@ export default {
     async playVideo(idx) {
       this.musicVideoId = this.musicList[idx].videoId
       await this.playingIdx(idx)
+      await this.player.playVideo()
     },
     async stopVideo(idx) {
       this.$set(this.playing, idx, 0)
@@ -324,3 +322,22 @@ export default {
   },
 }
 </script>
+<style>
+.video-container {
+  position: relative;
+  padding-bottom: 0%;
+  padding-top: 0px;
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 0%;
+}
+</style>

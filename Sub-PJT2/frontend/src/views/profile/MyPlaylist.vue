@@ -14,13 +14,14 @@
           </span>
         </h1>
       </div>
-      <youtube
-        id="genre-music"
-        :video-id="musicVideoId || defaultVideo"
-        :player-vars="playerVars"
-        ref="youtube"
-        style="display:none;"
-      ></youtube>
+      <div class="video-container">
+        <youtube
+          id="genre-music"
+          :video-id="musicVideoId || defaultVideo"
+          :player-vars="playerVars"
+          ref="youtube"
+        ></youtube>
+      </div>
       <div class="myplay-list">
         <div v-for="(myPlay, idx) in myPlayList" :key="idx">
           <div class="myplay-item">

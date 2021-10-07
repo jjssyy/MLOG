@@ -62,12 +62,13 @@
           </div>
         </div>
         <div class="play-stop-btn">
-          <youtube
-            id="genre-music"
-            :video-id="diary.diaryInfo.videoId"
-            ref="youtube"
-            style="display:none;"
-          ></youtube>
+          <div class="video-container">
+            <youtube
+              id="genre-music"
+              :video-id="diary.diaryInfo.videoId"
+              ref="youtube"
+            ></youtube>
+          </div>
           <button v-if="isStop" class="btn-reset" @click="playStart">
             <span>
               <i class="fas fa-play fa-lg"></i>
