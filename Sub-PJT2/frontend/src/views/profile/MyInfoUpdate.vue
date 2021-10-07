@@ -40,7 +40,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['nickname', 'filePath', 'uid']),
+    ...mapState(['nickname', 'filePath', 'uid', 'hasSurveyed']),
   },
   created() {
     this.newNickname = this.nickname
@@ -60,6 +60,7 @@ export default {
       formData.append('uid', this.uid)
       formData.append('nickname', this.newNickname)
       formData.append('filePath', this.tempImg)
+      formData.append('hasSurveyed', this.hasSurveyed)
 
       const file = document.getElementById('file').files[0]
       if (this.isChange && file == null) {
