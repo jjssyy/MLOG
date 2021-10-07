@@ -1,6 +1,7 @@
 package com.web.curation.diary;
 
 import java.time.LocalDate;
+import org.springframework.data.domain.Sort;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,5 @@ public interface DiaryDao extends JpaRepository<Diary, String>{
 
 	List<Diary> findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(UserAuth userAuth, LocalDate start, LocalDate end);
 	
-	List<Diary> getDiaryByUserAuthAndIsDeletedIsFalse(UserAuth userAuth);
+	List<Diary> getDiaryByUserAuthAndIsDeletedIsFalse(UserAuth userAuth,Sort sort);
 }
