@@ -75,6 +75,7 @@ https://descriptive-palm-574.notion.site/30361e28d9d44efead2413ffd1d4e0bf?v=79cc
         <li>spring-cloud-starter-aws : 2.2.5</li>
         <li>lombok</li>
         <li>mysql : 8.0.22</li>
+        <li>redis </li>
     </ul>
 </details>
 
@@ -127,7 +128,13 @@ https://descriptive-palm-574.notion.site/30361e28d9d44efead2413ffd1d4e0bf?v=79cc
 
   <details>
       <summary>개발, CI/CD 자세히 살펴보기 🔥</summary>
+      <ul>
+          <li>AWS-EC2</li>
+          <li>Jenkins</li>
+          <li>Docker</li>
+      </ul>
   </details>
+
 
 -------------------------------------------------
 
