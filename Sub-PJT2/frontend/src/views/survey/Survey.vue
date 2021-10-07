@@ -323,7 +323,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 .video-container {
   position: relative;
   padding-bottom: 0%;
