@@ -69,7 +69,7 @@ public class MemberController {
 
     private int cancelKakao(String token){
         int id = -1;
-        String reqURL = "https://kapi.kakao.com/v2/user/me";
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
 
         try {
             URL url = new URL(reqURL);
