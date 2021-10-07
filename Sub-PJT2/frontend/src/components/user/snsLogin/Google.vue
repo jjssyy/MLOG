@@ -60,14 +60,14 @@ export default {
         res => {
           this.$store.commit('SAVE_TOKEN', data.id_token)
           this.$store.commit('LOGIN', res.data['User Dto'])
-          if (this.hasSurveyed) {
-            if (this.nickname == 'defalut') {
-              this.$router.push({ name: 'InitNickname' })
-            } else {
-              this.$router.push({ name: 'Main' })
-            }
-          } else {
+          if (this.nickname == 'defalut') {
             this.$router.push({ name: 'InitNickname' })
+          } else {
+            if (this.hasSurveyed) {
+              this.$router.push({ name: 'Main' })
+            } else {
+              this.$router.push({ name: 'SurveyStart' })
+            }
           }
         },
         err => {
