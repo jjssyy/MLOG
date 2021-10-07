@@ -46,7 +46,10 @@ public class MemberController {
         String token = getKakaoToken(code);
         Map<String, String> userInfo = getKaKaoUserInfo(token);
 
-        if(userInfo.get("email") == null) throw new CustomException(ErrorCode.NEED_EMAIL);
+        if(userInfo.get("email") == null){
+            int id = cancelKakao(token);
+            throw new CustomException(ErrorCode.NEED_EMAIL);
+        }
 
         Optional<MemberDto> dto = memberService.getMemberByEmail(userInfo.get("email"));
 
@@ -61,6 +64,41 @@ public class MemberController {
         resultMap.put("token", token);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    private int cancelKakao(String token){
+        int id = -1;
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            StringBuilder result = new StringBuilder();
+
+            while ((line = br.readLine()) != null) {
+                result.append(line);
+            }
+
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result.toString());
+
+            JsonObject idObject = element.getAsJsonObject().getAsJsonObject();
+
+            id = element.getAsJsonObject().get("id").getAsInt();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
     private String getKakaoToken(String code) {
