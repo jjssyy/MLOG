@@ -40,29 +40,7 @@ export default {
   data() {
     return {
       content: { diaryInfo: { content: '', sentiment: 0 } },
-      // addContent: { diaryDate: 'loading' },
-      addContent: {
-        diaryDate: '2020-12-23',
-        content: '오늘은 싸피에 합격한 날.!!!!!',
-        accuracy: 0.9,
-        anger: -2.1,
-        deleted: false,
-        diary_id: 78,
-        fear: -2.06,
-        filePath:
-          'https://cdn.music-flo.com/image/album/631/344/02/04/402344631_5c9d407c.jpg?1553809533669/dims/resize/75x75/quality/90',
-        joy: 7.99,
-        mid: 948,
-        musicArtist: '하니',
-        musicGenre: 'ccm',
-        musicTitle: '행복',
-        neutral: -0.91,
-        regDate: '2021-10-07',
-        sadness: -1.97,
-        sentiment: 0.9,
-        uid: 'G84911457228',
-        videoId: 'dXyb4YW8f-U',
-      },
+      addContent: { diaryDate: 'loading' },
       isClkDelBtn: false,
       isRecdDiary: true,
     }
@@ -96,7 +74,7 @@ export default {
       if (response.data.recommendDiary == null) {
         this.isRecdDiary = false
       } else {
-        // this.addContent = response.data.recommendDiary
+        this.addContent = response.data.recommendDiary
         this.isRecdDiary = true
       }
     },

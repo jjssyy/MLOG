@@ -1,12 +1,15 @@
 <template>
-  <div id="music-diary" style="height: 770px; overflow-y: scroll;">
+  <div
+    id="music-diary"
+    style="height: 770px; overflow-y: scroll; padding: 10px 8px;"
+  >
     <br />
     <div v-for="(music, index) in musicList" :key="music.id">
       <div v-if="index < 3">
         <h3
           v-if="index == 0"
           class="subtitle"
-          style="justify-content: space-between"
+          style="justify-content: space-between; padding: 0px 5px;"
         >
           <p>이 음악은 어때요?</p>
           <div class="center">
@@ -23,7 +26,11 @@
         ></MusicItem>
       </div>
       <div v-else>
-        <h3 v-if="index == 3" class="subtitle">
+        <h3
+          v-if="index == 3"
+          class="subtitle"
+          style="padding:0px 5px; margin-top: 30px;"
+        >
           <p>다른 분위기</p>
           <p>음악은 어때요?</p>
         </h3>

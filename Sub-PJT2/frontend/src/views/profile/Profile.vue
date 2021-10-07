@@ -1,5 +1,5 @@
 <template>
-  <div class="profile">
+  <div class="profile" style="height: 770px; overflow-y: scroll;">
     <div class="profile-header2">
       <button class="back" @click="goMain">
         <i class="fas fa-arrow-left fa-2x"></i>

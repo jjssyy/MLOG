@@ -37,7 +37,7 @@ public class MemberController {
 
     private static String client_id = "1417199790d5e442654d27578fe4e890";
     private static String google_client_id ="512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com";
-    private static String redirect_uri = "http://localhost:8081";
+    private static String redirect_uri = "http://j5c104.p.ssafy.io";
 
     @GetMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
@@ -46,7 +46,11 @@ public class MemberController {
         String token = getKakaoToken(code);
         Map<String, String> userInfo = getKaKaoUserInfo(token);
 
-        if(userInfo.get("email") == null) throw new CustomException(ErrorCode.NEED_EMAIL);
+        if(userInfo.get("email") == null){
+            int id = cancelKakao(token);
+            System.out.println(id);
+            throw new CustomException(ErrorCode.NEED_EMAIL);
+        }
 
         Optional<MemberDto> dto = memberService.getMemberByEmail(userInfo.get("email"));
 
@@ -61,6 +65,41 @@ public class MemberController {
         resultMap.put("token", token);
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    private int cancelKakao(String token){
+        int id = -1;
+        String reqURL = "https://kapi.kakao.com/v1/user/unlink";
+
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            conn.setRequestProperty("Authorization", "Bearer " + token);
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+            String line = "";
+            StringBuilder result = new StringBuilder();
+
+            while ((line = br.readLine()) != null) {
+                result.append(line);
+            }
+
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result.toString());
+
+            JsonObject idObject = element.getAsJsonObject().getAsJsonObject();
+
+            id = element.getAsJsonObject().get("id").getAsInt();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return id;
     }
 
     private String getKakaoToken(String code) {

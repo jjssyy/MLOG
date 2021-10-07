@@ -10,13 +10,14 @@
       <h1>들으시나요? (최대 3가지)</h1>
     </div>
     <div class="music-list">
-      <youtube
-        id="genre-music"
-        :video-id="musicVideoId || defaultVideo"
-        :player-vars="playerVars"
-        ref="youtube"
-        style="display:none;"
-      ></youtube>
+      <div class="video-container">
+        <youtube
+          id="genre-music"
+          :video-id="musicVideoId || defaultVideo"
+          :player-vars="playerVars"
+          ref="youtube"
+        ></youtube>
+      </div>
       <div class="player-item" v-for="(musicItem, idx) in musicList" :key="idx">
         <div
           id="playerdiv"
@@ -24,7 +25,7 @@
           @click="selectGenre(idx)"
         >
           <div>
-            {{ musicItem.genre }}
+            {{ genre_korea[musicItem.genre] }}
           </div>
         </div>
         <div class="play-button">
@@ -73,6 +74,8 @@ export default {
       surveyMusicSelect: Array.from(Array(5), () => Array(3).fill(null)),
       playerVars: {
         autoplay: 1,
+        loop: 1,
+        playsinline: 1,
       },
       musicVideoId: '',
       defaultVideo: '',
@@ -91,6 +94,20 @@ export default {
         false,
         false,
       ],
+      genre_korea: {
+        ballad: '발라드',
+        ccm: 'ccm',
+        classic: '클래식',
+        dance_electronic: '댄스',
+        folk_blues: '포크 블루스',
+        hiphop: '힙합',
+        indie: '인디',
+        newage: '뉴에이지',
+        pop_acoustic: '팝 어쿠스틱',
+        rock_metal: '락 메탈',
+        r_n_b: '알앤비',
+        trot: '트로트',
+      },
       playing: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       musicList: [],
     }
@@ -179,11 +196,9 @@ export default {
           params: { survey_num: String(survey_num) },
         })
         this.stopingIdx()
-        this.musicVideoId = ''
         this.selected(survey_num)
       } else {
         this.stopingIdx()
-        this.musicVideoId = ''
         this.count = 0
         this.$router.push({ name: 'SurveyStart' })
       }
@@ -198,7 +213,6 @@ export default {
             params: { survey_num: String(survey_num) },
           })
           this.stopingIdx()
-          this.musicVideoId = ''
           this.selected(survey_num)
         } else {
           this.$swal({
@@ -216,7 +230,6 @@ export default {
       } else {
         this.selectMusicList(this.survey_num)
         this.stopingIdx()
-        this.musicVideoId = ''
         this.count = 0
         this.endSurvey()
         this.$swal({
@@ -230,7 +243,9 @@ export default {
             container: 'modal-custom',
           },
         })
-        this.$router.push({ name: 'Main' }, 1500)
+        setTimeout(() => {
+          this.$router.push({ name: 'Main' })
+        }, 1500)
       }
     },
     selectGenre(idx) {
@@ -258,6 +273,7 @@ export default {
     async playVideo(idx) {
       this.musicVideoId = this.musicList[idx].videoId
       await this.playingIdx(idx)
+      await this.player.playVideo()
     },
     async stopVideo(idx) {
       this.$set(this.playing, idx, 0)
@@ -307,3 +323,20 @@ export default {
   },
 }
 </script>
+<style>
+.video-container {
+  visibility: hidden;
+  height: 0;
+  width: 0;
+}
+
+/* .video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 0%;
+} */
+</style>

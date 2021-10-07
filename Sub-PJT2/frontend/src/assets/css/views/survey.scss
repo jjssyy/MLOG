@@ -32,9 +32,9 @@
     overflow-x: hidden;
     @media(hover: hover) {
       #playerdiv:hover{
-        background-color:#DAEEDE;
+        background-color:#e9e9e9;
         button {
-          background-color: #DAEEDE;
+          background-color: #e9e9e9;
         }
       }
     }
@@ -45,7 +45,7 @@
       align-items: center;
       padding: 32px 30px;
       justify-content: space-between;
-      border-bottom: 2px solid #dee2e6;
+      border-bottom: 2px solid #e9e9e9;
       font-size: 1.2rem;
       font-weight: 400;
       button {
@@ -56,7 +56,8 @@
     }
   }
   .survey-footer{
-    position: absolute; 
+    position: absolute;
+    z-index: 10000;
     bottom:0;
     width: 100%;
     height: 50px;
@@ -89,6 +90,7 @@
 .player-item{
   position: relative;
 .play-button{
+  z-index: 5;
   position: absolute;
   right: 20px;
   z-index: 100;
