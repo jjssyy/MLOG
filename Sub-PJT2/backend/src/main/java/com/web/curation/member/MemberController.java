@@ -48,6 +48,7 @@ public class MemberController {
 
         if(userInfo.get("email") == null){
             int id = cancelKakao(token);
+            System.out.println(id);
             throw new CustomException(ErrorCode.NEED_EMAIL);
         }
 
