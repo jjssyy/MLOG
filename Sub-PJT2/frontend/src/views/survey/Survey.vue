@@ -230,7 +230,9 @@ export default {
             container: 'modal-custom',
           },
         })
-        this.$router.push({ name: 'Main' }, 1500)
+        setTimeout(() => {
+          this.$router.push({ name: 'Main' })
+        }, 1500)
       }
     },
     selectGenre(idx) {
