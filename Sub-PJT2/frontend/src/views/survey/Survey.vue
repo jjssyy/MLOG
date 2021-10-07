@@ -75,7 +75,7 @@ export default {
       playerVars: {
         autoplay: 1,
         loop: 1,
-        // playsinline: 1,
+        playsinline: 1,
       },
       musicVideoId: '',
       defaultVideo: '',
@@ -325,14 +325,12 @@ export default {
 </script>
 <style>
 .video-container {
-  position: relative;
-  padding-bottom: 0%;
-  padding-top: 0px;
+  visibility: hidden;
   height: 0;
-  overflow: hidden;
+  width: 0;
 }
 
-.video-container iframe,
+/* .video-container iframe,
 .video-container object,
 .video-container embed {
   position: absolute;
@@ -340,5 +338,5 @@ export default {
   left: 0;
   width: 0%;
   height: 0%;
-}
+} */
 </style>
