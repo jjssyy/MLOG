@@ -24,7 +24,7 @@ import com.web.curation.music.MusicInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.data.domain.Sort;
 @Slf4j
 @AllArgsConstructor
 @Service
@@ -36,9 +36,10 @@ public class ProfileService {
 	DiaryAnalyticsDao diaryAnalyticsDao;
 	DiaryAnalyticsSentimentDao diaryAnalyticsSentimentDao;
 	public List<MusicDto> getMyPlayList(String id){
+		Sort sort =sortByDate();
 		List<MusicDto> result=new ArrayList<MusicDto>();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
-		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth);
+		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth,sort);
 		for(int i=0;i<tmp_DiaryList.size();i++) {
 			MusicDto musicDto=new MusicDto();
 			DiaryMusic currentDiaryMusic=diaryMusicDao.getDiaryMusicByDiary(tmp_DiaryList.get(i));
@@ -49,9 +50,10 @@ public class ProfileService {
 	}
 	
 	public List<DiaryDto> getMyDiary(String id){
+		Sort sort = sortByDate();
 		List<DiaryDto> result =new ArrayList<DiaryDto>();
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
-		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth);
+		List<Diary> tmp_DiaryList=diaryDao.getDiaryByUserAuthAndIsDeletedIsFalse(userAuth,sort);
 		for(int i=0;i<tmp_DiaryList.size();i++) {
 			DiaryDto tmpDiaryDto=new DiaryDto();
 			DiaryAnalytics diaryAnalytics = diaryAnalyticsDao.getDiaryAnalyticsByDiary(tmp_DiaryList.get(i));
@@ -79,5 +81,9 @@ public class ProfileService {
 		UserAuth userAuth=memberAuthDao.getUserAuthByUid(id);
 		List<Diary>  tmpDiaryList=diaryDao.findDiaryByUserAuthAndIsDeletedIsFalseAndDiaryDateBetween(userAuth, startDate, endDate);		
 		return tmpDiaryList.size();
+	}
+	
+	private static Sort sortByDate() {
+		return Sort.by(Sort.Direction.DESC,"diaryDate");
 	}
 }
