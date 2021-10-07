@@ -44,7 +44,7 @@
 
 @media (max-width: 480px) {
   #app {
-    height: 770px;
+    height: 100%;
     width: 100%;
     border-left: 0;
     border-right: 0;
