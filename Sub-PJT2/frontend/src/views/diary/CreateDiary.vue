@@ -1,7 +1,7 @@
 <template>
   <div
     id="create-diary"
-    style="background-color: #DAEEDC; position: relative;  height: auto; overflow-y: scroll;"
+    style="background-color: #DAEEDC; position: relative;  height: 770px; overflow-y: scroll;"
   >
     <Header></Header>
     <br />
