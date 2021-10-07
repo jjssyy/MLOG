@@ -65,7 +65,7 @@ public class MemberService {
 				.uid(memberDto.getUid())
 				.filePath(memberDto.getFilePath())
 				.nickname(memberDto.getNickname())
-				.hasSurveyed(false)
+				.hasSurveyed(memberDto.isHasSurveyed())
 				.build();
 
 		memberProfileDao.save(userProfile);
