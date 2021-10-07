@@ -37,7 +37,7 @@ public class MemberController {
 
     private static String client_id = "1417199790d5e442654d27578fe4e890";
     private static String google_client_id ="512592128492-b88aomr2gk1n6ivkbs8h2t0lc04e97ng.apps.googleusercontent.com";
-    private static String redirect_uri = "http://localhost:8081";
+    private static String redirect_uri = "http://j5c104.p.ssafy.io";
 
     @GetMapping("/kakao")
     public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code) {
