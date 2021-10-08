@@ -20,6 +20,8 @@
   5. 사용자의 일기에 대한 긍부정 보고서와 일기 작성 비율 보고서를 제공한다.
      <br>
 
+## UCC
+https://youtu.be/CBSSqBZxR3I
 ## ERD
 ![ERD](exec/ERD.png)
 
